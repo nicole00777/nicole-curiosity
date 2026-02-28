@@ -369,8 +369,36 @@ Return ONLY raw valid JSON:
       })
     });
 
-    const data = await upstream.json().catch(() => null);
-    if (!upstream.ok || !data) return res.status(502).json({ error: 'Upstream AI error' });
+    const raw = await upstream.text();
+let data = null;
+try { data = JSON.parse(raw); } catch {}
+
+/**
+ * Anthropic errors are JSON with shape:
+ * { type: "error", error: { type, message }, request_id }
+ */
+if (!upstream.ok) {
+  const upstreamType = data?.error?.type || 'unknown_error';
+  const upstreamMsg  = data?.error?.message || '';
+  const requestId    = data?.request_id || upstream.headers.get('request-id') || '';
+
+  // return minimal debug info (safe) so you can see if it's 401/403/404/429/529 etc.
+  return res.status(502).json({
+    error: 'Upstream AI error',
+    upstream_status: upstream.status,
+    upstream_type: upstreamType,
+    upstream_message: upstreamMsg.slice(0, 200),
+    upstream_request_id: requestId
+  });
+}
+
+if (!data) {
+  return res.status(502).json({
+    error: 'Upstream AI error',
+    upstream_status: upstream.status,
+    upstream_type: 'invalid_json_from_upstream'
+  });
+}
 
     const text = data?.content?.[0]?.text;
     if (!text || typeof text !== 'string') return res.status(502).json({ error: 'Empty AI response' });
