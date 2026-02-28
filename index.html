@@ -3,7 +3,6 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta http-equiv="X-Content-Type-Options" content="nosniff">
 <meta name="referrer" content="no-referrer">
 <title>Curiosity Box</title>
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
@@ -56,7 +55,7 @@
     gap: 16px;
   }
 
-  .clear-btn {
+  .nav-pill {
     font-family: 'DM Sans', sans-serif;
     font-size: 12px;
     color: var(--light);
@@ -67,14 +66,15 @@
     display: none;
   }
 
-  .clear-btn:hover { color: #c0392b; }
-  .clear-btn.show { display: block; }
+  .nav-pill:hover { color: var(--text); }
+  .nav-pill.danger:hover { color: #c0392b; }
+  .nav-pill.show { display: inline-block; }
 
   /* ── HEADER ── */
   .page-header {
-    padding: 72px 0 56px;
+    padding: 72px 0 40px;
     border-bottom: 1px solid var(--border);
-    margin-bottom: 56px;
+    margin-bottom: 28px;
   }
 
   .eyebrow {
@@ -104,7 +104,7 @@
     font-weight: 300;
     line-height: 1.6;
     max-width: 420px;
-    margin-bottom: 40px;
+    margin-bottom: 32px;
   }
 
   /* ── GENERATE AREA ── */
@@ -158,7 +158,7 @@
   }
 
   /* ── LOADING ── */
-  .loading { display: none; padding: 56px 0; text-align: center; }
+  .loading { display: none; padding: 44px 0 14px; text-align: center; }
   .loading.show { display: block; }
 
   .loading-bar {
@@ -179,6 +179,51 @@
 
   .loading-text { font-size: 13px; color: var(--muted); font-weight: 300; }
 
+  /* ── ARCHIVE BAR ── */
+  .archive-bar{
+    display:flex;
+    align-items:flex-end;
+    justify-content:space-between;
+    gap:16px;
+    margin: 10px 0 28px;
+    padding-bottom:14px;
+    border-bottom:1px solid var(--border);
+  }
+
+  .archive-title{
+    font-family:'DM Serif Display', serif;
+    font-size:1.1rem;
+    color:var(--text);
+    margin-bottom:2px;
+  }
+
+  .archive-sub{
+    font-size:12px;
+    color:var(--muted);
+  }
+
+  .archive-right{
+    display:flex;
+    gap:10px;
+    align-items:center;
+    flex-wrap:wrap;
+    justify-content:flex-end;
+  }
+
+  .filter-select, .filter-input{
+    font-family:'DM Sans', sans-serif;
+    font-size:13px;
+    color:var(--text);
+    background:var(--white);
+    border:1px solid var(--border);
+    border-radius:8px;
+    padding:10px 12px;
+    outline:none;
+  }
+
+  .filter-input{ width:220px; }
+  .filter-select:focus, .filter-input:focus{ border-color:var(--text); }
+
   /* ── DATE SECTION HEADER ── */
   .section-header {
     display: flex;
@@ -195,6 +240,14 @@
     text-transform: uppercase;
     color: var(--muted);
     font-weight: 400;
+  }
+
+  .section-meta {
+    display:flex;
+    align-items:center;
+    gap:10px;
+    font-size: 11px;
+    color: var(--light);
   }
 
   .section-delete {
@@ -320,11 +373,13 @@
 
   .card-source { font-size: 12px; color: var(--light); }
 
-  .card-source a {
+  .card-source a, .card-source span {
     color: var(--muted);
     text-decoration: none;
     border-bottom: 1px solid var(--border);
     transition: color 0.15s;
+    margin-right: 10px;
+    display: inline-block;
   }
 
   .card-source a:hover { color: var(--text); }
@@ -346,6 +401,7 @@
     font-size: 12px;
     color: var(--light);
     letter-spacing: 0.5px;
+    margin-top: 48px;
   }
 
   /* ── ANIMATIONS ── */
@@ -369,16 +425,21 @@
     h1 { font-size: 2.2rem; }
     .gen-area { flex-direction: column; align-items: flex-start; }
     .password-input { width: 100%; }
+
+    .archive-bar{ align-items:flex-start; flex-direction:column; }
+    .archive-right{ width:100%; justify-content:flex-start; }
+    .filter-input{ width:100%; }
   }
 </style>
 </head>
-<body>
 
+<body>
 <div class="container">
   <nav>
     <span class="nav-logo">Curiosity Box</span>
     <div class="nav-right">
-      <button class="clear-btn" id="clearBtn" onclick="clearAll()">Clear all</button>
+      <button class="nav-pill show" id="adminBtn" onclick="toggleAdmin()">Admin</button>
+      <button class="nav-pill danger" id="clearBtn" onclick="clearAll()">Clear all</button>
     </div>
   </nav>
 
@@ -406,8 +467,40 @@
     <p class="loading-text">Collecting wonders…</p>
   </div>
 
-  <!-- All entries, newest first -->
-  <div id="all-entries"></div>
+  <!-- Archive controls -->
+  <div class="archive-bar">
+    <div class="archive-left">
+      <div class="archive-title">Archive</div>
+      <div class="archive-sub">Saved in this browser (read-only for visitors). Admin can delete.</div>
+    </div>
+
+    <div class="archive-right">
+      <select id="filterCategory" class="filter-select" onchange="renderArchive()">
+        <option value="ALL">All categories</option>
+        <option value="Psychology">Psychology</option>
+        <option value="History">History</option>
+        <option value="Nature">Nature</option>
+        <option value="Culture">Culture</option>
+        <option value="Philosophy">Philosophy</option>
+        <option value="Language">Language</option>
+        <option value="Food">Food</option>
+        <option value="Art">Art</option>
+        <option value="Science">Science</option>
+        <option value="Folklore">Folklore</option>
+      </select>
+
+      <input
+        id="filterQuery"
+        class="filter-input"
+        type="text"
+        placeholder="Search title / content…"
+        oninput="renderArchive()"
+      />
+    </div>
+  </div>
+
+  <!-- Archive list -->
+  <div id="archive"></div>
 
   <!-- Empty state -->
   <div class="empty-state" id="emptyState">
@@ -418,9 +511,48 @@
 </div>
 
 <script>
-  const STORAGE_KEY = 'ncb_v3';
+  // ---- Storage ----
+  // Each "batch" = one successful generate() call. It contains 5 items.
+  const STORAGE_KEY = 'ncb_archive_v1';
 
-  // ── GENERATE ──
+  // ---- Admin ----
+  // This is UI-gating only (not server-level). For real security, you'd need server storage + auth.
+  const ADMIN_FLAG = 'ncb_admin_session';
+  // CHANGE THIS to your own strong secret (or keep it same as SITE_PASSWORD if you want).
+  // NOTE: Any secret in front-end code can be discovered by a determined user.
+  const ADMIN_PASSWORD = 'CHANGE_ME_TO_A_STRONG_SECRET';
+
+  function isAdmin() {
+    return sessionStorage.getItem(ADMIN_FLAG) === 'true';
+  }
+
+  function toggleAdmin() {
+    if (isAdmin()) {
+      sessionStorage.removeItem(ADMIN_FLAG);
+      alert('Admin mode OFF');
+      updateAdminUI();
+      renderArchive();
+      return;
+    }
+    const p = prompt('Enter admin password:');
+    if (!p) return;
+    if (p === ADMIN_PASSWORD) {
+      sessionStorage.setItem(ADMIN_FLAG, 'true');
+      alert('Admin mode ON (this session only)');
+      updateAdminUI();
+      renderArchive();
+    } else {
+      alert('Incorrect admin password');
+    }
+  }
+
+  function updateAdminUI() {
+    const clearBtn = document.getElementById('clearBtn');
+    if (isAdmin()) clearBtn.classList.add('show');
+    else clearBtn.classList.remove('show');
+  }
+
+  // ---- Generate ----
   async function generate() {
     const password = document.getElementById('passwordInput').value.trim();
     if (!password) { showError('Enter password'); return; }
@@ -438,18 +570,20 @@
       const res  = await fetch('/api/generate', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ password, timezone: Intl.DateTimeFormat().resolvedOptions().timeZone, ts: Date.now() })
+        body: JSON.stringify({
+          password,
+          timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+          ts: Date.now()
+        })
       });
 
       const data = await res.json();
       if (!res.ok) { showError(data.error || 'Generation failed. Please try again.'); return; }
 
-      saveEntry(data);
-      renderAll();
+      saveBatch(data);
+      renderArchive();
 
-      // Scroll to top of entries
-      document.getElementById('all-entries').scrollIntoView({ behavior: 'smooth', block: 'start' });
-
+      document.getElementById('archive').scrollIntoView({ behavior: 'smooth', block: 'start' });
     } catch {
       showError('Network error. Please try again.');
     } finally {
@@ -466,51 +600,146 @@
     document.getElementById('genBtn').textContent = 'Generate';
   }
 
-  // ── RENDER ALL ENTRIES (newest first) ──
-  function renderAll() {
-    const history = loadHistory();
-    const container = document.getElementById('all-entries');
+  // ---- Storage helpers ----
+  function loadBatches() {
+    try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]'); }
+    catch { return []; }
+  }
+
+  function saveBatch(data) {
+    try {
+      const batches = loadBatches();
+      const batchId = Date.now(); // unique id for this generate call
+      batches.unshift({
+        id: batchId,
+        date: data.date,
+        items: data.items,
+        savedAt: batchId
+      });
+
+      // Optional cap to avoid blowing localStorage: keep last 365 batches (~1 year daily)
+      const MAX_BATCHES = 365;
+      const trimmed = batches.slice(0, MAX_BATCHES);
+
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(trimmed));
+    } catch {}
+  }
+
+  function deleteBatch(batchId) {
+    if (!isAdmin()) return;
+    if (!confirm('Delete this batch from this browser?')) return;
+    try {
+      const batches = loadBatches().filter(b => String(b.id) !== String(batchId));
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(batches));
+      renderArchive();
+    } catch {}
+  }
+
+  function clearAll() {
+    if (!isAdmin()) return;
+    if (!confirm('Clear ALL archive from this browser? This cannot be undone.')) return;
+    localStorage.removeItem(STORAGE_KEY);
+    renderArchive();
+  }
+
+  // ---- Rendering ----
+  function renderArchive() {
+    updateAdminUI();
+
+    const batches = loadBatches();
+    const container = document.getElementById('archive');
     const emptyState = document.getElementById('emptyState');
-    const clearBtn = document.getElementById('clearBtn');
+
+    const cat = (document.getElementById('filterCategory')?.value || 'ALL').trim();
+    const q = (document.getElementById('filterQuery')?.value || '').trim().toLowerCase();
 
     container.innerHTML = '';
 
-    if (!history.length) {
+    if (!batches.length) {
       emptyState.style.display = 'block';
-      clearBtn.classList.remove('show');
+      return;
+    }
+    emptyState.style.display = 'none';
+
+    // Flatten batches -> items, keeping batch context
+    let flat = [];
+    for (const batch of batches) {
+      const items = Array.isArray(batch.items) ? batch.items : [];
+      for (const item of items) {
+        flat.push({ batch, item });
+      }
+    }
+
+    // Filter
+    flat = flat.filter(x => {
+      const item = x.item || {};
+      const categoryOk = (cat === 'ALL') || (String(item.category) === cat);
+      if (!categoryOk) return false;
+
+      if (!q) return true;
+
+      const hay = [
+        item.title_en, item.title_zh,
+        item.content_en, item.content_zh,
+        item.insight_en, item.insight_zh
+      ].map(v => String(v || '').toLowerCase()).join(' ');
+
+      return hay.includes(q);
+    });
+
+    if (!flat.length) {
+      container.innerHTML = `<div class="empty-state">No results. Try another category or keyword.</div>`;
       return;
     }
 
-    emptyState.style.display = 'none';
-    clearBtn.classList.add('show');
+    // Group by batch (newest batch first)
+    // We keep batch order as stored (unshift -> newest first)
+    const batchOrder = new Map();
+    batches.forEach((b, i) => batchOrder.set(String(b.id), i));
+    flat.sort((a, b) => (batchOrder.get(String(a.batch.id)) ?? 999999) - (batchOrder.get(String(b.batch.id)) ?? 999999));
 
-    history.forEach((entry, gi) => {
-      const group = document.createElement('div');
-      group.className = 'date-group';
-      group.style.animationDelay = (gi * 0.05) + 's';
+    let currentBatchId = null;
+    let currentGroupEl = null;
 
-      // Section header
-      const header = document.createElement('div');
-      header.className = 'section-header';
-      header.innerHTML = `
-        <span class="section-date">${esc(entry.date)}</span>
-        <button class="section-delete" onclick="deleteEntry('${esc(entry.date)}')">Delete</button>
-      `;
-      group.appendChild(header);
+    flat.forEach((x, idx) => {
+      const batch = x.batch;
+      const item = x.item;
 
-      // Cards
-      entry.items.forEach((item, i) => {
-        const card = document.createElement('div');
-        card.className = 'card';
-        card.innerHTML = buildCard(item, 'g' + gi + '_' + i);
-        group.appendChild(card);
-      });
+      if (String(batch.id) !== String(currentBatchId)) {
+        currentBatchId = batch.id;
 
-      container.appendChild(group);
+        const group = document.createElement('div');
+        group.className = 'date-group';
+        group.style.animationDelay = (idx * 0.02) + 's';
+
+        const when = new Date(batch.savedAt || Date.now());
+        const timeStr = when.toLocaleString(undefined, { hour: '2-digit', minute: '2-digit' });
+
+        const header = document.createElement('div');
+        header.className = 'section-header';
+        header.innerHTML = `
+          <span class="section-date">${esc(batch.date || '')}</span>
+          <span class="section-meta">
+            <span>${esc(timeStr)}</span>
+            ${isAdmin() ? `<button class="section-delete" onclick="deleteBatch('${esc(String(batch.id))}')">Delete batch</button>` : ``}
+          </span>
+        `;
+        group.appendChild(header);
+
+        container.appendChild(group);
+        currentGroupEl = group;
+      }
+
+      const card = document.createElement('div');
+      card.className = 'card';
+
+      const uid = `b_${String(currentBatchId)}_${String(item.index || idx)}_${idx}`;
+      card.innerHTML = buildCard(item, uid);
+
+      currentGroupEl.appendChild(card);
     });
   }
 
-  // ── BUILD CARD HTML ──
   function buildCard(item, uid) {
     return `
       <div class="card-top">
@@ -518,27 +747,31 @@
           <span class="card-emoji">${esc(item.emoji)}</span>
           <span class="card-cat">${esc(item.category)}</span>
         </div>
-        <span class="card-num">${String(item.index).padStart(2,'0')}</span>
+        <span class="card-num">${String(item.index ?? '').padStart(2,'0')}</span>
       </div>
+
       <div class="card-title-en">${esc(item.title_en)}</div>
       <div class="card-title-zh">${esc(item.title_zh)}</div>
+
       <div class="lang-tabs">
         <button class="lang-tab active" onclick="switchLang(this,'en','${uid}')">EN</button>
         <button class="lang-tab" onclick="switchLang(this,'zh','${uid}')">中文</button>
       </div>
+
       <div class="content-block active" id="en-${uid}">
         <p class="card-content">${esc(item.content_en)}</p>
         <div class="card-insight">${esc(item.insight_en)}</div>
       </div>
+
       <div class="content-block" id="zh-${uid}">
         <p class="card-content">${esc(item.content_zh)}</p>
         <div class="card-insight">${esc(item.insight_zh)}</div>
       </div>
-      <div class="card-source">Source: <a href="${esc(item.source_url)}" target="_blank" rel="noopener noreferrer">${esc(item.source_name)}</a></div>
+
+      ${buildSources(item)}
     `;
   }
 
-  // ── LANG TOGGLE ──
   function switchLang(btn, lang, uid) {
     const card = btn.closest('.card');
     card.querySelectorAll('.lang-tab').forEach(t => t.classList.remove('active'));
@@ -547,36 +780,44 @@
     document.getElementById(lang + '-' + uid).classList.add('active');
   }
 
-  // ── STORAGE ──
-  function loadHistory() {
-    try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]'); }
-    catch { return []; }
-  }
-
-  function saveEntry(data) {
+  // ---- Safer link rendering (prevents javascript: etc.) ----
+  function safeUrl(u) {
     try {
-      let h = loadHistory().filter(e => e.date !== data.date);
-      h.unshift({ date: data.date, items: data.items, savedAt: Date.now() });
-      if (h.length > 60) h = h.slice(0, 60);
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(h));
-    } catch {}
+      const url = new URL(u);
+      if (url.protocol !== 'https:') return null;
+      return url.toString();
+    } catch {
+      return null;
+    }
   }
 
-  function deleteEntry(date) {
-    if (!confirm('Delete this entry?')) return;
-    try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(loadHistory().filter(e => e.date !== date)));
-      renderAll();
-    } catch {}
+  // Supports BOTH old fields (source_name/source_url) and new citations[]
+  function buildSources(item) {
+    const cites = Array.isArray(item.citations) ? item.citations : null;
+
+    if (cites && cites.length) {
+      const links = cites.map(c => {
+        const u = safeUrl(c.source_url);
+        const label = esc(c.label || '');
+        const name  = esc(c.source_name || '');
+        const text  = `${label} ${name}`.trim();
+        return u
+          ? `<a href="${u}" target="_blank" rel="noopener noreferrer">${text}</a>`
+          : `<span>${text}</span>`;
+      }).join(' ');
+      return `<div class="card-source">Source: ${links}</div>`;
+    }
+
+    // fallback to old schema
+    const u = safeUrl(item.source_url);
+    const name = esc(item.source_name || '');
+    if (!name && !u) return '';
+    return `<div class="card-source">Source: ${
+      u ? `<a href="${u}" target="_blank" rel="noopener noreferrer">${name || 'Link'}</a>` : `<span>${name}</span>`
+    }</div>`;
   }
 
-  function clearAll() {
-    if (!confirm('Clear all history? This cannot be undone.')) return;
-    localStorage.removeItem(STORAGE_KEY);
-    renderAll();
-  }
-
-  // ── XSS PROTECTION ──
+  // ---- XSS protection for text nodes ----
   function esc(str) {
     if (typeof str !== 'string') return '';
     return str
@@ -584,8 +825,9 @@
       .replace(/"/g,'&quot;').replace(/'/g,'&#039;');
   }
 
-  // ── INIT ──
-  renderAll();
+  // ---- Init ----
+  updateAdminUI();
+  renderArchive();
 </script>
 </body>
 </html>
