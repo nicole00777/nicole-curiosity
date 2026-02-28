@@ -52,8 +52,8 @@ Return ONLY raw valid JSON. No markdown fences, no explanation, nothing else:
       "content_en": "English content 80-120 words, clever, light, a little wicked, never boring",
       "insight_zh": "💡 一句点睛中文洞察（20字以内）",
       "insight_en": "💡 One sharp English insight under 20 words",
-      "source_name": "Real source name",
-      "source_url": "Real URL from en.wikipedia.org or britannica.com only"
+      "source_name": "Real source name — e.g. journal title, book name, museum, university, official institution",
+      "source_url": "The most specific and original source URL possible — prefer the actual study, book page, museum, journal article, or official site over Wikipedia. Must be a real working URL."
     }
   ]
 }
