@@ -1,14 +1,60 @@
-import { Ratelimit } from '@upstash/ratelimit';
-import { Redis } from '@upstash/redis';
+// api/generate.js  (Vercel Serverless Function, NOT Next.js pages/api)
+//
+// Required env vars on Vercel:
+// - SITE_PASSWORD
+// - CLAUDE_API_KEY
+// - ALLOWED_ORIGIN  (recommended): https://nicole-curiosity.vercel.app   (no trailing slash)
+//
+// Optional:
+// - CLAUDE_MODEL (default: claude-3-5-haiku-20241022)
 
-const redis = Redis.fromEnv();
-const ratelimit = new Ratelimit({
-  redis,
-  // 12 requests per 60 seconds per IP
-  limiter: Ratelimit.slidingWindow(12, '60 s'),
-  analytics: true
-});
+import crypto from 'crypto';
 
+const ALLOWED_ORIGIN = process.env.ALLOWED_ORIGIN || '';
+const SITE_PASSWORD = process.env.SITE_PASSWORD || '';
+const CLAUDE_API_KEY = process.env.CLAUDE_API_KEY || '';
+const CLAUDE_MODEL = process.env.CLAUDE_MODEL || 'claude-3-5-haiku-20241022';
+
+// ---- Best-effort in-memory rate limit (not perfect on multi-instance) ----
+const WINDOW_MS = 60_000; // 1 minute
+const MAX_REQ = 12;
+
+function getIp(req) {
+  const xff = (req.headers['x-forwarded-for'] || '').toString();
+  return xff.split(',')[0].trim() || req.socket?.remoteAddress || 'unknown';
+}
+
+function rateLimit(ip) {
+  global.__ncb_rl = global.__ncb_rl || new Map();
+  const m = global.__ncb_rl;
+
+  const now = Date.now();
+  const entry = m.get(ip) || { start: now, count: 0 };
+
+  if (now - entry.start > WINDOW_MS) {
+    entry.start = now;
+    entry.count = 0;
+  }
+
+  entry.count += 1;
+  m.set(ip, entry);
+
+  return entry.count <= MAX_REQ;
+}
+
+// ---- Timing-safe password compare ----
+function timingSafeEquals(a, b) {
+  try {
+    const aBuf = Buffer.from(String(a));
+    const bBuf = Buffer.from(String(b));
+    if (aBuf.length !== bBuf.length) return false;
+    return crypto.timingSafeEqual(aBuf, bBuf);
+  } catch {
+    return false;
+  }
+}
+
+// ---- Domains allowlist (for citations) ----
 const allowedDomains = [
   // Encyclopedias
   'en.wikipedia.org',
@@ -81,38 +127,53 @@ const academicDomains = new Set([
   'utoronto.ca','ethz.ch','epfl.ch'
 ]);
 
-function hostnameInSet(host, set) {
+function hostMatches(host, domain) {
   const h = (host || '').toLowerCase();
-  for (const d of set) {
-    if (h === d || h.endsWith(`.${d}`)) return true;
-  }
-  return false;
+  const d = domain.toLowerCase();
+  return h === d || h.endsWith(`.${d}`);
 }
 
 function isAllowedUrl(u) {
   try {
     if (typeof u !== 'string') return false;
-    const trimmed = u.trim();
-    if (!trimmed.startsWith('https://')) return false;
+    const s = u.trim();
+    if (!s.startsWith('https://')) return false;
 
-    const url = new URL(trimmed);
+    const url = new URL(s);
 
-    // Disallow obvious shorteners
+    // block common shorteners
     const forbiddenHosts = new Set(['bit.ly', 't.co', 'tinyurl.com', 'goo.gl']);
     if (forbiddenHosts.has(url.hostname.toLowerCase())) return false;
 
-    // Must be a specific page, not homepage
+    // must be a specific page
     if (!url.pathname || url.pathname === '/' || url.pathname.length < 2) return false;
 
     const host = url.hostname.toLowerCase();
-    return allowedDomains.some(d => host === d || host.endsWith(`.${d}`));
+    return allowedDomains.some(d => hostMatches(host, d));
   } catch {
     return false;
   }
 }
 
+function isMuseumUrl(u) {
+  try {
+    const host = new URL(u).hostname.toLowerCase();
+    for (const d of museumDomains) if (hostMatches(host, d)) return true;
+  } catch {}
+  return false;
+}
+
+function isAcademicUrl(u) {
+  try {
+    const host = new URL(u).hostname.toLowerCase();
+    for (const d of academicDomains) if (hostMatches(host, d)) return true;
+  } catch {}
+  return false;
+}
+
+// ---- Safer JSON extraction ----
 function extractJsonByBraces(text) {
-  const s = text || '';
+  const s = (text || '').trim();
   const start = s.indexOf('{');
   if (start === -1) return null;
 
@@ -128,30 +189,27 @@ function extractJsonByBraces(text) {
       else if (ch === '\\') escape = true;
       else if (ch === '"') inString = false;
       continue;
-    } else {
-      if (ch === '"') {
-        inString = true;
-        continue;
-      }
-      if (ch === '{') depth++;
-      if (ch === '}') depth--;
-      if (depth === 0) return s.slice(start, i + 1);
     }
+
+    if (ch === '"') { inString = true; continue; }
+    if (ch === '{') depth++;
+    if (ch === '}') depth--;
+    if (depth === 0) return s.slice(start, i + 1);
   }
   return null;
 }
 
 function validateResult(result) {
-  if (!result || typeof result !== 'object') return 'Invalid structure';
+  if (!result || typeof result !== 'object') return 'Bad JSON';
   if (!Array.isArray(result.items) || result.items.length !== 5) return 'Must return exactly 5 items';
 
   const allowedCategories = new Set([
     'Psychology','History','Nature','Culture','Philosophy','Language','Food','Art','Science','Folklore'
   ]);
 
-  const seenIdx = new Set();
   let museumHit = 0;
   let academicHit = 0;
+  const seenIdx = new Set();
 
   for (const item of result.items) {
     if (!item || typeof item !== 'object') return 'Invalid item';
@@ -163,7 +221,7 @@ function validateResult(result) {
 
     const zh = String(item.content_zh || '');
     const en = String(item.content_en || '');
-    if (!zh.includes('[1]') || !en.includes('[1]')) return 'Missing inline citation marker';
+    if (!zh.includes('[1]') || !en.includes('[1]')) return 'Missing inline citation markers';
 
     if (!Array.isArray(item.citations) || item.citations.length < 1 || item.citations.length > 2) {
       return 'Each item must have 1-2 citations';
@@ -172,20 +230,19 @@ function validateResult(result) {
     for (const c of item.citations) {
       if (!c || typeof c !== 'object') return 'Invalid citation';
       if (!c.source_name || !c.source_url) return 'Citation missing fields';
-      if (!isAllowedUrl(c.source_url)) return 'Invalid citation URL/domain';
-
-      const host = new URL(c.source_url).hostname;
-      if (hostnameInSet(host, museumDomains)) museumHit++;
-      if (hostnameInSet(host, academicDomains)) academicHit++;
+      if (!isAllowedUrl(c.source_url)) return 'Citation URL not allowed';
+      if (isMuseumUrl(c.source_url)) museumHit++;
+      if (isAcademicUrl(c.source_url)) academicHit++;
     }
   }
 
-  if (museumHit < 1) return 'Must include at least one museum source';
-  if (academicHit < 1) return 'Must include at least one academic source';
+  if (museumHit < 1) return 'Need at least one museum source';
+  if (academicHit < 1) return 'Need at least one academic/journal/university source';
 
   return null;
 }
 
+// ---- Vercel Serverless Function handler ----
 export default async function handler(req, res) {
   // Security headers
   res.setHeader('X-Content-Type-Options', 'nosniff');
@@ -194,12 +251,9 @@ export default async function handler(req, res) {
   res.setHeader('Permissions-Policy', 'geolocation=(), microphone=(), camera=()');
   res.setHeader('Cross-Origin-Opener-Policy', 'same-origin');
   res.setHeader('Cross-Origin-Resource-Policy', 'same-origin');
-  res.setHeader('Content-Security-Policy', "default-src 'none'; frame-ancestors 'none'; base-uri 'none';");
 
-  // Strict CORS
-  const ALLOWED_ORIGIN = process.env.ALLOWED_ORIGIN;
+  // Strict CORS (recommended)
   const origin = req.headers.origin;
-
   if (ALLOWED_ORIGIN) {
     if (origin === ALLOWED_ORIGIN) {
       res.setHeader('Access-Control-Allow-Origin', ALLOWED_ORIGIN);
@@ -214,31 +268,28 @@ export default async function handler(req, res) {
   if (req.method === 'OPTIONS') return res.status(204).end();
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
 
-  // Rate limit (Upstash)
-  const ip =
-    (req.headers['x-forwarded-for'] || '').toString().split(',')[0].trim() ||
-    req.socket?.remoteAddress ||
-    'unknown';
+  // Best-effort rate limit
+  const ip = getIp(req);
+  if (!rateLimit(ip)) return res.status(429).json({ error: 'Too many requests' });
 
-  const { success } = await ratelimit.limit(`ip:${ip}`);
-  if (!success) return res.status(429).json({ error: 'Too many requests' });
+  // Required env
+  if (!SITE_PASSWORD || !CLAUDE_API_KEY) {
+    return res.status(500).json({ error: 'Server misconfigured' });
+  }
 
-  // Auth
-  const { password, timezone } = req.body || {};
-  const SITE_PASSWORD = process.env.SITE_PASSWORD;
+  // Parse JSON body (Vercel should give req.body; but guard anyway)
+  const body = req.body || {};
+  const password = typeof body.password === 'string' ? body.password : '';
+  const timezone = typeof body.timezone === 'string' ? body.timezone : '';
 
-  if (!SITE_PASSWORD || typeof password !== 'string' || password !== SITE_PASSWORD) {
-    // minimal delay to slow brute forcing
-    await new Promise(r => setTimeout(r, 400));
+  if (!password || !timingSafeEquals(password, SITE_PASSWORD)) {
+    await new Promise(r => setTimeout(r, 350));
     return res.status(401).json({ error: 'Unauthorized' });
   }
 
-  const CLAUDE_API_KEY = process.env.CLAUDE_API_KEY;
-  if (!CLAUDE_API_KEY) return res.status(500).json({ error: 'Server misconfigured' });
-
-  // Safe timezone
+  // Validate timezone
   let userTimezone = 'UTC';
-  if (typeof timezone === 'string' && timezone.length <= 64) {
+  if (timezone && timezone.length <= 64) {
     try {
       Intl.DateTimeFormat(undefined, { timeZone: timezone });
       userTimezone = timezone;
@@ -291,7 +342,7 @@ Return ONLY raw valid JSON:
       "citations": [
         {
           "label": "[1]",
-          "source_type": "Museum / Journal / Encyclopedia / University / Institution / Media / Database",
+          "source_type": "Museum / Journal / Encyclopedia / University / Database",
           "source_name": "Publisher + page title",
           "source_url": "https://... (direct page)",
           "locator": "optional: section/heading, object ID, DOI, PMID, or page anchor"
@@ -303,7 +354,7 @@ Return ONLY raw valid JSON:
 `;
 
   try {
-    const response = await fetch('https://api.anthropic.com/v1/messages', {
+    const upstream = await fetch('https://api.anthropic.com/v1/messages', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -311,26 +362,26 @@ Return ONLY raw valid JSON:
         'anthropic-version': '2023-06-01'
       },
       body: JSON.stringify({
-        model: 'claude-3-5-haiku-20241022',
+        model: CLAUDE_MODEL,
         max_tokens: 4096,
         temperature: 0.6,
         messages: [{ role: 'user', content: prompt }]
       })
     });
 
-    const data = await response.json().catch(() => null);
-    if (!response.ok || !data) return res.status(502).json({ error: 'Upstream AI error' });
+    const data = await upstream.json().catch(() => null);
+    if (!upstream.ok || !data) return res.status(502).json({ error: 'Upstream AI error' });
 
-    const rawText = data?.content?.[0]?.text;
-    if (!rawText || typeof rawText !== 'string') return res.status(502).json({ error: 'Empty AI response' });
-
-    const trimmed = rawText.trim();
+    const text = data?.content?.[0]?.text;
+    if (!text || typeof text !== 'string') return res.status(502).json({ error: 'Empty AI response' });
 
     let result = null;
+
+    // strict parse first
     try {
-      result = JSON.parse(trimmed);
+      result = JSON.parse(text.trim());
     } catch {
-      const extracted = extractJsonByBraces(trimmed);
+      const extracted = extractJsonByBraces(text);
       if (!extracted) return res.status(502).json({ error: 'Invalid AI output format' });
       try {
         result = JSON.parse(extracted);
@@ -339,11 +390,20 @@ Return ONLY raw valid JSON:
       }
     }
 
-    const validationError = validateResult(result);
-    if (validationError) return res.status(502).json({ error: 'AI output failed validation' });
+    const vErr = validateResult(result);
+    if (vErr) return res.status(502).json({ error: 'AI output failed validation' });
+
+    // Backward compatibility for your existing front-end:
+    // also provide item.source_name/source_url as the first citation.
+    for (const item of result.items) {
+      if (!item.source_name && Array.isArray(item.citations) && item.citations[0]) {
+        item.source_name = item.citations[0].source_name || '';
+        item.source_url = item.citations[0].source_url || '';
+      }
+    }
 
     return res.status(200).json(result);
   } catch {
-    return res.status(500).json({ error: 'Server error. Please try again.' });
+    return res.status(500).json({ error: 'Server error' });
   }
 }
