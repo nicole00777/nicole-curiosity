@@ -363,8 +363,8 @@ Return ONLY raw valid JSON:
       },
       body: JSON.stringify({
         model: CLAUDE_MODEL,
-        max_tokens: 4096,
-        temperature: 0.6,
+        max_tokens: 1500,
+        temperature: 0.2,
         messages: [{ role: 'user', content: prompt }]
       })
     });
@@ -478,7 +478,20 @@ ${first.slice(0, 12000)}
 // ---- use it ----
 let result = null;
 try {
-  result = await parseOrRepairJson(text);
+  let result;
+try {
+  result = JSON.parse(text.trim());
+} catch {
+  const extracted = extractJsonByBraces(text);
+  if (!extracted) {
+    return res.status(502).json({ error: 'Invalid AI JSON' });
+  }
+  try {
+    result = JSON.parse(extracted);
+  } catch {
+    return res.status(502).json({ error: 'Invalid AI JSON' });
+  }
+}
 } catch (e) {
   // optional: log a small snippet for debugging without leaking too much
   console.error('AI JSON parse failed:', String(e), text.slice(0, 500));
