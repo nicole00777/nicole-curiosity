@@ -364,13 +364,27 @@ Date string to use: "${today}"
     });
 
     const raw = await upstream.text();
-    let data = null;
-    try { data = JSON.parse(raw); } catch {}
+let data = null;
+try { data = JSON.parse(raw); } catch {}
 
-    if (!upstream.ok || !data) {
-      const msg = data?.error?.message || raw.slice(0, 200);
-      return res.status(502).json({ error: "Upstream AI error", upstream_status: upstream.status, detail: msg });
-    }
+if (!upstream.ok) {
+  return res.status(502).json({
+    error: "Upstream AI error",
+    upstream_status: upstream.status,
+    upstream_type: data?.error?.type || "unknown",
+    upstream_message: (data?.error?.message || raw || "").slice(0, 300),
+    upstream_request_id: data?.request_id || upstream.headers.get("request-id") || ""
+  });
+}
+
+if (!data) {
+  return res.status(502).json({
+    error: "Upstream AI error",
+    upstream_status: upstream.status,
+    upstream_type: "invalid_json_from_upstream",
+    upstream_message: raw.slice(0, 300)
+  });
+}
 
     const text = data?.content?.[0]?.text;
     if (!text || typeof text !== "string") {
