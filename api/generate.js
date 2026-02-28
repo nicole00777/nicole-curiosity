@@ -6,8 +6,8 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
-  // Password check
-  const { password } = req.body;
+  const { password, timezone } = req.body;
+
   if (!password || password !== process.env.SITE_PASSWORD) {
     return res.status(401).json({ error: 'Incorrect password' });
   }
@@ -16,6 +16,15 @@ export default async function handler(req, res) {
   if (!CLAUDE_API_KEY) {
     return res.status(500).json({ error: 'API key not configured' });
   }
+
+  // Use user's local timezone, fallback to UTC
+  const userTimezone = timezone || 'UTC';
+  const today = new Date().toLocaleDateString('en-US', {
+    timeZone: userTimezone,
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric'
+  });
 
   const prompt = `You are a curiosity generator for Nicole — a highly open, intellectually adventurous person who loves culture, history, psychology, human nature, natural science, art, aesthetics, language, food, travel, and philosophy.
 
@@ -31,7 +40,7 @@ Each fact must:
 
 Return ONLY raw valid JSON. No markdown fences, no explanation, nothing else:
 {
-  "date": "today's date as: Month DD, YYYY",
+  "date": "${today}",
   "items": [
     {
       "index": 1,
