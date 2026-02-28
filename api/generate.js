@@ -403,20 +403,87 @@ if (!data) {
     const text = data?.content?.[0]?.text;
     if (!text || typeof text !== 'string') return res.status(502).json({ error: 'Empty AI response' });
 
-    let result = null;
+    async function callClaude(userPrompt) {
+  const upstream = await fetch('https://api.anthropic.com/v1/messages', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'x-api-key': CLAUDE_API_KEY,
+      'anthropic-version': '2023-06-01'
+    },
+    body: JSON.stringify({
+      model: CLAUDE_MODEL,
+      max_tokens: 4096,
+      temperature: 0.2,
+      messages: [{ role: 'user', content: userPrompt }]
+    })
+  });
 
-    // strict parse first
-    try {
-      result = JSON.parse(text.trim());
-    } catch {
-      const extracted = extractJsonByBraces(text);
-      if (!extracted) return res.status(502).json({ error: 'Invalid AI output format' });
-      try {
-        result = JSON.parse(extracted);
-      } catch {
-        return res.status(502).json({ error: 'Invalid AI JSON' });
-      }
-    }
+  const raw = await upstream.text();
+  let data = null;
+  try { data = JSON.parse(raw); } catch {}
+
+  if (!upstream.ok || !data) {
+    const msg = data?.error?.message || raw.slice(0, 200);
+    return { ok: false, status: upstream.status, text: null, err: msg };
+  }
+
+  const t = data?.content?.[0]?.text;
+  if (!t || typeof t !== 'string') return { ok: false, status: 502, text: null, err: 'Empty AI text' };
+
+  return { ok: true, status: 200, text: t, err: null };
+}
+
+async function parseOrRepairJson(aiText) {
+  const first = aiText.trim();
+
+  // 1) try direct parse
+  try { return JSON.parse(first); } catch {}
+
+  // 2) try brace extraction then parse
+  const extracted = extractJsonByBraces(first);
+  if (extracted) {
+    try { return JSON.parse(extracted); } catch {}
+  }
+
+  // 3) ask Claude to repair into strict JSON (single retry)
+  const repairPrompt = `
+You are a strict JSON repair tool.
+Convert the following into VALID JSON only.
+Rules:
+- Output MUST start with "{" and end with "}".
+- No markdown fences, no backticks, no commentary.
+- Use standard ASCII double quotes only (").
+- No trailing commas.
+- Ensure all strings are properly escaped.
+
+INPUT:
+${first.slice(0, 12000)}
+`;
+
+  const repaired = await callClaude(repairPrompt);
+  if (!repaired.ok || !repaired.text) throw new Error('repair_failed');
+
+  const repText = repaired.text.trim();
+  try { return JSON.parse(repText); } catch {}
+
+  const repExtracted = extractJsonByBraces(repText);
+  if (repExtracted) {
+    try { return JSON.parse(repExtracted); } catch {}
+  }
+
+  throw new Error('invalid_json');
+}
+
+// ---- use it ----
+let result = null;
+try {
+  result = await parseOrRepairJson(text);
+} catch (e) {
+  // optional: log a small snippet for debugging without leaking too much
+  console.error('AI JSON parse failed:', String(e), text.slice(0, 500));
+  return res.status(502).json({ error: 'Invalid AI JSON' });
+}
 
     const vErr = validateResult(result);
     if (vErr) return res.status(502).json({ error: 'AI output failed validation' });
