@@ -16,7 +16,6 @@
     --border:    #e4e3de;
     --border-lt: #eeedea;
 
-    /* Category palette — dusty, refined */
     --psychology:  #6b8fa8;
     --history:     #a07850;
     --nature:      #5f8c6e;
@@ -34,7 +33,6 @@
   }
 
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
   html { font-size: 16px; scroll-behavior: smooth; }
 
   body {
@@ -44,21 +42,11 @@
     font-weight: 300;
     min-height: 100vh;
     -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
   }
 
-  /* ═══════════════════════════════
-     LAYOUT
-  ═══════════════════════════════ */
-  .page {
-    max-width: 960px;
-    margin: 0 auto;
-    padding: 0 40px;
-  }
+  .page { max-width: 960px; margin: 0 auto; padding: 0 40px; }
 
-  /* ═══════════════════════════════
-     NAV
-  ═══════════════════════════════ */
+  /* ── NAV ── */
   nav {
     display: flex;
     align-items: center;
@@ -80,20 +68,11 @@
   .nav-logo {
     font-family: 'DM Serif Display', serif;
     font-size: 1rem;
-    font-weight: 400;
     color: var(--text);
-    letter-spacing: 0.3px;
-  }
-
-  .nav-right {
-    display: flex;
-    align-items: center;
-    gap: 24px;
   }
 
   .nav-link {
     font-size: 12px;
-    font-weight: 400;
     color: var(--tertiary);
     background: none;
     border: none;
@@ -101,15 +80,14 @@
     letter-spacing: 0.5px;
     transition: color 0.15s;
     display: none;
+    font-family: 'DM Sans', sans-serif;
   }
 
   .nav-link:hover { color: var(--text); }
   .nav-link.danger:hover { color: #c0392b; }
   .nav-link.show { display: inline; }
 
-  /* ═══════════════════════════════
-     HERO
-  ═══════════════════════════════ */
+  /* ── HERO ── */
   .hero {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -118,8 +96,6 @@
     border-bottom: 1px solid var(--border);
     align-items: end;
   }
-
-  .hero-left {}
 
   .hero-kicker {
     font-size: 10px;
@@ -140,10 +116,7 @@
     margin-bottom: 20px;
   }
 
-  .hero-title em {
-    font-style: italic;
-    color: var(--secondary);
-  }
+  .hero-title em { font-style: italic; color: var(--secondary); }
 
   .hero-sub {
     font-size: 14px;
@@ -164,7 +137,6 @@
     display: flex;
     gap: 8px;
     align-items: center;
-    width: 100%;
     justify-content: flex-end;
   }
 
@@ -201,7 +173,7 @@
   }
 
   .gen-btn:hover { background: #2a2a2a; transform: translateY(-1px); }
-  .gen-btn:active { transform: translateY(0px); }
+  .gen-btn:active { transform: translateY(0); }
   .gen-btn:disabled { opacity: 0.28; cursor: not-allowed; transform: none; }
 
   .error-msg {
@@ -212,20 +184,12 @@
     width: 100%;
   }
 
-  /* ═══════════════════════════════
-     LOADING
-  ═══════════════════════════════ */
-  .loading {
-    display: none;
-    padding: 48px 0 16px;
-    text-align: center;
-  }
-
+  /* ── LOADING ── */
+  .loading { display: none; padding: 48px 0 16px; text-align: center; }
   .loading.show { display: block; }
 
   .loading-track {
-    width: 36px;
-    height: 1px;
+    width: 36px; height: 1px;
     background: var(--border);
     margin: 0 auto 16px;
     overflow: hidden;
@@ -247,9 +211,7 @@
     text-transform: uppercase;
   }
 
-  /* ═══════════════════════════════
-     ARCHIVE TOOLBAR
-  ═══════════════════════════════ */
+  /* ── TOOLBAR ── */
   .toolbar {
     display: flex;
     align-items: center;
@@ -267,11 +229,7 @@
     color: var(--tertiary);
   }
 
-  .toolbar-right {
-    display: flex;
-    gap: 8px;
-    align-items: center;
-  }
+  .toolbar-right { display: flex; gap: 8px; align-items: center; }
 
   .filter-select, .filter-input {
     font-family: 'DM Sans', sans-serif;
@@ -289,13 +247,8 @@
   .filter-input { width: 180px; }
   .filter-select:focus, .filter-input:focus { border-color: #888; }
 
-  /* ═══════════════════════════════
-     DATE GROUP
-  ═══════════════════════════════ */
-  .date-group {
-    margin-bottom: 60px;
-    animation: riseIn 0.4s ease both;
-  }
+  /* ── DATE GROUP ── */
+  .date-group { margin-bottom: 60px; animation: riseIn 0.4s ease both; }
 
   .group-header {
     display: flex;
@@ -314,13 +267,7 @@
     color: var(--tertiary);
   }
 
-  .group-meta {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    font-size: 11px;
-    color: var(--tertiary);
-  }
+  .group-meta { display: flex; align-items: center; gap: 14px; font-size: 11px; color: var(--tertiary); }
 
   .group-delete {
     font-size: 11px;
@@ -335,19 +282,9 @@
 
   .group-delete:hover { color: #c0392b; }
 
-  /* ═══════════════════════════════
-     CARDS — 2-column grid
-  ═══════════════════════════════ */
-  .cards-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 10px;
-  }
-
-  /* First card spans full width */
-  .cards-grid .card:first-child {
-    grid-column: 1 / -1;
-  }
+  /* ── CARDS GRID ── */
+  .cards-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .cards-grid .card:first-child { grid-column: 1 / -1; }
 
   .card {
     background: var(--surface);
@@ -357,22 +294,17 @@
     position: relative;
     overflow: hidden;
     transition: box-shadow 0.2s, transform 0.18s;
-    cursor: default;
   }
 
-  .card:hover {
-    box-shadow: 0 8px 32px rgba(0,0,0,0.07);
-    transform: translateY(-2px);
-  }
+  .card:hover { box-shadow: 0 8px 32px rgba(0,0,0,0.07); transform: translateY(-2px); }
 
-  /* Top accent bar — category color */
   .card::before {
     content: '';
     position: absolute;
     top: 0; left: 0; right: 0;
     height: 2px;
     background: var(--cat-color, var(--default));
-    opacity: 0.7;
+    opacity: 0.8;
   }
 
   .card-header {
@@ -382,12 +314,7 @@
     margin-bottom: 14px;
   }
 
-  .card-meta {
-    display: flex;
-    align-items: center;
-    gap: 7px;
-  }
-
+  .card-meta { display: flex; align-items: center; gap: 7px; }
   .card-emoji { font-size: 16px; line-height: 1; }
 
   .card-cat {
@@ -398,11 +325,7 @@
     color: var(--cat-color, var(--default));
   }
 
-  .card-num {
-    font-size: 10px;
-    color: var(--border);
-    letter-spacing: 0.5px;
-  }
+  .card-num { font-size: 10px; color: var(--border); letter-spacing: 0.5px; }
 
   .card-title-en {
     font-family: 'DM Serif Display', serif;
@@ -411,13 +334,9 @@
     line-height: 1.3;
     color: var(--text);
     margin-bottom: 3px;
-    letter-spacing: -0.1px;
   }
 
-  /* full-width first card gets bigger title */
-  .card:first-child .card-title-en {
-    font-size: 1.45rem;
-  }
+  .card:first-child .card-title-en { font-size: 1.45rem; }
 
   .card-title-zh {
     font-size: 11px;
@@ -426,7 +345,6 @@
     font-weight: 300;
   }
 
-  /* lang toggle */
   .lang-tabs {
     display: inline-flex;
     gap: 1px;
@@ -439,8 +357,6 @@
   .lang-tab {
     font-family: 'DM Sans', sans-serif;
     font-size: 10px;
-    font-weight: 400;
-    letter-spacing: 0.5px;
     padding: 4px 12px;
     border-radius: 5px;
     border: none;
@@ -468,6 +384,7 @@
   }
 
   .card-insight {
+    font-family: 'DM Serif Display', serif;
     font-size: 12.5px;
     color: var(--secondary);
     font-style: italic;
@@ -475,32 +392,249 @@
     padding-top: 12px;
     border-top: 1px solid var(--border-lt);
     margin-bottom: 12px;
-    font-family: 'DM Serif Display', serif;
-    font-weight: 400;
   }
 
-  .card-source {
-    font-size: 10.5px;
-    color: var(--tertiary);
-  }
-
+  .card-source { font-size: 10.5px; color: var(--tertiary); margin-bottom: 14px; }
   .card-source span { font-style: italic; }
 
-  /* ═══════════════════════════════
-     EMPTY STATE
-  ═══════════════════════════════ */
+  /* ── SHARE BAR ── */
+  .share-bar {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding-top: 12px;
+    border-top: 1px solid var(--border-lt);
+    flex-wrap: wrap;
+  }
+
+  .share-label {
+    font-size: 9px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--tertiary);
+    margin-right: 2px;
+  }
+
+  .share-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 10px;
+    font-weight: 400;
+    color: var(--secondary);
+    background: #f0efeb;
+    border: none;
+    border-radius: 20px;
+    padding: 4px 10px;
+    cursor: pointer;
+    transition: background 0.15s, color 0.15s;
+    white-space: nowrap;
+  }
+
+  .share-btn:hover { background: var(--cat-color, #888); color: #fff; }
+
+  .share-btn svg { width: 11px; height: 11px; fill: currentColor; flex-shrink: 0; }
+
+  /* ── SHARE MODAL ── */
+  .modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.5);
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(4px);
+  }
+
+  .modal-overlay.show { display: flex; }
+
+  .modal {
+    background: var(--surface);
+    border-radius: 16px;
+    padding: 32px;
+    max-width: 420px;
+    width: 90%;
+    box-shadow: 0 24px 64px rgba(0,0,0,0.15);
+    animation: popIn 0.2s ease both;
+  }
+
+  .modal-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.2rem;
+    margin-bottom: 6px;
+  }
+
+  .modal-sub { font-size: 12px; color: var(--tertiary); margin-bottom: 24px; }
+
+  .modal-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin-bottom: 16px;
+  }
+
+  .modal-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12px;
+    font-weight: 400;
+    color: var(--text);
+    background: #f5f4f0;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 12px 14px;
+    cursor: pointer;
+    transition: background 0.15s, border-color 0.15s;
+    text-align: left;
+  }
+
+  .modal-btn:hover { background: var(--text); color: #fff; border-color: var(--text); }
+  .modal-btn:hover svg { fill: #fff; }
+
+  .modal-btn svg { width: 16px; height: 16px; fill: var(--text); flex-shrink: 0; transition: fill 0.15s; }
+
+  .modal-btn.full { grid-column: 1 / -1; }
+
+  .modal-note {
+    font-size: 11px;
+    color: var(--tertiary);
+    line-height: 1.6;
+    padding: 10px 12px;
+    background: #f5f4f0;
+    border-radius: 8px;
+    margin-bottom: 16px;
+  }
+
+  .modal-close {
+    width: 100%;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12px;
+    color: var(--tertiary);
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+    transition: color 0.15s;
+  }
+
+  .modal-close:hover { color: var(--text); }
+
+  /* ── IMAGE PREVIEW MODAL ── */
+  /* ── IMAGE PICKER MODAL ── */
+  .img-modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.65);
+    z-index: 2000;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(6px);
+    padding: 20px;
+  }
+
+  .img-modal-overlay.show { display: flex; }
+
+  .img-modal {
+    background: var(--surface);
+    border-radius: 16px;
+    padding: 28px;
+    width: 100%;
+    max-width: 500px;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: 0 32px 80px rgba(0,0,0,0.25);
+    animation: popIn 0.2s ease both;
+  }
+
+  .img-picker-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin-bottom: 4px;
+  }
+
+  .img-picker-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12px;
+    font-weight: 400;
+    color: var(--secondary);
+    background: #f5f4f0;
+    border: 1.5px solid transparent;
+    border-radius: 9px;
+    padding: 10px 12px;
+    cursor: pointer;
+    transition: all 0.15s;
+    text-align: left;
+  }
+
+  .img-picker-btn:hover { background: #eeedea; }
+  .img-picker-btn.active { border-color: var(--text); color: var(--text); background: #fff; }
+
+  .picker-swatch {
+    width: 16px; height: 16px;
+    border-radius: 4px;
+    flex-shrink: 0;
+    display: inline-block;
+  }
+
+  .ratio-icon {
+    display: inline-block;
+    border: 1.5px solid currentColor;
+    border-radius: 2px;
+    flex-shrink: 0;
+    opacity: 0.6;
+  }
+
+  .ratio-sq   { width: 14px; height: 14px; }
+  .ratio-port { width: 12px; height: 15px; }
+  .ratio-land { width: 18px; height: 11px; }
+
+  .img-dl-btn {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    background: var(--text);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+
+  .img-dl-btn:hover { background: #333; }
+
+  .img-close-btn {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12px;
+    color: var(--tertiary);
+    background: #f0efeb;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+
+  .img-close-btn:hover { background: var(--border); }
+
+  /* ── EMPTY + FOOTER ── */
   .empty-state {
     text-align: center;
     padding: 72px 0 96px;
     color: var(--tertiary);
     font-size: 13px;
-    font-weight: 300;
     line-height: 2;
   }
 
-  /* ═══════════════════════════════
-     FOOTER
-  ═══════════════════════════════ */
   footer {
     border-top: 1px solid var(--border);
     padding: 28px 0;
@@ -518,65 +652,27 @@
     color: var(--tertiary);
   }
 
-  .footer-r {
-    font-size: 10px;
-    color: var(--border);
-    letter-spacing: 1px;
-  }
+  .footer-r { font-size: 10px; color: var(--border); letter-spacing: 1px; }
 
-  /* ═══════════════════════════════
-     ANIMATIONS
-  ═══════════════════════════════ */
-  @keyframes riseIn {
-    from { opacity: 0; transform: translateY(14px); }
-    to   { opacity: 1; transform: translateY(0); }
-  }
+  /* ── ANIMATIONS ── */
+  @keyframes riseIn { from { opacity:0; transform:translateY(14px); } to { opacity:1; transform:translateY(0); } }
+  @keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
+  @keyframes sweep { 0% { left:-100%; } 100% { left:100%; } }
+  @keyframes popIn { from { opacity:0; transform:scale(0.95); } to { opacity:1; transform:scale(1); } }
 
-  @keyframes fadeIn {
-    from { opacity: 0; }
-    to   { opacity: 1; }
-  }
-
-  @keyframes sweep {
-    0%   { left: -100%; }
-    100% { left: 100%; }
-  }
-
-  /* ═══════════════════════════════
-     RESPONSIVE
-  ═══════════════════════════════ */
+  /* ── RESPONSIVE ── */
   @media (max-width: 720px) {
     .page { padding: 0 20px; }
-
-    .hero {
-      grid-template-columns: 1fr;
-      gap: 40px;
-      padding: 48px 0 40px;
-    }
-
-    .hero-right {
-      align-items: flex-start;
-    }
-
+    .hero { grid-template-columns: 1fr; gap: 40px; padding: 48px 0 40px; }
+    .hero-right { align-items: flex-start; }
     .gen-row { justify-content: flex-start; }
-
-    .cards-grid {
-      grid-template-columns: 1fr;
-    }
-
-    .card:first-child {
-      grid-column: auto;
-    }
-
-    .card:first-child .card-title-en {
-      font-size: 1.15rem;
-    }
-
+    .cards-grid { grid-template-columns: 1fr; }
+    .cards-grid .card:first-child { grid-column: auto; }
+    .card:first-child .card-title-en { font-size: 1.15rem; }
     .toolbar { flex-direction: column; align-items: flex-start; }
-    .toolbar-right { flex-wrap: wrap; }
     .filter-input { width: 100%; }
-
     footer { flex-direction: column; gap: 6px; }
+    .modal-grid { grid-template-columns: 1fr; }
   }
 </style>
 </head>
@@ -584,44 +680,34 @@
 <body>
 <div class="page">
 
-  <!-- NAV -->
   <nav>
     <span class="nav-logo">Curiosity Box</span>
-    <div class="nav-right">
+    <div>
       <button class="nav-link danger" id="clearBtn" onclick="clearAll()">Clear all</button>
     </div>
   </nav>
 
-  <!-- HERO -->
   <div class="hero">
     <div class="hero-left">
       <div class="hero-kicker">Nicole's Daily</div>
       <h1 class="hero-title">Five things<br>worth <em>knowing.</em></h1>
       <p class="hero-sub">Surprising, sharp, and a little wicked —<br>one curiosity box per day.</p>
     </div>
-
     <div class="hero-right">
       <div class="gen-row">
-        <input
-          type="password"
-          class="password-input"
-          id="passwordInput"
-          placeholder="Password"
-          onkeydown="if(event.key==='Enter') generate()"
-        />
+        <input type="password" class="password-input" id="passwordInput"
+          placeholder="Password" onkeydown="if(event.key==='Enter') generate()"/>
         <button class="gen-btn" id="genBtn" onclick="generate()">Generate</button>
       </div>
       <div class="error-msg" id="errorMsg"></div>
     </div>
   </div>
 
-  <!-- LOADING -->
   <div class="loading" id="loading">
     <div class="loading-track"></div>
     <p class="loading-label">Collecting wonders</p>
   </div>
 
-  <!-- TOOLBAR -->
   <div class="toolbar">
     <span class="toolbar-left">Archive</span>
     <div class="toolbar-right">
@@ -638,20 +724,12 @@
         <option value="Science">Science</option>
         <option value="Folklore">Folklore</option>
       </select>
-      <input
-        id="filterQuery"
-        class="filter-input"
-        type="text"
-        placeholder="Search…"
-        oninput="renderArchive()"
-      />
+      <input id="filterQuery" class="filter-input" type="text"
+        placeholder="Search…" oninput="renderArchive()"/>
     </div>
   </div>
 
-  <!-- ARCHIVE -->
   <div id="archive"></div>
-
-  <!-- EMPTY -->
   <div class="empty-state" id="emptyState">
     Nothing yet.<br>Enter your password and generate today's wonders.
   </div>
@@ -660,28 +738,80 @@
     <span class="footer-l">Nicole's World</span>
     <span class="footer-r">Made with curiosity</span>
   </footer>
+</div>
 
+<!-- Share modal -->
+<div class="modal-overlay" id="shareModal" onclick="closeShareModal(event)">
+  <div class="modal">
+    <div class="modal-title">Share this wonder</div>
+    <div class="modal-sub" id="shareModalSub"></div>
+    <div class="modal-grid" id="shareModalGrid"></div>
+    <div class="modal-note" id="shareModalNote" style="display:none"></div>
+    <button class="modal-close" onclick="closeModal('shareModal')">Close</button>
+  </div>
+</div>
+
+<!-- Image picker modal -->
+<div class="img-modal-overlay" id="imgPickerModal" onclick="if(event.target===this)closeModal('imgPickerModal')">
+  <div class="img-modal">
+    <div style="font-family:'DM Serif Display',serif;font-size:1.1rem;margin-bottom:4px">Save as image</div>
+    <div style="font-size:12px;color:#999;margin-bottom:20px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis" id="imgPickerTitle"></div>
+
+    <div style="font-size:9px;letter-spacing:2.5px;text-transform:uppercase;color:#aaa;margin-bottom:10px">Style</div>
+    <div class="img-picker-grid" style="margin-bottom:18px">
+      <button class="img-picker-btn active" onclick="selectOpt(this,'style','category')">
+        <span class="picker-swatch" id="swatchCategory"></span> Category
+      </button>
+      <button class="img-picker-btn" onclick="selectOpt(this,'style','dark')">
+        <span class="picker-swatch" style="background:#111"></span> Dark
+      </button>
+      <button class="img-picker-btn" onclick="selectOpt(this,'style','light')">
+        <span class="picker-swatch" style="background:#f5f4f0;border:1px solid #ccc"></span> Light
+      </button>
+      <button class="img-picker-btn" onclick="selectOpt(this,'style','bw')">
+        <span class="picker-swatch" style="background:linear-gradient(135deg,#fff 50%,#111 50%)"></span> B&amp;W
+      </button>
+    </div>
+
+    <div style="font-size:9px;letter-spacing:2.5px;text-transform:uppercase;color:#aaa;margin-bottom:10px">Ratio</div>
+    <div class="img-picker-grid" style="grid-template-columns:1fr 1fr 1fr;margin-bottom:20px">
+      <button class="img-picker-btn active" onclick="selectOpt(this,'ratio','1:1')">
+        <span class="ratio-icon ratio-sq"></span> 1:1
+      </button>
+      <button class="img-picker-btn" onclick="selectOpt(this,'ratio','4:5')">
+        <span class="ratio-icon ratio-port"></span> 4:5
+      </button>
+      <button class="img-picker-btn" onclick="selectOpt(this,'ratio','16:9')">
+        <span class="ratio-icon ratio-land"></span> 16:9
+      </button>
+    </div>
+
+    <canvas id="imgCanvas" style="width:100%;border-radius:10px;box-shadow:0 4px 20px rgba(0,0,0,0.12);display:block;margin-bottom:16px"></canvas>
+
+    <div style="display:flex;gap:8px;justify-content:center">
+      <button class="img-dl-btn" onclick="downloadCanvas()">⬇ Download</button>
+      <button class="img-close-btn" onclick="closeModal('imgPickerModal')">Close</button>
+    </div>
+  </div>
 </div>
 
 <script>
   const STORAGE_KEY = 'ncb_archive_v1';
 
   const CAT_COLORS = {
-    Psychology:  'var(--psychology)',
-    History:     'var(--history)',
-    Nature:      'var(--nature)',
-    Culture:     'var(--culture)',
-    Philosophy:  'var(--philosophy)',
-    Language:    'var(--language)',
-    Food:        'var(--food)',
-    Art:         'var(--art)',
-    Science:     'var(--science)',
-    Folklore:    'var(--folklore)',
+    Psychology: '#6b8fa8', History: '#a07850', Nature: '#5f8c6e',
+    Culture: '#8a6fa8', Philosophy: '#4a7a9b', Language: '#b08040',
+    Food: '#b86848', Art: '#9060a0', Science: '#3a7090', Folklore: '#708050',
   };
+
+  // dark categories need light text, light ones dark text
+  const CAT_DARK = new Set(['Psychology','Philosophy','Science','Culture','Art','Nature','Folklore']);
+
+  let _currentImageDataUrl = null;
 
   // ── GENERATE ──
   async function generate() {
-    const pw  = document.getElementById('passwordInput').value.trim();
+    const pw = document.getElementById('passwordInput').value.trim();
     if (!pw) { showError('Enter password'); return; }
 
     const btn    = document.getElementById('genBtn');
@@ -711,9 +841,8 @@
       renderArchive();
       document.getElementById('archive').scrollIntoView({ behavior: 'smooth', block: 'start' });
 
-    } catch {
-      showError('Network error. Please try again.');
-    } finally {
+    } catch { showError('Network error. Please try again.'); }
+    finally {
       btn.disabled = false;
       btn.textContent = 'Generate';
       loader.classList.remove('show');
@@ -752,7 +881,7 @@
   }
 
   function clearAll() {
-    if (!confirm('Clear ALL history? This cannot be undone.')) return;
+    if (!confirm('Clear ALL history? Cannot be undone.')) return;
     localStorage.removeItem(STORAGE_KEY);
     renderArchive();
   }
@@ -769,26 +898,19 @@
 
     container.innerHTML = '';
 
-    if (!batches.length) {
-      empty.style.display = 'block';
-      clearBtn.classList.remove('show');
-      return;
-    }
-
+    if (!batches.length) { empty.style.display='block'; clearBtn.classList.remove('show'); return; }
     empty.style.display = 'none';
     clearBtn.classList.add('show');
 
-    // Flatten + filter
     let flat = [];
-    for (const batch of batches) {
+    for (const batch of batches)
       for (const item of (batch.items || [])) flat.push({ batch, item });
-    }
 
     flat = flat.filter(({ item }) => {
       if (cat !== 'ALL' && String(item.category) !== cat) return false;
       if (!q) return true;
       const hay = [item.title_en, item.title_zh, item.content_en, item.content_zh]
-        .map(v => String(v || '').toLowerCase()).join(' ');
+        .map(v => String(v||'').toLowerCase()).join(' ');
       return hay.includes(q);
     });
 
@@ -797,15 +919,11 @@
       return;
     }
 
-    // Group by batch
     let curId = null, curGrid = null;
-    let cardIdx = 0;
 
     flat.forEach(({ batch, item }, idx) => {
       if (String(batch.id) !== String(curId)) {
         curId = batch.id;
-        cardIdx = 0;
-
         const group = document.createElement('div');
         group.className = 'date-group';
         group.style.animationDelay = (idx * 0.03) + 's';
@@ -816,12 +934,11 @@
         const header = document.createElement('div');
         header.className = 'group-header';
         header.innerHTML = `
-          <span class="group-date">${esc(batch.date || '')}</span>
+          <span class="group-date">${esc(batch.date||'')}</span>
           <span class="group-meta">
             <span>${esc(timeStr)}</span>
             <button class="group-delete" onclick="deleteBatch('${esc(String(batch.id))}')">Delete</button>
-          </span>
-        `;
+          </span>`;
         group.appendChild(header);
 
         const grid = document.createElement('div');
@@ -833,23 +950,39 @@
 
       const card = document.createElement('div');
       card.className = 'card';
-      card.style.setProperty('--cat-color', CAT_COLORS[item.category] || 'var(--default)');
+      const catColor = CAT_COLORS[item.category] || '#888';
+      card.style.setProperty('--cat-color', catColor);
 
       const uid = `c${String(curId)}_${idx}`;
-      card.innerHTML = buildCard(item, uid);
+      card.innerHTML = buildCard(item, uid, catColor);
       curGrid.appendChild(card);
-      cardIdx++;
     });
   }
 
-  function buildCard(item, uid) {
+  function buildCard(item, uid, catColor) {
+    const src = item.source_name
+      ? `<div class="card-source">Source: <span>${esc(item.source_name)}</span></div>` : '';
+
+    // Build share data attributes safely
+    const shareData = encodeURIComponent(JSON.stringify({
+      emoji: item.emoji,
+      category: item.category,
+      title_en: item.title_en,
+      title_zh: item.title_zh,
+      content_en: item.content_en,
+      content_zh: item.content_zh,
+      insight_en: item.insight_en,
+      insight_zh: item.insight_zh,
+      source_name: item.source_name || '',
+    }));
+
     return `
       <div class="card-header">
         <div class="card-meta">
           <span class="card-emoji">${esc(item.emoji)}</span>
           <span class="card-cat">${esc(item.category)}</span>
         </div>
-        <span class="card-num">${String(item.index ?? '').padStart(2,'0')}</span>
+        <span class="card-num">${String(item.index??'').padStart(2,'0')}</span>
       </div>
       <div class="card-title-en">${esc(item.title_en)}</div>
       <div class="card-title-zh">${esc(item.title_zh)}</div>
@@ -865,8 +998,16 @@
         <p class="card-content">${esc(item.content_zh)}</p>
         <div class="card-insight">${esc(item.insight_zh)}</div>
       </div>
-      ${item.source_name ? `<div class="card-source">Source: <span>${esc(item.source_name)}</span></div>` : ''}
-    `;
+      ${src}
+      <div class="share-bar">
+        <span class="share-label">Share</span>
+        <button class="share-btn" onclick="openShareModal(${shareData})">
+          ${iconShare()} Share
+        </button>
+        <button class="share-btn" onclick="generateImageCard(${shareData})">
+          ${iconImage()} Save as image
+        </button>
+      </div>`;
   }
 
   function switchLang(btn, lang, uid) {
@@ -874,15 +1015,238 @@
     card.querySelectorAll('.lang-tab').forEach(t => t.classList.remove('active'));
     card.querySelectorAll('.content-block').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
-    document.getElementById(lang + '-' + uid).classList.add('active');
+    document.getElementById(lang+'-'+uid).classList.add('active');
   }
 
+  // ── SHARE MODAL ──
+  function openShareModal(item) {
+    const isEn = document.querySelector('.lang-tab.active')?.textContent === 'EN';
+    const title = isEn ? item.title_en : item.title_zh;
+    const content = isEn ? item.content_en : item.content_zh;
+    const insight = isEn ? item.insight_en : item.insight_zh;
+
+    const shareText = `${item.emoji} ${title}\n\n${content}\n\n${insight}\n\n— Curiosity Box`;
+    const encoded   = encodeURIComponent(shareText);
+    const encodedUrl = encodeURIComponent('https://nicole-curiosity.vercel.app');
+
+    document.getElementById('shareModalSub').textContent = `"${title}"`;
+
+    const grid = document.getElementById('shareModalGrid');
+    grid.innerHTML = `
+      <button class="modal-btn" onclick="openUrl('https://twitter.com/intent/tweet?text=${encoded}')">
+        ${iconX()} Twitter / X
+      </button>
+      <button class="modal-btn" onclick="openUrl('https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}&quote=${encoded}')">
+        ${iconFacebook()} Facebook
+      </button>
+      <button class="modal-btn" onclick="openUrl('https://api.whatsapp.com/send?text=${encoded}')">
+        ${iconWhatsApp()} WhatsApp
+      </button>
+      <button class="modal-btn" onclick="openUrl('sms:?body=${encoded}')">
+        ${iconSMS()} 短信 SMS
+      </button>
+      <button class="modal-btn full" onclick="copyText(${JSON.stringify(shareText).replace(/'/g,"&#39;")})">
+        ${iconCopy()} 复制文字 Copy text
+      </button>
+    `;
+
+    const note = document.getElementById('shareModalNote');
+    note.style.display = 'block';
+    note.textContent = '📱 微信 / 小红书 / Instagram：点「Save as image」保存图片后，手动分享到 App 内。';
+
+    document.getElementById('shareModal').classList.add('show');
+  }
+
+  function openUrl(url) { window.open(url, '_blank', 'noopener'); }
+
+  async function copyText(text) {
+    try {
+      await navigator.clipboard.writeText(text);
+      alert('Copied!');
+    } catch {
+      // fallback
+      const ta = document.createElement('textarea');
+      ta.value = text;
+      document.body.appendChild(ta);
+      ta.select();
+      document.execCommand('copy');
+      document.body.removeChild(ta);
+      alert('Copied!');
+    }
+  }
+
+  function closeModal(id) { document.getElementById(id).classList.remove('show'); }
+  function closeShareModal(e) {
+    if (e.target.classList.contains('modal-overlay') || e.target.classList.contains('img-modal-overlay')) {
+      e.target.classList.remove('show');
+    }
+  }
+
+  // ── IMAGE CARD GENERATION ──
+  let _imgItem = null;
+  let _imgStyle = 'category';
+  let _imgRatio = '1:1';
+
+  const STYLES = {
+    category: item => ({ bg: CAT_COLORS[item.category]||'#888', text:'#fff', sub:'rgba(255,255,255,0.65)', border:'rgba(255,255,255,0.2)' }),
+    dark:     ()   => ({ bg:'#111111', text:'#ffffff', sub:'rgba(255,255,255,0.55)', border:'rgba(255,255,255,0.15)' }),
+    light:    item => ({ bg:'#f5f4f0', text:'#111111', sub:'#777777', border:'rgba(0,0,0,0.1)', accent: CAT_COLORS[item.category]||'#888' }),
+    bw:       ()   => ({ bg:'#ffffff', text:'#111111', sub:'#666666', border:'rgba(0,0,0,0.12)' }),
+  };
+
+  const RATIOS = { '1:1': [1080,1080], '4:5': [1080,1350], '16:9': [1280,720] };
+
+  function selectOpt(btn, type, val) {
+    const grid = btn.closest('.img-picker-grid');
+    grid.querySelectorAll('.img-picker-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    if (type === 'style') _imgStyle = val;
+    else _imgRatio = val;
+    renderCanvas();
+  }
+
+  function generateImageCard(item) {
+    _imgItem = item;
+    _imgStyle = 'category';
+    _imgRatio = '1:1';
+
+    // Reset active buttons
+    document.querySelectorAll('#imgPickerModal .img-picker-grid').forEach(grid => {
+      grid.querySelectorAll('.img-picker-btn').forEach((b,i) => b.classList.toggle('active', i===0));
+    });
+
+    // Set category swatch color
+    document.getElementById('swatchCategory').style.background = CAT_COLORS[item.category]||'#888';
+
+    document.getElementById('imgPickerTitle').textContent = item.title_en;
+    document.getElementById('imgPickerModal').classList.add('show');
+    renderCanvas();
+  }
+
+  function renderCanvas() {
+    if (!_imgItem) return;
+    const item = _imgItem;
+    const [W, H] = RATIOS[_imgRatio];
+    const s = STYLES[_imgStyle](item);
+
+    const canvas = document.getElementById('imgCanvas');
+    canvas.width  = W;
+    canvas.height = H;
+    // Show at correct aspect ratio in modal
+    canvas.style.aspectRatio = W + '/' + H;
+
+    const ctx = canvas.getContext('2d');
+    const DPR = 1; // canvas already at full res
+
+    // Background
+    ctx.fillStyle = s.bg;
+    ctx.fillRect(0, 0, W, H);
+
+    // For light/bw style: top accent line
+    if (_imgStyle === 'light' || _imgStyle === 'bw') {
+      ctx.fillStyle = _imgStyle === 'light' ? (s.accent||'#888') : '#111';
+      ctx.fillRect(0, 0, W, 6);
+    }
+
+    const pad = W * 0.1;
+    let y = H * 0.12;
+
+    // Category + emoji
+    ctx.font = `500 ${W*0.026}px DM Sans, sans-serif`;
+    ctx.fillStyle = _imgStyle === 'light' ? (s.accent||s.sub) : s.sub;
+    ctx.letterSpacing = '2px';
+    ctx.fillText((item.emoji + '  ' + item.category.toUpperCase()), pad, y);
+    y += W * 0.07;
+
+    // Title EN
+    ctx.fillStyle = s.text;
+    const titleSize = W * 0.054;
+    ctx.font = `400 ${titleSize}px 'DM Serif Display', Georgia, serif`;
+    y = wrapText(ctx, item.title_en, pad, y, W - pad*2, titleSize * 1.3) + titleSize * 0.4;
+
+    // Title ZH
+    ctx.font = `300 ${W*0.024}px DM Sans, sans-serif`;
+    ctx.fillStyle = s.sub;
+    ctx.fillText(item.title_zh, pad, y);
+    y += W * 0.07;
+
+    // Divider
+    ctx.fillStyle = s.border;
+    ctx.fillRect(pad, y, W - pad*2, 1);
+    y += W * 0.04;
+
+    // Content
+    const bodySize = W * 0.031;
+    ctx.font = `300 ${bodySize}px DM Sans, sans-serif`;
+    ctx.fillStyle = s.text;
+    y = wrapText(ctx, item.content_en, pad, y, W - pad*2, bodySize * 1.75) + bodySize;
+
+    // Insight
+    if (y < H * 0.72) {
+      y += W * 0.025;
+      ctx.fillStyle = s.border;
+      ctx.fillRect(pad, y, W - pad*2, 1);
+      y += W * 0.035;
+      const insightSize = W * 0.028;
+      ctx.font = `italic 400 ${insightSize}px 'DM Serif Display', Georgia, serif`;
+      ctx.fillStyle = s.sub;
+      wrapText(ctx, item.insight_en, pad, y, W - pad*2, insightSize * 1.65);
+    }
+
+    // Footer
+    const footY = H - H * 0.06;
+    ctx.fillStyle = s.border;
+    ctx.fillRect(pad, footY - 12, W - pad*2, 1);
+    const footSize = W * 0.022;
+    ctx.font = `400 ${footSize}px DM Sans, sans-serif`;
+    ctx.fillStyle = s.sub;
+    ctx.fillText('Curiosity Box', pad, footY + footSize);
+    ctx.textAlign = 'right';
+    ctx.fillText('Nicole's Daily', W - pad, footY + footSize);
+    ctx.textAlign = 'left';
+  }
+
+  function wrapText(ctx, text, x, y, maxW, lineH) {
+    const words = String(text||'').split(' ');
+    let line = '';
+    for (const word of words) {
+      const test = line ? line + ' ' + word : word;
+      if (ctx.measureText(test).width > maxW && line) {
+        ctx.fillText(line, x, y);
+        line = word;
+        y += lineH;
+      } else {
+        line = test;
+      }
+    }
+    if (line) { ctx.fillText(line, x, y); y += lineH; }
+    return y;
+  }
+
+  function downloadCanvas() {
+    const canvas = document.getElementById('imgCanvas');
+    const a = document.createElement('a');
+    a.href = canvas.toDataURL('image/png');
+    a.download = `curiosity-${_imgStyle}-${_imgRatio.replace(':','-')}.png`;
+    a.click();
+  }
+
+  // ── XSS ──
   function esc(str) {
     if (typeof str !== 'string') return '';
     return str
       .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
       .replace(/"/g,'&quot;').replace(/'/g,'&#039;');
   }
+
+  // ── ICONS (inline SVG) ──
+  function iconShare()    { return `<svg viewBox="0 0 24 24"><path d="M18 16a3 3 0 0 0-2.04.8L8.91 12.7A3.1 3.1 0 0 0 9 12a3.1 3.1 0 0 0-.09-.7l7.05-4.1A3 3 0 1 0 15 5a3.1 3.1 0 0 0 .09.7L8.04 9.8A3 3 0 1 0 8 15l-.04.01 7.05 4.1A3 3 0 1 0 18 16z"/></svg>`; }
+  function iconImage()    { return `<svg viewBox="0 0 24 24"><path d="M21 3H3a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h18a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2zM3 19V5h18v14H3zm8-9a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4.5 6l-3-4-2.5 3-1.5-2-3 4h12l-2-1z"/></svg>`; }
+  function iconX()        { return `<svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.763l7.726-8.835L2.492 2.25h6.845l4.265 5.637L18.244 2.25zm-1.161 17.52h1.833L7.084 4.126H5.117l12 15.644z"/></svg>`; }
+  function iconFacebook() { return `<svg viewBox="0 0 24 24"><path d="M24 12.073C24 5.404 18.627 0 12 0S0 5.404 0 12.073C0 18.1 4.388 23.094 10.125 24v-8.437H7.078v-3.49h3.047V9.41c0-3.025 1.792-4.697 4.533-4.697 1.312 0 2.686.236 2.686.236v2.97h-1.514c-1.491 0-1.956.93-1.956 1.887v2.266h3.328l-.532 3.49h-2.796V24C19.612 23.094 24 18.1 24 12.073z"/></svg>`; }
+  function iconWhatsApp() { return `<svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12.004 0C5.373 0 0 5.373 0 12c0 2.118.554 4.107 1.522 5.834L.054 23.22a.75.75 0 0 0 .907.913l5.474-1.432A11.954 11.954 0 0 0 12.004 24C18.629 24 24 18.627 24 12S18.629 0 12.004 0zm0 21.818a9.804 9.804 0 0 1-5.031-1.385l-.36-.214-3.732.977.997-3.648-.235-.374A9.789 9.789 0 0 1 2.182 12c0-5.418 4.408-9.818 9.822-9.818 5.416 0 9.814 4.4 9.814 9.818 0 5.416-4.398 9.818-9.814 9.818z"/></svg>`; }
+  function iconSMS()      { return `<svg viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H6l-2 2V4h16v12z"/></svg>`; }
+  function iconCopy()     { return `<svg viewBox="0 0 24 24"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>`; }
 
   renderArchive();
 </script>
