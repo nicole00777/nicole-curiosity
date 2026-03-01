@@ -1615,21 +1615,10 @@ function updatePlanet() {
 
     // Full category name as SVG title (tooltip only)
     const title = document.createElementNS('http://www.w3.org/2000/svg','title');
-    title.textContent = cat + ' (' + count + ')';
+    title.textContent = cat;
     g.appendChild(title);
 
-    // Count — small number outside bubble
-    const badge = document.createElementNS('http://www.w3.org/2000/svg','text');
-    badge.setAttribute('x', pos.x + r*0.62);
-    badge.setAttribute('y', pos.y - r*0.62);
-    badge.setAttribute('text-anchor','middle');
-    badge.setAttribute('fill', color);
-    badge.setAttribute('font-size','7.5');
-    badge.setAttribute('font-family','DM Sans, sans-serif');
-    badge.setAttribute('font-weight','500');
-    badge.setAttribute('opacity','0.9');
-    badge.textContent = count;
-    g.appendChild(badge);
+
 
     svg.appendChild(g);
   });
