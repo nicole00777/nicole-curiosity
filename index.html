@@ -65,6 +65,16 @@
     justify-content: space-between;
     padding: 28px 0;
     border-bottom: 1px solid var(--border);
+    position: relative;
+  }
+
+  nav::before {
+    content: '';
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, #7c9eb5, #6a9e7a, #b07c5a, #9b7eb8, #c47f6a);
+    z-index: 100;
   }
 
   .nav-logo {
