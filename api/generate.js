@@ -33,57 +33,61 @@ function timingSafeEquals(a, b) {
   } catch { return false; }
 }
 
+const VALID_MOODS = ["surprise", "dark", "funny", "contemplative", "beautiful", "unsettling", "any"];
+
+const MOOD_PROMPTS = {
+  surprise:      "Prioritise facts that are jaw-dropping and completely counterintuitive — things that make you question reality.",
+  dark:          "Lean into the dark, unsettling and morally complicated corners of history and human nature.",
+  funny:         "Find the absurd, darkly comic and embarrassing moments — wit over solemnity.",
+  contemplative: "Choose facts that invite slow reflection — on meaning, time, consciousness, and the human condition.",
+  beautiful:     "Seek out the quietly astonishing — natural phenomena, artistic achievements, or acts of unexpected grace.",
+  unsettling:    "Prioritise facts that are deeply strange, subtly wrong, or that leave a lingering unease.",
+  any:           "No particular mood — full range of tone and subject matter.",
+};
+
 const topicPool = [
-  "the real cause of the Library of Alexandria's decline","Byzantine Greek fire lost formula",
-  "how the Black Death accidentally caused the Renaissance","the Mongol invasion that stopped at Vienna and why",
-  "Napoleon's hemorrhoids at Waterloo","the Dancing Plague of 1518 Strasbourg",
-  "the Children's Crusade that never was","the War of Jenkins' Ear absurdity",
+  "the real cause of the Library of Alexandria decline","Byzantine Greek fire lost formula",
+  "how the Black Death accidentally caused the Renaissance","the Mongol invasion that stopped at Vienna",
+  "the Dancing Plague of 1518 Strasbourg","the War of Jenkins Ear absurdity",
   "the Great Molasses Flood of Boston 1919","Operation Mincemeat WWII corpse deception",
   "the Radium Girls and corporate cover-up","the man who single-handedly prevented nuclear war 1983",
-  "how the CIA covertly funded abstract expressionism","the real archaeological evidence for Troy",
-  "the forgotten female pharaohs erased from Egyptian history","eunuchs running the Byzantine empire",
-  "the Stasi's secret smell archive","ancient Roman fast food thermopolia archaeology",
+  "how the CIA covertly funded abstract expressionism","forgotten female pharaohs erased from Egyptian history",
+  "the Stasi secret smell archive","ancient Roman fast food thermopolia archaeology",
   "how medieval peasants had more holidays than modern workers","Viking shield-maidens DNA evidence",
-  "the Dunning-Kruger effect is more nuanced than memes suggest","embodied cognition changing philosophy of mind",
-  "how total sleep deprivation mimics acute psychosis","the mere exposure effect and why familiarity breeds love",
-  "why human memory is reconstructive not reproductive","the rubber hand illusion and body ownership",
-  "social contagion of yawning in dogs and chimps","how language shapes color discrimination ability",
-  "decision fatigue in parole board judges","the replication crisis destroying classic psychology findings",
+  "the Dunning-Kruger effect more nuanced than memes suggest","embodied cognition changing philosophy of mind",
+  "how total sleep deprivation mimics acute psychosis","why human memory is reconstructive not reproductive",
+  "the rubber hand illusion and body ownership","how language shapes color discrimination ability",
+  "decision fatigue in parole board judges","the replication crisis destroying classic psychology",
   "tardigrades surviving hard vacuum of space","mycorrhizal wood wide web forest communication",
-  "anglerfish male dissolving into female body","the immortal jellyfish biological immortality mechanism",
-  "how trees recognize and favor their own offspring","Ophiocordyceps zombie ant fungus precise neurology",
-  "slime mold solving Tokyo subway optimization problem","flowers using electric fields to communicate with bees",
+  "anglerfish male dissolving into female body","the immortal jellyfish biological immortality",
+  "Ophiocordyceps zombie ant fungus precise neurology","slime mold solving Tokyo subway optimization",
   "pistol shrimp cavitation bubble hotter than sun surface","mantis shrimp seeing 16 color channels",
   "Polynesian open ocean navigation by stars waves and swells","Aboriginal Australian songlines as geographic GPS",
-  "the Pirahaa people with no numbers recursion or creation myth","linguistic relativity in spatial reasoning",
-  "cultures recognizing five or more gender categories historically","gift economies and the obligation to give receive reciprocate",
-  "cargo cults and their rational interpretation of colonial contact","how the industrial clock changed human concept of time",
+  "the Pirahaa people with no numbers recursion or creation myth","cargo cults rational interpretation of colonial contact",
+  "how the industrial clock changed human concept of time","childhood as an invented concept with a historical birth date",
   "Zhuangzi butterfly dream and the problem of identity","Stoic negative visualization as modern cognitive therapy",
-  "how Nietzsche actual ideas differ from their weaponized version","Wittgenstein language games dismantling philosophy",
   "what the trolley problem was actually designed to prove","simulation theory most serious academic arguments",
   "placebo effect working in fully open-label conditions","CRISPR discovered by accident studying yogurt bacteria",
-  "Barry Marshall drinking H. pylori to prove stomach ulcer cause","dark matter never directly detected yet certain it exists",
-  "Rosalind Franklin stolen X-ray and the double helix story","how anesthesia works is still genuinely not fully understood",
-  "GPS accuracy requiring Einstein general relativity correction","zero invented multiple times but rejected by Europe",
-  "how Vermeer likely used a camera obscura as optical projector","why blue pigment was worth more than gold in medieval Europe",
+  "Barry Marshall drinking H pylori to prove stomach ulcer cause","dark matter never directly detected yet certain it exists",
+  "how anesthesia works is still genuinely not fully understood","GPS accuracy requiring Einstein general relativity correction",
+  "how Vermeer likely used a camera obscura","why blue pigment was worth more than gold in medieval Europe",
   "Japanese wabi-sabi as complete philosophy of imperfection","Hieronymus Bosch monsters as illustrated Flemish proverbs",
   "how musical notation nearly disappeared in early Christianity","Freudian psychology weaponized by Bernays for mass advertising",
-  "each sourdough starter having unique regional microbial fingerprint","umami discovered by Japanese scientist studying kombu seaweed",
-  "cilantro soap taste linked to specific olfactory receptor gene","sugar trade and Atlantic slavery as single economic system",
-  "how coffee houses were the original internet for Enlightenment ideas","MSG demonization as deliberate racist marketing campaign",
+  "each sourdough starter having unique regional microbial fingerprint","umami discovered by Japanese scientist studying kombu 1908",
+  "cilantro soap taste linked to specific olfactory receptor gene","MSG demonization as deliberate racist marketing campaign",
   "how language shapes spatial reasoning not just vocabulary","grammatical tense revealing how cultures perceive time differently",
-  "evidentiality markers requiring speakers to cite information sources","bee waggle dance as genuine symbolic language with syntax",
-  "how creole languages emerge fully formed in one generation","how literacy physically rewires the reading brain visual cortex",
+  "bee waggle dance as genuine symbolic language with syntax","how creole languages emerge fully formed in one generation",
   "history of premature burial and the safety coffin patent industry","hysteria diagnosis as systematic medical control of women",
-  "phrenology pseudoscience believed by serious 19th century scientists","patent medicines containing cocaine morphine and radium",
-  "Victorian freak shows as early celebrity culture economy","solitary confinement causing measurable brain damage in weeks",
+  "phrenology pseudoscience believed by serious 19th century scientists","solitary confinement causing measurable brain damage in weeks",
   "Toxoplasma changing human behavior and risk tolerance","how octopuses dream and change color while sleeping",
-  "the mimic octopus impersonating 15 different species","how Venus flytraps count to avoid false triggers",
-  "the forgotten Songhai empire larger than Western Europe","how the spice trade caused more deaths than any war",
-  "the history of human zoos in European capitals until 1958","the economics of pirate democracy and their constitutions",
+  "how Venus flytraps count to avoid false triggers","forgotten Songhai empire larger than Western Europe",
   "how salt built empires caused revolutions and mapped trade routes","fermentation as humanity oldest biotechnology predating writing",
-  "how the Columbian Exchange changed every cuisine on earth","the real history of witch trials as property inheritance disputes",
-  "how the concept of hell changed radically across Christian history","why humans are one of the only animals that can choke on food",
+  "how the Columbian Exchange changed every cuisine on earth","real history of witch trials as property inheritance disputes",
+  "how the concept of hell changed radically across Christian history","Victorian death photography as love and grief ritual",
+  "the economics of pirate democracy and their constitutions","how cartographers planted fake towns to catch plagiarists",
+  "human sacrifice as debt economy and political theater","the hidden sophistication of oral tradition memory systems",
+  "how cities increase innovation rates by measurable mathematics","the invention of privacy as a bourgeois modern concept",
+  "gift economies and the obligation to give receive and reciprocate","the anthropology of gossip as social grooming and bonding",
 ];
 
 export default async function handler(req, res) {
@@ -116,6 +120,8 @@ export default async function handler(req, res) {
   const body     = req.body || {};
   const password = typeof body.password === "string" ? body.password : "";
   const timezone = typeof body.timezone === "string" ? body.timezone : "";
+  const moodRaw  = typeof body.mood === "string" ? body.mood.toLowerCase().trim() : "any";
+  const mood     = VALID_MOODS.includes(moodRaw) ? moodRaw : "any";
 
   if (!password || !timingSafeEquals(password, SITE_PASSWORD)) {
     await new Promise((r) => setTimeout(r, 350));
@@ -132,35 +138,37 @@ export default async function handler(req, res) {
 
   const today = new Date().toLocaleDateString("en-US", {
     timeZone: userTimezone,
-    year: "numeric",
-    month: "long",
-    day: "numeric",
+    year: "numeric", month: "long", day: "numeric",
   });
 
   const seeds = [...topicPool].sort(() => Math.random() - 0.5).slice(0, 5);
   const seedHint = seeds.join(" / ");
+  const moodInstruction = MOOD_PROMPTS[mood];
 
   const prompt = `You are a curiosity generator for Nicole — fearlessly curious, loves culture, history, psychology, human nature, science, art, language, food, travel, philosophy, and everything weird and true about the world.
 
-Today's random seeds (use as inspiration, not literal topics): ${seedHint}
+Today's mood: ${mood.toUpperCase()} — ${moodInstruction}
+
+Today's random seeds (inspiration only, not literal topics): ${seedHint}
 
 Generate exactly 5 fascinating facts — each from a completely different domain, era, culture, and corner of knowledge.
 
 Rules:
 - Something Nicole has almost certainly never encountered before
 - Go beyond Wikipedia — find the strange, counterintuitive, or darkly funny angle
-- 40-55 English words per content field (no lists, a small story with texture)
-- Clever, slightly wicked humor — like a well-traveled friend who reads too much
+- 40-55 English words per content_en (no lists, a small story with texture)
+- Tone must match today's mood
 - One sharp insight that reframes how you see the world
 - Real, specific, verifiable source name (book, journal, study, museum — NO URLs)
+- tags: 2-3 lowercase English keywords describing the core theme (e.g. ["memory", "illusion", "perception"])
 
 Return ONLY this exact JSON, no markdown, no explanation, nothing else:
 {
   "date": "${today}",
+  "mood": "${mood}",
   "items": [
     {
       "index": 1,
-      "emoji": "one relevant emoji",
       "category": "Psychology",
       "title_zh": "Chinese title under 10 characters",
       "title_en": "English title under 8 words",
@@ -168,13 +176,14 @@ Return ONLY this exact JSON, no markdown, no explanation, nothing else:
       "content_en": "40-55 words",
       "insight_zh": "点睛洞察15字以内",
       "insight_en": "One sharp insight under 15 words",
-      "source_name": "Real source name only — book title, journal name, or institution"
+      "source_name": "Real source name only",
+      "tags": ["keyword1", "keyword2"]
     }
   ]
 }
 
-category must be one of: Psychology / History / Nature / Culture / Philosophy / Language / Food / Art / Science / Folklore
-Forbidden: motivational content, fabricated sources, repeated domains across the 5 items, any text outside the JSON.`;
+category must be exactly one of: Psychology / History / Nature / Culture / Philosophy / Language / Food / Art / Science / Folklore
+Forbidden: motivational content, fabricated sources, repeated domains across 5 items, any text outside the JSON.`;
 
   try {
     const upstream = await fetch("https://api.anthropic.com/v1/messages", {
@@ -213,29 +222,23 @@ Forbidden: motivational content, fabricated sources, repeated domains across the
     let result;
     try {
       result = JSON.parse(jsonMatch[0]);
-    } catch (parseErr) {
-      // Try stripping common JSON corruption patterns
+    } catch {
       const repaired = jsonMatch[0]
-        .replace(/[\u0000-\u001F\u007F]/g, ' ')  // control chars
-        .replace(/,\s*}/g, '}')                   // trailing commas
-        .replace(/,\s*]/g, ']');                  // trailing commas in arrays
-      try {
-        result = JSON.parse(repaired);
-      } catch {
-        return res.status(502).json({
-          error: "JSON parse failed",
-          raw_sample: cleaned.slice(0, 800),
-        });
-      }
+        .replace(/[\u0000-\u001F\u007F]/g, " ")
+        .replace(/,\s*}/g, "}")
+        .replace(/,\s*]/g, "]");
+      try { result = JSON.parse(repaired); }
+      catch { return res.status(502).json({ error: "JSON parse failed", raw_sample: cleaned.slice(0, 800) }); }
     }
 
     if (!result.items || !Array.isArray(result.items) || result.items.length === 0) {
       return res.status(502).json({ error: "Invalid response structure" });
     }
 
+    result.mood = mood;
     return res.status(200).json(result);
 
-  } catch (err) {
+  } catch {
     return res.status(500).json({ error: "Server error. Please try again." });
   }
 }
