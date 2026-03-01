@@ -187,7 +187,7 @@ Forbidden: motivational content, fabricated sources, repeated domains across the
       body: JSON.stringify({
         model: CLAUDE_MODEL,
         max_tokens: 3000,
-        temperature: 1.0,
+        temperature: 0.8,
         messages: [{ role: "user", content: prompt }],
       }),
     });
@@ -214,10 +214,19 @@ Forbidden: motivational content, fabricated sources, repeated domains across the
     try {
       result = JSON.parse(jsonMatch[0]);
     } catch (parseErr) {
-      return res.status(502).json({
-        error: "JSON parse failed",
-        raw_sample: cleaned.slice(0, 800),
-      });
+      // Try stripping common JSON corruption patterns
+      const repaired = jsonMatch[0]
+        .replace(/[\u0000-\u001F\u007F]/g, ' ')  // control chars
+        .replace(/,\s*}/g, '}')                   // trailing commas
+        .replace(/,\s*]/g, ']');                  // trailing commas in arrays
+      try {
+        result = JSON.parse(repaired);
+      } catch {
+        return res.status(502).json({
+          error: "JSON parse failed",
+          raw_sample: cleaned.slice(0, 800),
+        });
+      }
     }
 
     if (!result.items || !Array.isArray(result.items) || result.items.length === 0) {
