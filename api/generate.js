@@ -340,7 +340,15 @@ Forbidden: anything that sounds like a listicle fun fact, safe trivia, motivatio
     const jsonMatch = cleaned.match(/\{[\s\S]*\}/);
     if (!jsonMatch) return res.status(502).json({ error: "Could not parse AI response" });
 
-    const result = JSON.parse(jsonMatch[0]);
+    let result;
+    try {
+      result = JSON.parse(jsonMatch[0]);
+    } catch (parseErr) {
+      return res.status(502).json({ 
+        error: "JSON parse failed", 
+        raw_sample: cleaned.slice(0, 500) 
+      });
+    }
     if (!result.items || !Array.isArray(result.items) || result.items.length === 0) {
       return res.status(502).json({ error: "Invalid response structure" });
     }
