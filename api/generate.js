@@ -165,7 +165,7 @@ Rules:
     Institution/museum: Institution Name
     Website/publication: Publication Name
   Include author name whenever one exists. No URLs. Must be real and verifiable.
-- tags: 2-3 lowercase English keywords describing the core theme (e.g. ["memory", "illusion", "perception"])
+- tags: 2-3 broad thematic tags that will be shared across many entries. Always include the category name as one tag (e.g. "psychology", "history"). Use high-level concepts only — not specific facts. Choose from themes like: memory, perception, behavior, identity, consciousness, power, death, ritual, time, evolution, ecology, language, food, art, war, religion, body, society, gender, money, science, nature, culture, philosophy, folklore, health, emotion, politics, technology, trade, empire, belief, discovery
 
 Return ONLY this exact JSON, no markdown, no explanation, nothing else:
 {
@@ -182,7 +182,7 @@ Return ONLY this exact JSON, no markdown, no explanation, nothing else:
       "insight_zh": "点睛洞察15字以内",
       "insight_en": "One sharp insight under 15 words",
       "source": "Formatted source citation",
-      "tags": ["keyword1", "keyword2"]
+      "tags": ["psychology", "behavior"]
     }
   ]
 }
