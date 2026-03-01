@@ -133,7 +133,7 @@ nav::before{content:'';position:fixed;top:0;left:0;right:0;height:2px;background
 .share-btn svg{width:11px;height:11px;fill:currentColor;flex-shrink:0}
 
 /* LOAD MORE */
-.load-more-btn{display:block;width:100%;font-family:'DM Sans',sans-serif;font-size:12px;color:var(--secondary);background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-sm);padding:14px;cursor:pointer;transition:background .15s,color .15s;margin-bottom:48px;letter-spacing:.3px}
+.load-more-btn{display:block;width:100%;font-family:'DM Sans',sans-serif;font-size:12px;color:var(--secondary);background:#eeede8;border:1px solid #d4d3ce;border-radius:var(--radius-sm);padding:14px;cursor:pointer;transition:background .15s,color .15s,border-color .15s;margin-bottom:48px;letter-spacing:.3px}
 .load-more-btn:hover{background:var(--text);color:#fff;border-color:var(--text)}
 
 /* SIDEBAR */
@@ -154,6 +154,57 @@ nav::before{content:'';position:fixed;top:0;left:0;right:0;height:2px;background
 .sb-link:last-child{border-bottom:none}.sb-link:hover{color:var(--text)}
 .sb-icon{width:14px;height:14px;border-radius:3px;flex-shrink:0;opacity:.7;object-fit:contain}
 .sb-name{font-size:11px;font-weight:400;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+
+/* ── DAILY SUMMARY MODAL ─────────────────────── */
+.summary-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:850;align-items:flex-start;justify-content:center;backdrop-filter:blur(5px);padding:32px 20px;overflow-y:auto}
+.summary-overlay.show{display:flex}
+.summary-modal{background:var(--bg);border-radius:20px;padding:40px;max-width:680px;width:100%;box-shadow:0 40px 80px rgba(0,0,0,.2);animation:popIn .25s ease both;margin:auto}
+.summary-lean{font-family:'DM Serif Display',serif;font-size:1.05rem;color:var(--secondary);font-style:italic;text-align:center;margin-bottom:32px;padding-bottom:24px;border-bottom:1px solid var(--border);line-height:1.6}
+.summary-lean strong{color:var(--text);font-style:normal}
+.summary-cards{display:flex;flex-direction:column;gap:14px;margin-bottom:28px}
+.summary-card{background:#fafaf7;border:1px solid #d0cfc9;border-radius:12px;padding:20px 22px;position:relative;overflow:hidden}
+.summary-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--sc-color,#888) 0%,transparent 100%)}
+.summary-card-cat{font-size:9px;font-weight:500;letter-spacing:2px;text-transform:uppercase;color:var(--sc-color,#888);margin-bottom:8px}
+.summary-card-title{font-family:'DM Serif Display',serif;font-size:1.1rem;margin-bottom:10px;line-height:1.25}
+.summary-card-body{font-size:13px;color:#2a2a2a;line-height:1.8;font-weight:300;margin-bottom:10px}
+.summary-card-insight{font-family:'DM Serif Display',serif;font-size:12px;color:var(--secondary);font-style:italic;line-height:1.6;padding-top:10px;border-top:1px solid #e0deda}
+.summary-lang-tabs{display:inline-flex;gap:1px;margin-bottom:10px;background:#eeede8;border-radius:6px;padding:2px}
+.summary-lang-tab{font-family:'DM Sans',sans-serif;font-size:10px;padding:3px 10px;border-radius:5px;border:none;background:none;color:var(--tertiary);cursor:pointer;transition:all .15s}
+.summary-lang-tab.active{background:#f5f4f0;color:var(--text);box-shadow:0 1px 3px rgba(0,0,0,.06)}
+.summary-save-btn{display:block;width:100%;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;background:var(--text);color:#fff;border:none;border-radius:10px;padding:14px;cursor:pointer;transition:background .15s;letter-spacing:.3px}
+.summary-save-btn:hover{background:#2a2a2a}
+
+/* ── CARD DETAIL MODAL ───────────────────────── */
+.detail-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:800;align-items:center;justify-content:center;backdrop-filter:blur(4px);padding:24px}
+.detail-overlay.show{display:flex}
+.detail-modal{background:#fafaf7;border-radius:16px;padding:40px;max-width:580px;width:100%;max-height:88vh;overflow-y:auto;box-shadow:0 32px 64px rgba(0,0,0,.18);animation:popIn .2s ease both;position:relative}
+.detail-close{position:absolute;top:16px;right:18px;background:none;border:none;cursor:pointer;font-size:20px;color:var(--tertiary);padding:4px;line-height:1;transition:color .15s}
+.detail-close:hover{color:var(--text)}
+.detail-cat{font-size:9px;font-weight:500;letter-spacing:2px;text-transform:uppercase;margin-bottom:14px;display:flex;align-items:center;gap:7px}
+.detail-title{font-family:'DM Serif Display',serif;font-size:1.55rem;line-height:1.2;margin-bottom:18px}
+.detail-lang-tabs{display:inline-flex;gap:1px;margin-bottom:16px;background:#eeede8;border-radius:6px;padding:2px}
+.detail-lang-tab{font-family:'DM Sans',sans-serif;font-size:11px;padding:5px 14px;border-radius:5px;border:none;background:none;color:var(--tertiary);cursor:pointer;transition:all .15s}
+.detail-lang-tab.active{background:#f5f4f0;color:var(--text);box-shadow:0 1px 3px rgba(0,0,0,.06)}
+.detail-content{font-size:15px;color:#1a1a1a;line-height:1.9;font-weight:300;margin-bottom:16px}
+.detail-insight{font-family:'DM Serif Display',serif;font-size:14px;color:var(--secondary);font-style:italic;line-height:1.7;padding:16px 0;border-top:1px solid #e0deda;border-bottom:1px solid #e0deda;margin-bottom:14px}
+.detail-source{font-size:11px;color:var(--tertiary);margin-bottom:14px}
+.detail-source span{font-style:italic}
+.detail-tags{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:20px}
+.detail-tag{font-size:10px;font-weight:400;border-radius:20px;padding:3px 11px;border:1px solid currentColor;cursor:pointer;font-family:'DM Sans',sans-serif;transition:background .15s,color .15s;letter-spacing:.3px;opacity:.7}
+.detail-tag:hover{opacity:1}
+
+/* ── KNOWLEDGE PLANET ────────────────────────── */
+.sb-planet{margin-bottom:20px}
+.sb-planet-label{font-size:9px;font-weight:500;letter-spacing:2px;text-transform:uppercase;color:var(--secondary);margin-bottom:10px}
+.planet-svg{width:100%;cursor:default}
+.planet-bubble{cursor:pointer;transition:opacity .2s}
+.planet-bubble:hover{opacity:.8}
+.planet-bubble.active-cat{stroke-width:2px}
+
+/* ── CARD CLICKABLE ──────────────────────────── */
+.card{cursor:pointer}
+.card .share-btn,.card .star-btn,.card .lang-tab,.card .tag{position:relative;z-index:2}
 
 /* SHARE MODAL */
 .modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:1000;align-items:center;justify-content:center;backdrop-filter:blur(4px)}
@@ -339,6 +390,10 @@ footer{border-top:1px solid var(--border);padding:28px 0;display:flex;align-item
         <button class="refresh-btn" onclick="rotatePick(this)" title="Shuffle">↻</button>
       </div>
       <div id="todayPickInner"></div>
+    </div>
+    <div class="sb-planet">
+      <div class="sb-planet-label">Knowledge diet</div>
+      <svg class="planet-svg" id="planetSvg" viewBox="0 0 180 130"></svg>
     </div>
       <div class="sb-section">
         <div class="sb-heading">Deep Reading</div>
@@ -588,6 +643,32 @@ footer{border-top:1px solid var(--border);padding:28px 0;display:flex;align-item
 </div>
 </div>
 
+<!-- Daily Summary Modal -->
+<div class="summary-overlay" id="summaryModal">
+  <div class="summary-modal">
+    <div class="summary-lean" id="summaryLean"></div>
+    <div class="summary-cards" id="summaryCards"></div>
+    <button class="summary-save-btn" onclick="closeSummaryAndSave()">Save to Archive ↓</button>
+  </div>
+</div>
+
+<!-- Card Detail Modal -->
+<div class="detail-overlay" id="detailModal" onclick="if(event.target===this)closeDetail()">
+  <div class="detail-modal">
+    <button class="detail-close" onclick="closeDetail()">&#215;</button>
+    <div class="detail-cat" id="detailCat"></div>
+    <div class="detail-title" id="detailTitle"></div>
+    <div class="detail-lang-tabs">
+      <button class="detail-lang-tab active" onclick="detailSwitchLang('en',this)">EN</button>
+      <button class="detail-lang-tab" onclick="detailSwitchLang('zh',this)">中文</button>
+    </div>
+    <div class="detail-content" id="detailContent"></div>
+    <div class="detail-insight" id="detailInsight"></div>
+    <div class="detail-source" id="detailSource"></div>
+    <div class="detail-tags" id="detailTags"></div>
+  </div>
+</div>
+
 <!-- Share modal -->
 <div class="modal-overlay" id="shareModal" onclick="closeShareModal(event)">
   <div class="modal">
@@ -689,11 +770,8 @@ async function generate() {
         : err);
       return;
     }
-    _showCount = PAGE_SIZE;
-    saveBatch(data);
-    renderArchive();
-    document.getElementById('archive').scrollIntoView({behavior:'smooth',block:'start'});
-    showCuriosityToast(data.items||[]);
+    _pendingBatch = data;
+    openSummaryModal(data);
     feedCreature();
   } catch { showError('Something got lost in transit. Give it another go.'); }
   finally { btn.disabled=false; btn.textContent='Generate'; loader.classList.remove('show'); }
@@ -810,6 +888,10 @@ function renderArchive() {
     const uid = 'c'+String(batch.id)+'_'+idx;
     _cardRegistry[uid] = item;
     card.innerHTML = buildCard(item, uid, stars.includes(uid));
+    card.addEventListener('click', function(e) {
+      if (e.target.closest('.share-btn,.star-btn,.lang-tab,.tag')) return;
+      openDetail(uid);
+    });
     curGrid.appendChild(card);
   });
 
@@ -1147,7 +1229,7 @@ function renderPick() {
   el.innerHTML = '<a class="sb-pick-link" href="'+p.url+'" target="_blank" rel="noopener"><span class="sb-pick-name">'+p.name+'</span></a><div class="sb-pick-tip">'+p.tip+'</div>';
 }
 function initTodayPick() {
-  _pickIdx = new Date().getDate() % PICKS.length;
+  _pickIdx = Math.floor(Math.random() * PICKS.length);
   renderPick();
 }
 function rotatePick(btn) {
@@ -1201,11 +1283,9 @@ function spinBtn(btn) {
   setTimeout(() => btn.classList.remove('spinning'), 350);
 }
 function initFunBits() {
-  const d = new Date();
-  const seed = d.getFullYear()*1000 + d.getMonth()*31 + d.getDate();
-  _nonsenseIdx = seed % NONSENSE.length;
-  _antiIdx     = (seed + 3) % ANTI_CURIOSITY.length;
-  _stupidIdx   = (seed + 7) % STUPID_HISTORY.length;
+  _nonsenseIdx = Math.floor(Math.random() * NONSENSE.length);
+  _antiIdx     = Math.floor(Math.random() * ANTI_CURIOSITY.length);
+  _stupidIdx   = Math.floor(Math.random() * STUPID_HISTORY.length);
   document.getElementById('dailyNonsense').textContent    = NONSENSE[_nonsenseIdx];
   document.getElementById('antiCuriosity').textContent    = ANTI_CURIOSITY[_antiIdx];
   document.getElementById('historicalStupidity').textContent = STUPID_HISTORY[_stupidIdx];
@@ -1246,7 +1326,7 @@ function closeWonder() {
   document.getElementById('wonderOverlay').classList.remove('show');
   document.body.style.overflow = '';
 }
-document.addEventListener('keydown', e => { if(e.key==='Escape') closeWonder(); });
+document.addEventListener('keydown', e => { if(e.key==='Escape') { closeWonder(); closeDetail(); closeSummaryAndSave(); } });
 
 // ── CURIOSITY TOAST ───────────────────────────────────
 function showCuriosityToast(items) {
@@ -1296,9 +1376,262 @@ function updateCreature() {
 }
 
 // ── INIT ──────────────────────────────────────────────
+updatePlanet();
 initTodayPick();
 initFunBits();
 initCreature();
+
+
+// ── PENDING BATCH ─────────────────────────────
+let _pendingBatch = null;
+
+// ── SUMMARY MODAL ─────────────────────────────
+function openSummaryModal(data) {
+  const items = data.items || [];
+
+  // Lean phrase
+  const cats = items.map(i => i.category).filter(Boolean);
+  const counts = {};
+  cats.forEach(c => counts[c] = (counts[c]||0)+1);
+  const sorted = Object.entries(counts).sort((a,b) => b[1]-a[1]);
+  let phrase = '';
+  if (sorted.length === 1) phrase = sorted[0][0].toLowerCase();
+  else if (sorted.length === 2) phrase = sorted[0][0].toLowerCase() + ' and ' + sorted[1][0].toLowerCase();
+  else phrase = sorted[0][0].toLowerCase() + ', ' + sorted[1][0].toLowerCase() + ' and the curious in-between';
+
+  document.getElementById('summaryLean').innerHTML =
+    'Your curiosity today leaned towards <strong>' + phrase + '.</strong>';
+
+  // Build summary cards
+  const container = document.getElementById('summaryCards');
+  container.innerHTML = '';
+  items.forEach((item, i) => {
+    const color = CAT_COLORS[item.category] || '#888';
+    const div = document.createElement('div');
+    div.className = 'summary-card';
+    div.style.setProperty('--sc-color', color);
+    const srcText = item.source || item.source_name || '';
+    div.innerHTML =
+      '<div class="summary-card-cat">' + esc(CAT_ICONS[item.category]||'○') + ' ' + esc(item.category) + '</div>' +
+      '<div class="summary-card-title">' + esc(item.title_en) + '</div>' +
+      '<div class="summary-lang-tabs">' +
+        '<button class="summary-lang-tab active" data-lang="en" data-idx="' + i + '" onclick="summarySwitchLang(this.dataset.lang,this,+this.dataset.idx)">EN</button>' +
+        '<button class="summary-lang-tab" data-lang="zh" data-idx="' + i + '" onclick="summarySwitchLang(this.dataset.lang,this,+this.dataset.idx)">中文</button>' +
+      '</div>' +
+      '<div class="summary-card-body" id="sbody-en-' + i + '">' + esc(item.content_en) + '</div>' +
+      '<div class="summary-card-body" id="sbody-zh-' + i + '" style="display:none">' + esc(item.content_zh) + '</div>' +
+      '<div class="summary-card-insight" id="sins-en-' + i + '">' + esc(item.insight_en) + '</div>' +
+      '<div class="summary-card-insight" id="sins-zh-' + i + '" style="display:none">' + esc(item.insight_zh) + '</div>' +
+      (srcText ? '<div style="font-size:10.5px;color:var(--tertiary);margin-top:10px;font-style:italic">' + esc(srcText) + '</div>' : '');
+    container.appendChild(div);
+  });
+
+  document.getElementById('summaryModal').classList.add('show');
+  document.body.style.overflow = 'hidden';
+}
+
+function summarySwitchLang(lang, btn, idx) {
+  const card = btn.closest('.summary-card');
+  card.querySelectorAll('.summary-lang-tab').forEach(t => t.classList.remove('active'));
+  btn.classList.add('active');
+  ['en','zh'].forEach(l => {
+    const b = document.getElementById('sbody-' + l + '-' + idx);
+    const s = document.getElementById('sins-' + l + '-' + idx);
+    if (b) b.style.display = l === lang ? '' : 'none';
+    if (s) s.style.display = l === lang ? '' : 'none';
+  });
+}
+
+function closeSummaryAndSave() {
+  document.getElementById('summaryModal').classList.remove('show');
+  document.body.style.overflow = '';
+  if (_pendingBatch) {
+    _showCount = PAGE_SIZE;
+    saveBatch(_pendingBatch);
+    renderArchive();
+    _pendingBatch = null;
+    document.getElementById('archive').scrollIntoView({behavior:'smooth', block:'start'});
+    updatePlanet();
+  }
+}
+
+// ── CARD DETAIL MODAL ─────────────────────────
+let _detailItem = null, _detailLang = 'en';
+
+function openDetail(uid) {
+  const item = _cardRegistry[uid];
+  if (!item) return;
+  _detailItem = item;
+  _detailLang = 'en';
+  const color = CAT_COLORS[item.category] || '#888';
+
+  document.getElementById('detailCat').innerHTML =
+    '<span style="color:' + color + '">' + esc(CAT_ICONS[item.category]||'○') + '</span>' +
+    '<span style="font-size:9px;font-weight:500;letter-spacing:2px;text-transform:uppercase;color:' + color + '">' + esc(item.category) + '</span>';
+  document.getElementById('detailTitle').textContent = item.title_en;
+  document.getElementById('detailContent').textContent = item.content_en;
+  document.getElementById('detailInsight').textContent = item.insight_en;
+  const srcText = item.source || item.source_name || '';
+  const srcEl = document.getElementById('detailSource');
+  srcEl.innerHTML = srcText ? 'Source: <span>' + esc(srcText) + '</span>' : '';
+  srcEl.style.display = srcText ? '' : 'none';
+
+  // Tags
+  const tagsEl = document.getElementById('detailTags');
+  tagsEl.innerHTML = '';
+  if (item.tags && item.tags.length) {
+    item.tags.forEach(t => {
+      const btn = document.createElement('button');
+      btn.className = 'detail-tag';
+      btn.style.color = color;
+      btn.textContent = t;
+      btn.addEventListener('click', () => {
+        closeDetail();
+        document.getElementById('filterQuery').value = t;
+        _showCount = 10;
+        renderArchive();
+        document.getElementById('archive').scrollIntoView({behavior:'smooth',block:'start'});
+      });
+      tagsEl.appendChild(btn);
+    });
+  }
+
+  // Reset lang tabs
+  document.querySelectorAll('.detail-lang-tab').forEach((b,i) => b.classList.toggle('active', i===0));
+  document.getElementById('detailModal').classList.add('show');
+  document.body.style.overflow = 'hidden';
+}
+
+function detailSwitchLang(lang, btn) {
+  if (!_detailItem) return;
+  _detailLang = lang;
+  document.querySelectorAll('.detail-lang-tab').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('detailTitle').textContent =
+    lang === 'zh' ? _detailItem.title_zh : _detailItem.title_en;
+  document.getElementById('detailContent').textContent =
+    lang === 'zh' ? _detailItem.content_zh : _detailItem.content_en;
+  document.getElementById('detailInsight').textContent =
+    lang === 'zh' ? _detailItem.insight_zh : _detailItem.insight_en;
+}
+
+function closeDetail() {
+  document.getElementById('detailModal').classList.remove('show');
+  document.body.style.overflow = '';
+}
+
+// ── KNOWLEDGE PLANET ──────────────────────────
+function updatePlanet() {
+  const batches = loadBatches();
+  const counts = {};
+  const ORDER = Object.keys(CAT_COLORS);
+  ORDER.forEach(c => counts[c] = 0);
+  batches.forEach(b => (b.items||[]).forEach(item => {
+    if (counts[item.category] !== undefined) counts[item.category]++;
+  }));
+
+  const total = Object.values(counts).reduce((a,b) => a+b, 0);
+  if (total === 0) { document.getElementById('planetSvg').innerHTML = ''; return; }
+
+  const W = 180, H = 130;
+  const entries = ORDER.filter(c => counts[c] > 0)
+    .map(c => ({cat:c, count:counts[c], color:CAT_COLORS[c]}))
+    .sort((a,b) => b.count - a.count);
+
+  const maxCount = entries[0]?.count || 1;
+  const minR = 10, maxR = 32;
+
+  // Simple non-overlapping placement using force-like nudge
+  const placed = [];
+  function tryPlace(r) {
+    for (let attempt = 0; attempt < 200; attempt++) {
+      const x = minR + Math.random() * (W - 2*minR);
+      const y = minR + Math.random() * (H - 2*minR);
+      let ok = true;
+      for (const p of placed) {
+        const dx = x - p.x, dy = y - p.y;
+        if (Math.sqrt(dx*dx+dy*dy) < r + p.r + 4) { ok = false; break; }
+      }
+      if (ok) return {x, y};
+    }
+    return null;
+  }
+
+  const svg = document.getElementById('planetSvg');
+  svg.innerHTML = '';
+  const activeCat = (document.getElementById('filterCategory')?.value||'ALL');
+
+  entries.forEach(({cat, count, color}) => {
+    const r = minR + (count / maxCount) * (maxR - minR);
+    const pos = tryPlace(r);
+    if (!pos) return;
+    placed.push({...pos, r});
+
+    const g = document.createElementNS('http://www.w3.org/2000/svg','g');
+    g.setAttribute('class', 'planet-bubble' + (activeCat===cat?' active-cat':''));
+    g.setAttribute('style', '--cat-stroke:' + color);
+    g.style.cursor = 'pointer';
+    g.addEventListener('click', () => {
+      const sel = document.getElementById('filterCategory');
+      if (sel.value === cat) { sel.value = 'ALL'; }
+      else { sel.value = cat; }
+      _showCount = 10;
+      renderArchive();
+      updatePlanet();
+    });
+
+    const circle = document.createElementNS('http://www.w3.org/2000/svg','circle');
+    circle.setAttribute('cx', pos.x);
+    circle.setAttribute('cy', pos.y);
+    circle.setAttribute('r', r);
+    circle.setAttribute('fill', color);
+    circle.setAttribute('fill-opacity', activeCat===cat ? '0.9' : '0.55');
+    circle.setAttribute('stroke', color);
+    circle.setAttribute('stroke-width', activeCat===cat ? '2' : '0');
+    g.appendChild(circle);
+
+    // Label — only if bubble is big enough
+    if (r >= 16) {
+      const text = document.createElementNS('http://www.w3.org/2000/svg','text');
+      text.setAttribute('x', pos.x);
+      text.setAttribute('y', pos.y + 1);
+      text.setAttribute('text-anchor','middle');
+      text.setAttribute('dominant-baseline','middle');
+      text.setAttribute('fill','#fff');
+      text.setAttribute('font-size', Math.max(7, Math.min(9, r*0.35)));
+      text.setAttribute('font-family','DM Sans, sans-serif');
+      text.setAttribute('font-weight','500');
+      text.setAttribute('letter-spacing','0.5');
+      text.textContent = cat.slice(0,4).toUpperCase();
+      g.appendChild(text);
+    }
+
+    // Count badge
+    const badge = document.createElementNS('http://www.w3.org/2000/svg','text');
+    badge.setAttribute('x', pos.x + r*0.5);
+    badge.setAttribute('y', pos.y - r*0.5);
+    badge.setAttribute('text-anchor','middle');
+    badge.setAttribute('fill', color);
+    badge.setAttribute('font-size','7');
+    badge.setAttribute('font-family','DM Sans, sans-serif');
+    badge.setAttribute('opacity','0.8');
+    badge.textContent = count;
+    g.appendChild(badge);
+
+    svg.appendChild(g);
+  });
+
+  // Empty state
+  if (entries.length === 0) {
+    const t = document.createElementNS('http://www.w3.org/2000/svg','text');
+    t.setAttribute('x','90'); t.setAttribute('y','65');
+    t.setAttribute('text-anchor','middle');
+    t.setAttribute('fill','#bbb'); t.setAttribute('font-size','10');
+    t.setAttribute('font-family','DM Sans, sans-serif');
+    t.textContent = 'Generate to populate';
+    svg.appendChild(t);
+  }
+}
 
 
 renderArchive();
