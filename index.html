@@ -826,7 +826,8 @@ function renderArchive() {
 
 function buildCard(item, uid, starred) {
   const catIcon = CAT_ICONS[item.category] || '○';
-  const src = item.source_name ? '<div class="card-source">Source: <span>'+esc(item.source_name)+'</span></div>' : '';
+  const srcText = item.source || item.source_name || '';
+  const src = srcText ? '<div class="card-source">Source: <span>'+esc(srcText)+'</span></div>' : '';
   
   return (
     '<div class="card-header">' +
@@ -1054,12 +1055,13 @@ function renderCanvas() {
     y = wrapText(ctx, insightText, pad, y, W-pad*2, insightSize*1.6) + insightSize*0.3;
 
     // Source
-    if (item.source_name) {
+    const canvasSrc = item.source || item.source_name || '';
+    if (canvasSrc) {
       y += W*0.012;
       const srcSize = Math.round(W*0.017*scale);
       ctx.font='300 '+srcSize+'px DM Sans, sans-serif';
       ctx.fillStyle=s.sub; ctx.globalAlpha=0.6;
-      ctx.fillText('— '+item.source_name, pad, y);
+      ctx.fillText('— '+canvasSrc, pad, y);
       ctx.globalAlpha=1;
       y += srcSize*2.0;
     }
