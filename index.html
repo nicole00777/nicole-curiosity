@@ -52,8 +52,8 @@ nav::before{content:'';position:fixed;top:0;left:0;right:0;height:2px;background
 .mood-chip.active[data-mood="unsettling"]{background:#7a5a8a;color:#fff;border-color:#7a5a8a}
 
 .gen-row{display:flex;gap:8px;align-items:center}
-.password-input{font-family:'DM Sans',sans-serif;font-size:13px;font-weight:300;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-sm);padding:11px 16px;width:148px;outline:none;transition:border-color .2s}
-.password-input::placeholder{color:#ccc}.password-input:focus{border-color:#888}
+.password-input{font-family:'DM Sans',sans-serif;font-size:13px;font-weight:300;background:#eeede8;border:1px solid #d4d3ce;border-radius:var(--radius-sm);padding:11px 16px;width:148px;outline:none;transition:border-color .2s,background .2s}
+.password-input::placeholder{color:#bbb}.password-input:focus{border-color:#999;background:#e8e7e2}
 .gen-btn{font-family:'DM Sans',sans-serif;font-size:12px;font-weight:500;letter-spacing:.5px;background:var(--text);color:#fff;border:none;border-radius:var(--radius-sm);padding:12px 24px;cursor:pointer;transition:background .18s,transform .1s;white-space:nowrap}
 .gen-btn:hover{background:#2a2a2a;transform:translateY(-1px)}.gen-btn:active{transform:none}.gen-btn:disabled{opacity:.28;cursor:not-allowed;transform:none}
 .error-msg{font-size:12px;color:#c0392b;min-height:16px;text-align:right;width:100%}
@@ -75,8 +75,8 @@ nav::before{content:'';position:fixed;top:0;left:0;right:0;height:2px;background
 .star-filter-btn{background:none;border:none;cursor:pointer;font-size:15px;color:var(--tertiary);line-height:1;padding:0 2px;transition:color .15s;opacity:.5}
 .star-filter-btn:hover{opacity:.9}.star-filter-btn.active{color:#c8843a;opacity:1}
 .toolbar-right{display:flex;gap:8px;align-items:center}
-.filter-select,.filter-input{font-family:'DM Sans',sans-serif;font-size:12px;font-weight:300;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-sm);padding:8px 12px;outline:none;transition:border-color .15s}
-.filter-input{width:150px}.filter-select:focus,.filter-input:focus{border-color:#888}
+.filter-select,.filter-input{font-family:'DM Sans',sans-serif;font-size:12px;font-weight:300;background:#eeede8;border:1px solid #d4d3ce;border-radius:var(--radius-sm);padding:8px 12px;outline:none;transition:border-color .15s,background .15s}
+.filter-input{width:150px}.filter-select:focus,.filter-input:focus{border-color:#999;background:#e8e7e2}
 
 /* DATE GROUP */
 .date-group{margin-bottom:56px;animation:riseIn .4s ease both}
@@ -91,9 +91,9 @@ nav::before{content:'';position:fixed;top:0;left:0;right:0;height:2px;background
 .cards-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .cards-grid .card:first-child{grid-column:1/-1}
 .card{
-  border:1px solid #d8d7d2;border-radius:var(--radius);padding:24px;
+  border:1px solid #d0cfc9;border-radius:var(--radius);padding:24px;
   position:relative;overflow:hidden;transition:box-shadow .2s,transform .18s;
-  background-color:var(--surface);
+  background-color:#fafaf7;
 }
 .card:hover{box-shadow:0 12px 40px rgba(0,0,0,.11);transform:translateY(-2px)}
 /* Gradient fade top bar */
@@ -114,14 +114,14 @@ nav::before{content:'';position:fixed;top:0;left:0;right:0;height:2px;background
 .card-title-zh{font-size:11px;color:var(--tertiary);margin-bottom:16px;font-weight:300}
 .lang-tabs{display:inline-flex;gap:1px;margin-bottom:12px;background:#f0efeb;border-radius:6px;padding:2px}
 .lang-tab{font-family:'DM Sans',sans-serif;font-size:10px;padding:4px 12px;border-radius:5px;border:none;background:none;color:var(--tertiary);cursor:pointer;transition:all .15s}
-.lang-tab.active{background:var(--surface);color:var(--text);box-shadow:0 1px 3px rgba(0,0,0,.08)}
+.lang-tab.active{background:#f5f4f0;color:var(--text);box-shadow:0 1px 3px rgba(0,0,0,.06)}
 .content-block{display:none}.content-block.active{display:block;animation:fadeIn .2s ease both}
 .card-content{font-size:13.5px;color:#2a2a2a;line-height:1.85;margin-bottom:12px;font-weight:300}
 .card-insight{font-family:'DM Serif Display',serif;font-size:12.5px;color:var(--secondary);font-style:italic;line-height:1.65;padding-top:12px;border-top:1px solid var(--border-lt);margin-bottom:12px}
 .card-source{font-size:11px;color:var(--secondary);margin-bottom:10px}.card-source span{font-style:italic}
 
 /* TAGS */
-.card-tags{display:none}
+.card-tags{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:10px}
 .tag{font-size:9.5px;font-weight:400;color:var(--cat-color,var(--c-default));background:transparent;border:1px solid var(--cat-color,var(--c-default));border-radius:20px;padding:2px 9px;opacity:.6;cursor:pointer;font-family:'DM Sans',sans-serif;transition:opacity .15s,background .15s,color .15s;letter-spacing:.3px}
 .tag:hover{opacity:1;background:var(--cat-color,var(--c-default));color:#fff}
 
@@ -230,6 +230,9 @@ nav::before{content:'';position:fixed;top:0;left:0;right:0;height:2px;background
 .sb-pick-link:hover .sb-pick-name{text-decoration:underline}
 .sb-pick-name{font-size:12px;font-weight:500;line-height:1.4}
 .sb-pick-tip{font-size:10.5px;color:var(--secondary);line-height:1.55;margin-top:5px;font-style:italic}
+.refresh-btn{background:none;border:none;cursor:pointer;font-size:13px;color:var(--tertiary);padding:0 2px;line-height:1;transition:color .15s,transform .35s ease;display:inline-block;vertical-align:middle;opacity:.5}
+.refresh-btn:hover{color:var(--text);opacity:1}
+.refresh-btn.spinning{transform:rotate(360deg)}
 
 /* FOOTER */
 .footer-disclaimer{font-size:11px;color:var(--secondary);text-align:center;margin-top:20px;margin-bottom:16px;line-height:1.8;font-style:italic}
@@ -331,7 +334,10 @@ footer{border-top:1px solid var(--border);padding:28px 0;display:flex;align-item
 
   <aside class="sidebar">
     <div class="sb-pick" id="todayPick">
-      <div class="sb-pick-label">Today&#x27;s pick</div>
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px">
+        <div class="sb-pick-label" style="margin-bottom:0">Today&#x27;s pick</div>
+        <button class="refresh-btn" onclick="rotatePick(this)" title="Shuffle">↻</button>
+      </div>
       <div id="todayPickInner"></div>
     </div>
       <div class="sb-section">
@@ -549,9 +555,27 @@ footer{border-top:1px solid var(--border);padding:28px 0;display:flex;align-item
 
 <div id="funBitsRow" style="display:none;padding:32px 0 0;border-top:1px solid var(--border-lt)">
   <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:24px 40px">
-    <div class="fun-bit"><div class="fun-bit-label">Pointless wisdom</div><div class="fun-bit-text" id="dailyNonsense"></div></div>
-    <div class="fun-bit"><div class="fun-bit-label">You didn&#x27;t need to know</div><div class="fun-bit-text" id="antiCuriosity"></div></div>
-    <div class="fun-bit"><div class="fun-bit-label">Bad idea of the day</div><div class="fun-bit-text" id="historicalStupidity"></div></div>
+    <div class="fun-bit">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
+        <div class="fun-bit-label" style="margin-bottom:0">Pointless wisdom</div>
+        <button class="refresh-btn" onclick="rotateNonsense(this)" title="Another one">&#8635;</button>
+      </div>
+      <div class="fun-bit-text" id="dailyNonsense"></div>
+    </div>
+    <div class="fun-bit">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
+        <div class="fun-bit-label" style="margin-bottom:0">You didn&#x27;t need to know</div>
+        <button class="refresh-btn" onclick="rotateAnti(this)" title="Another one">&#8635;</button>
+      </div>
+      <div class="fun-bit-text" id="antiCuriosity"></div>
+    </div>
+    <div class="fun-bit">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
+        <div class="fun-bit-label" style="margin-bottom:0">Bad idea of the day</div>
+        <button class="refresh-btn" onclick="rotateStupid(this)" title="Another one">&#8635;</button>
+      </div>
+      <div class="fun-bit-text" id="historicalStupidity"></div>
+    </div>
   </div>
 </div>
 
@@ -831,6 +855,7 @@ function buildCard(item, uid, starred) {
       '<p class="card-content">'+esc(item.content_zh)+'</p>' +
       '<div class="card-insight">'+esc(item.insight_zh)+'</div>' +
     '</div>' +
+    (item.tags && item.tags.length ? '<div class="card-tags">' + item.tags.map(t => '<span class="tag">'+esc(t)+'</span>').join('') + '</div>' : '') +
     src +
     '<div class="share-bar"><span class="share-label">Share</span>' +
       '<button class="share-btn" data-uid="'+uid+'" onclick="openShareModal(_cardRegistry[this.dataset.uid])">'+iconShare()+' Share</button>' +
@@ -1112,12 +1137,21 @@ const PICKS = [
   {name:"Smithsonian Magazine",url:"https://www.smithsonianmag.com",tip:"History, science, art — reliably good."},
 ];
 
-function initTodayPick() {
-  const idx = new Date().getDate() % PICKS.length;
-  const p = PICKS[idx];
+let _pickIdx = 0;
+function renderPick() {
+  const p = PICKS[_pickIdx];
   const el = document.getElementById('todayPickInner');
   if (!el) return;
   el.innerHTML = '<a class="sb-pick-link" href="'+p.url+'" target="_blank" rel="noopener"><span class="sb-pick-name">'+p.name+'</span></a><div class="sb-pick-tip">'+p.tip+'</div>';
+}
+function initTodayPick() {
+  _pickIdx = new Date().getDate() % PICKS.length;
+  renderPick();
+}
+function rotatePick(btn) {
+  _pickIdx = (_pickIdx + 1) % PICKS.length;
+  renderPick();
+  spinBtn(btn);
 }
 
 // ── DAILY FUN BITS ────────────────────────────────────
@@ -1158,18 +1192,37 @@ const STUPID_HISTORY = [
   "1974: A law was passed in Hartford, Connecticut, making it illegal to educate your dog. It remains on the books.",
 ];
 
+let _nonsenseIdx = 0, _antiIdx = 0, _stupidIdx = 0;
+
+function spinBtn(btn) {
+  btn.classList.add('spinning');
+  setTimeout(() => btn.classList.remove('spinning'), 350);
+}
 function initFunBits() {
   const d = new Date();
   const seed = d.getFullYear()*1000 + d.getMonth()*31 + d.getDate();
-  const pick = (arr) => arr[seed % arr.length];
-  const n = document.getElementById('dailyNonsense');
-  const a = document.getElementById('antiCuriosity');
-  const s = document.getElementById('historicalStupidity');
-  if (n) n.textContent = pick(NONSENSE);
-  if (a) a.textContent = pick(ANTI_CURIOSITY);
-  if (s) s.textContent = pick(STUPID_HISTORY);
-  const row = document.getElementById('funBitsRow');
-  if (row) row.style.display = 'block';
+  _nonsenseIdx = seed % NONSENSE.length;
+  _antiIdx     = (seed + 3) % ANTI_CURIOSITY.length;
+  _stupidIdx   = (seed + 7) % STUPID_HISTORY.length;
+  document.getElementById('dailyNonsense').textContent    = NONSENSE[_nonsenseIdx];
+  document.getElementById('antiCuriosity').textContent    = ANTI_CURIOSITY[_antiIdx];
+  document.getElementById('historicalStupidity').textContent = STUPID_HISTORY[_stupidIdx];
+  document.getElementById('funBitsRow').style.display = 'block';
+}
+function rotateNonsense(btn) {
+  _nonsenseIdx = (_nonsenseIdx + 1) % NONSENSE.length;
+  document.getElementById('dailyNonsense').textContent = NONSENSE[_nonsenseIdx];
+  spinBtn(btn);
+}
+function rotateAnti(btn) {
+  _antiIdx = (_antiIdx + 1) % ANTI_CURIOSITY.length;
+  document.getElementById('antiCuriosity').textContent = ANTI_CURIOSITY[_antiIdx];
+  spinBtn(btn);
+}
+function rotateStupid(btn) {
+  _stupidIdx = (_stupidIdx + 1) % STUPID_HISTORY.length;
+  document.getElementById('historicalStupidity').textContent = STUPID_HISTORY[_stupidIdx];
+  spinBtn(btn);
 }
 
 // ── RANDOM WONDER ─────────────────────────────────────
