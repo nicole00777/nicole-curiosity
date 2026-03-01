@@ -19,7 +19,9 @@
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{font-size:16px;scroll-behavior:smooth}
 body{background:var(--bg);color:var(--text);font-family:'DM Sans',-apple-system,sans-serif;font-weight:300;min-height:100vh;-webkit-font-smoothing:antialiased}
-.page{max-width:1200px;margin:0 auto;padding:0 40px}
+.page{max-width:1200px;margin:0 auto;padding:0 40px;position:relative}
+.page::before,.page::after{content:'';position:fixed;top:0;bottom:0;width:1px;background:linear-gradient(180deg,transparent 0%,#d8d7d2 8%,#d8d7d2 92%,transparent 100%);z-index:0;pointer-events:none}
+.page::before{left:calc(50% - 600px)}.page::after{right:calc(50% - 600px)}
 
 /* NAV */
 nav{display:flex;align-items:center;justify-content:space-between;padding:28px 0;border-bottom:1px solid var(--border)}
@@ -29,7 +31,7 @@ nav::before{content:'';position:fixed;top:0;left:0;right:0;height:2px;background
 .nav-link:hover{color:var(--text)}.nav-link.danger:hover{color:#c0392b}.nav-link.show{display:inline}
 
 /* HERO */
-.hero{display:grid;grid-template-columns:1fr 1fr;padding:72px 0 64px;border-bottom:1px solid var(--border);align-items:end}
+.hero{display:grid;grid-template-columns:1fr 1fr;padding:72px 0 64px;border-bottom:1px solid #cccbc6;align-items:end}
 .hero-kicker{font-size:10px;font-weight:500;letter-spacing:3.5px;text-transform:uppercase;color:var(--tertiary);margin-bottom:24px}
 .hero-title{font-family:'DM Serif Display',serif;font-size:clamp(2.8rem,4.5vw,4.2rem);font-weight:400;line-height:1.06;letter-spacing:-.5px;margin-bottom:20px}
 .hero-title em{font-style:italic;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
@@ -63,10 +65,10 @@ nav::before{content:'';position:fixed;top:0;left:0;right:0;height:2px;background
 .loading-label{font-size:11px;color:var(--tertiary);letter-spacing:1.5px;text-transform:uppercase}
 
 /* LAYOUT */
-.main-layout{display:grid;grid-template-columns:1fr 200px;gap:56px;align-items:start}
+.main-layout{display:grid;grid-template-columns:1fr 200px;gap:56px;align-items:start;border-left:none}
 
 /* TOOLBAR */
-.toolbar{display:flex;align-items:center;justify-content:space-between;padding:28px 0 24px;gap:16px;flex-wrap:wrap}
+.toolbar{display:flex;align-items:center;justify-content:space-between;padding:36px 0 28px;gap:16px;flex-wrap:wrap}
 .toolbar-left{display:flex;align-items:center;gap:10px}
 .toolbar-accent{width:12px;height:12px;border-radius:2px;background:var(--grad);flex-shrink:0}
 .toolbar-title{font-size:10px;font-weight:500;letter-spacing:3px;text-transform:uppercase;color:var(--tertiary)}
@@ -89,12 +91,11 @@ nav::before{content:'';position:fixed;top:0;left:0;right:0;height:2px;background
 .cards-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .cards-grid .card:first-child{grid-column:1/-1}
 .card{
-  border:1px solid var(--border);border-radius:var(--radius);padding:24px;
+  border:1px solid #d8d7d2;border-radius:var(--radius);padding:24px;
   position:relative;overflow:hidden;transition:box-shadow .2s,transform .18s;
   background-color:var(--surface);
-  background-image:radial-gradient(ellipse at top left, var(--cat-tint,transparent) 0%, transparent 70%);
 }
-.card:hover{box-shadow:0 8px 32px rgba(0,0,0,.07);transform:translateY(-2px)}
+.card:hover{box-shadow:0 12px 40px rgba(0,0,0,.11);transform:translateY(-2px)}
 /* Gradient fade top bar */
 .card::before{
   content:'';position:absolute;top:0;left:0;right:0;height:2px;
@@ -136,19 +137,19 @@ nav::before{content:'';position:fixed;top:0;left:0;right:0;height:2px;background
 .load-more-btn:hover{background:var(--text);color:#fff;border-color:var(--text)}
 
 /* SIDEBAR */
-.sidebar{position:sticky;top:40px;padding-top:80px}
+.sidebar{position:sticky;top:40px;padding-top:80px;border-left:1px solid #d8d7d2;padding-left:32px;margin-left:-16px}
 .sb-section{margin-bottom:24px}
 .sb-heading{font-size:8.5px;font-weight:500;letter-spacing:2px;text-transform:uppercase;margin-bottom:8px;padding-bottom:8px;border-bottom:1px solid var(--border)}
 .sb-section:nth-child(1) .sb-heading{color:#7c9eb5;border-bottom-color:#7c9eb520}
 .sb-section:nth-child(2) .sb-heading{color:#5f8c6e;border-bottom-color:#5f8c6e20}
-.sb-section:nth-child(3) .sb-heading{color:#a07850;border-bottom-color:#a0785020}
+.sb-section:nth-child(3) .sb-heading{color:#b86848;border-bottom-color:#b8684820}
 .sb-section:nth-child(4) .sb-heading{color:#8a6fa8;border-bottom-color:#8a6fa820}
 .sb-section:nth-child(5) .sb-heading{color:#4a7a9b;border-bottom-color:#4a7a9b20}
-.sb-section:nth-child(6) .sb-heading{color:#5f8c6e;border-bottom-color:#5f8c6e20}
-.sb-section:nth-child(7) .sb-heading{color:#b86848;border-bottom-color:#b8684820}
-.sb-section:nth-child(8) .sb-heading{color:#b08040;border-bottom-color:#b0804020}
-.sb-section:nth-child(9) .sb-heading{color:#b86848;border-bottom-color:#b8684820}
-.sb-section:nth-child(10) .sb-heading{color:#5f8c6e;border-bottom-color:#5f8c6e20}
+.sb-section:nth-child(6) .sb-heading{color:#a07850;border-bottom-color:#a0785020}
+.sb-section:nth-child(7) .sb-heading{color:#708050;border-bottom-color:#70805020}
+.sb-section:nth-child(8) .sb-heading{color:#9060a0;border-bottom-color:#9060a020}
+.sb-section:nth-child(9) .sb-heading{color:#3a7090;border-bottom-color:#3a709020}
+.sb-section:nth-child(10) .sb-heading{color:#b08040;border-bottom-color:#b0804020}
 .sb-link{display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid var(--border-lt);text-decoration:none;color:var(--secondary);transition:color .15s}
 .sb-link:last-child{border-bottom:none}.sb-link:hover{color:var(--text)}
 .sb-icon{width:14px;height:14px;border-radius:3px;flex-shrink:0;opacity:.7;object-fit:contain}
@@ -187,6 +188,46 @@ nav::before{content:'';position:fixed;top:0;left:0;right:0;height:2px;background
 .img-close-btn{font-family:'DM Sans',sans-serif;font-size:12px;color:var(--tertiary);background:#f0efeb;border:none;border-radius:8px;padding:10px 20px;cursor:pointer;transition:background .15s}
 .img-close-btn:hover{background:var(--border)}
 
+/* CURIOSITY TOAST */
+.curiosity-toast{position:fixed;bottom:32px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--text);color:#fff;font-family:'DM Serif Display',serif;font-size:13px;font-style:italic;padding:12px 24px;border-radius:40px;opacity:0;transition:opacity .4s,transform .4s;pointer-events:none;z-index:500;white-space:nowrap;max-width:90vw;text-align:center}
+.curiosity-toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+/* RANDOM WONDER */
+.wonder-overlay{display:none;position:fixed;inset:0;background:rgba(245,244,240,.96);z-index:900;align-items:center;justify-content:center;backdrop-filter:blur(2px)}
+.wonder-overlay.show{display:flex}
+.wonder-card{max-width:560px;width:90%;padding:48px;position:relative}
+.wonder-close{position:absolute;top:16px;right:16px;background:none;border:none;cursor:pointer;font-size:20px;color:var(--tertiary);line-height:1;padding:4px}
+.wonder-close:hover{color:var(--text)}
+.wonder-cat{font-size:9px;font-weight:500;letter-spacing:2.5px;text-transform:uppercase;margin-bottom:16px}
+.wonder-title{font-family:'DM Serif Display',serif;font-size:1.6rem;line-height:1.2;margin-bottom:8px}
+.wonder-body{font-size:14px;color:var(--secondary);line-height:1.85;margin-bottom:16px;font-weight:300}
+.wonder-insight{font-family:'DM Serif Display',serif;font-size:13px;color:var(--secondary);font-style:italic;line-height:1.65;padding-top:14px;border-top:1px solid var(--border-lt)}
+.wonder-again{margin-top:28px;font-family:'DM Sans',sans-serif;font-size:11px;color:var(--tertiary);background:none;border:none;cursor:pointer;letter-spacing:.5px;padding:0;transition:color .15s}
+.wonder-again:hover{color:var(--text)}
+
+/* FUN BITS */
+.fun-bits{border-top:1px solid var(--border-lt);padding:24px 0 0;margin-top:8px}
+.fun-bit{margin-bottom:20px}
+.fun-bit-label{font-size:8.5px;font-weight:500;letter-spacing:2px;text-transform:uppercase;color:var(--tertiary);margin-bottom:6px}
+.fun-bit-text{font-size:13px;color:var(--secondary);line-height:1.7;font-weight:300}
+.fun-bit-text em{font-style:italic;color:var(--text)}
+
+/* CREATURE */
+.creature-wrap{position:fixed;bottom:20px;right:24px;z-index:200;pointer-events:none}
+.creature{width:12px;height:12px;border-radius:50%;background:var(--text);opacity:0.18;transition:width .6s cubic-bezier(.34,1.56,.64,1),height .6s cubic-bezier(.34,1.56,.64,1),opacity .6s}
+.creature.fed{opacity:0.35}
+
+/* TODAY'S PICK */
+.sb-pick{background:var(--bg);border:1px solid var(--border);border-radius:var(--radius-sm);padding:10px 12px;margin-bottom:20px}
+.sb-pick-label{font-size:8px;letter-spacing:2px;text-transform:uppercase;color:var(--tertiary);margin-bottom:6px}
+.sb-pick-link{display:flex;align-items:center;gap:8px;text-decoration:none;color:var(--text)}
+.sb-pick-link:hover .sb-pick-name{text-decoration:underline}
+.sb-pick-name{font-size:11px;font-weight:500;line-height:1.4}
+.sb-pick-tip{font-size:10px;color:var(--secondary);line-height:1.5;margin-top:4px;font-style:italic}
+
+/* FOOTER */
+.footer-disclaimer{font-size:9.5px;color:var(--tertiary);text-align:center;margin-top:6px;line-height:1.7;font-style:italic}
+
 /* EMPTY + FOOTER */
 .empty-state{text-align:center;padding:72px 0 96px;color:var(--tertiary);font-size:13px;line-height:2}
 footer{border-top:1px solid var(--border);padding:28px 0;display:flex;align-items:center;justify-content:space-between;margin-top:40px}
@@ -221,7 +262,7 @@ footer{border-top:1px solid var(--border);padding:28px 0;display:flex;align-item
 
 <div class="hero">
   <div class="hero-left">
-    <div class="hero-kicker">Nicole's Daily</div>
+    <div class="hero-kicker">A Daily</div>
     <h1 class="hero-title">Five things<br>worth <em>knowing.</em></h1>
     <p class="hero-sub">Surprising, sharp, and a little wicked —<br>one curiosity box per day.</p>
   </div>
@@ -254,9 +295,9 @@ footer{border-top:1px solid var(--border);padding:28px 0;display:flex;align-item
   <div>
     <div class="toolbar">
       <div class="toolbar-left">
-        <div class="toolbar-accent"></div>
         <span class="toolbar-title">Archive</span>
         <button class="star-filter-btn" id="starFilterBtn" onclick="toggleStarFilter()" title="Show starred only">&#9733;</button>
+        <button class="star-filter-btn" onclick="openRandomWonder()" title="Random wonder" style="margin-left:4px;font-size:13px;opacity:.4">&#9675;</button>
       </div>
       <div class="toolbar-right">
         <select id="filterCategory" class="filter-select" onchange="_showCount=10;renderArchive()">
@@ -283,6 +324,67 @@ footer{border-top:1px solid var(--border);padding:28px 0;display:flex;align-item
   </div>
 
   <aside class="sidebar">
+    <div class="sb-pick" id="todayPick">
+      <div class="sb-pick-label">Today&#x27;s pick</div>
+      <div id="todayPickInner"></div>
+    </div>
+      <div class="sb-section">
+        <div class="sb-heading">Deep Reading</div>
+        <a class="sb-link" href="https://aeon.co" target="_blank" rel="noopener">
+          <img class="sb-icon" src="https://www.google.com/s2/favicons?domain=aeon.co&sz=32" alt="" loading="lazy" onerror="this.style.opacity=0">
+          <span class="sb-name">Aeon</span>
+        </a>
+        <a class="sb-link" href="https://longreads.com" target="_blank" rel="noopener">
+          <img class="sb-icon" src="https://www.google.com/s2/favicons?domain=longreads.com&sz=32" alt="" loading="lazy" onerror="this.style.opacity=0">
+          <span class="sb-name">Longreads</span>
+        </a>
+        <a class="sb-link" href="https://psyche.co" target="_blank" rel="noopener">
+          <img class="sb-icon" src="https://www.google.com/s2/favicons?domain=psyche.co&sz=32" alt="" loading="lazy" onerror="this.style.opacity=0">
+          <span class="sb-name">Psyche</span>
+        </a>
+        <a class="sb-link" href="https://www.theatlantic.com/science/" target="_blank" rel="noopener">
+          <img class="sb-icon" src="https://www.google.com/s2/favicons?domain=theatlantic.com&sz=32" alt="" loading="lazy" onerror="this.style.opacity=0">
+          <span class="sb-name">The Atlantic</span>
+        </a>
+      </div>
+      <div class="sb-section">
+        <div class="sb-heading">Food &amp; Drink</div>
+        <a class="sb-link" href="https://www.bonappetit.com" target="_blank" rel="noopener">
+          <img class="sb-icon" src="https://www.google.com/s2/favicons?domain=bonappetit.com&sz=32" alt="" loading="lazy" onerror="this.style.opacity=0">
+          <span class="sb-name">Bon Appétit</span>
+        </a>
+        <a class="sb-link" href="https://www.eater.com" target="_blank" rel="noopener">
+          <img class="sb-icon" src="https://www.google.com/s2/favicons?domain=eater.com&sz=32" alt="" loading="lazy" onerror="this.style.opacity=0">
+          <span class="sb-name">Eater</span>
+        </a>
+        <a class="sb-link" href="https://food52.com" target="_blank" rel="noopener">
+          <img class="sb-icon" src="https://www.google.com/s2/favicons?domain=food52.com&sz=32" alt="" loading="lazy" onerror="this.style.opacity=0">
+          <span class="sb-name">Food52</span>
+        </a>
+        <a class="sb-link" href="https://www.seriouseats.com" target="_blank" rel="noopener">
+          <img class="sb-icon" src="https://www.google.com/s2/favicons?domain=seriouseats.com&sz=32" alt="" loading="lazy" onerror="this.style.opacity=0">
+          <span class="sb-name">Serious Eats</span>
+        </a>
+      </div>
+      <div class="sb-section">
+        <div class="sb-heading">Medical Science</div>
+        <a class="sb-link" href="https://www.mayoclinic.org" target="_blank" rel="noopener">
+          <img class="sb-icon" src="https://www.google.com/s2/favicons?domain=mayoclinic.org&sz=32" alt="" loading="lazy" onerror="this.style.opacity=0">
+          <span class="sb-name">Mayo Clinic</span>
+        </a>
+        <a class="sb-link" href="https://medlineplus.gov" target="_blank" rel="noopener">
+          <img class="sb-icon" src="https://www.google.com/s2/favicons?domain=medlineplus.gov&sz=32" alt="" loading="lazy" onerror="this.style.opacity=0">
+          <span class="sb-name">MedlinePlus (NIH)</span>
+        </a>
+        <a class="sb-link" href="https://www.nejm.org" target="_blank" rel="noopener">
+          <img class="sb-icon" src="https://www.google.com/s2/favicons?domain=nejm.org&sz=32" alt="" loading="lazy" onerror="this.style.opacity=0">
+          <span class="sb-name">New England Journal of Medicine</span>
+        </a>
+        <a class="sb-link" href="https://www.statnews.com" target="_blank" rel="noopener">
+          <img class="sb-icon" src="https://www.google.com/s2/favicons?domain=statnews.com&sz=32" alt="" loading="lazy" onerror="this.style.opacity=0">
+          <span class="sb-name">STAT News</span>
+        </a>
+      </div>
       <div class="sb-section">
         <div class="sb-heading">Museums &amp; Collections</div>
         <a class="sb-link" href="https://www.britishmuseum.org" target="_blank" rel="noopener">
@@ -323,18 +425,26 @@ footer{border-top:1px solid var(--border);padding:28px 0;display:flex;align-item
         </a>
       </div>
       <div class="sb-section">
-        <div class="sb-heading">Science &amp; Research</div>
-        <a class="sb-link" href="https://www.nature.com/news" target="_blank" rel="noopener">
-          <img class="sb-icon" src="https://www.google.com/s2/favicons?domain=nature.com&sz=32" alt="" loading="lazy" onerror="this.style.opacity=0">
-          <span class="sb-name">Nature News</span>
+        <div class="sb-heading">Nature &amp; Conservation</div>
+        <a class="sb-link" href="https://www.carbonbrief.org" target="_blank" rel="noopener">
+          <img class="sb-icon" src="https://www.google.com/s2/favicons?domain=carbonbrief.org&sz=32" alt="" loading="lazy" onerror="this.style.opacity=0">
+          <span class="sb-name">Carbon Brief</span>
         </a>
-        <a class="sb-link" href="https://nautil.us" target="_blank" rel="noopener">
-          <img class="sb-icon" src="https://www.google.com/s2/favicons?domain=nautil.us&sz=32" alt="" loading="lazy" onerror="this.style.opacity=0">
-          <span class="sb-name">Nautilus</span>
+        <a class="sb-link" href="https://www.iucnredlist.org" target="_blank" rel="noopener">
+          <img class="sb-icon" src="https://www.google.com/s2/favicons?domain=iucnredlist.org&sz=32" alt="" loading="lazy" onerror="this.style.opacity=0">
+          <span class="sb-name">IUCN Red List</span>
         </a>
-        <a class="sb-link" href="https://www.scientificamerican.com" target="_blank" rel="noopener">
-          <img class="sb-icon" src="https://www.google.com/s2/favicons?domain=scientificamerican.com&sz=32" alt="" loading="lazy" onerror="this.style.opacity=0">
-          <span class="sb-name">Scientific American</span>
+        <a class="sb-link" href="https://www.nationalgeographic.com/environment" target="_blank" rel="noopener">
+          <img class="sb-icon" src="https://www.google.com/s2/favicons?domain=nationalgeographic.com&sz=32" alt="" loading="lazy" onerror="this.style.opacity=0">
+          <span class="sb-name">National Geographic</span>
+        </a>
+        <a class="sb-link" href="https://www.nature.org/en-us/newsroom/" target="_blank" rel="noopener">
+          <img class="sb-icon" src="https://www.google.com/s2/favicons?domain=nature.org&sz=32" alt="" loading="lazy" onerror="this.style.opacity=0">
+          <span class="sb-name">The Nature Conservancy</span>
+        </a>
+        <a class="sb-link" href="https://www.worldwildlife.org/stories" target="_blank" rel="noopener">
+          <img class="sb-icon" src="https://www.google.com/s2/favicons?domain=worldwildlife.org&sz=32" alt="" loading="lazy" onerror="this.style.opacity=0">
+          <span class="sb-name">WWF Stories</span>
         </a>
       </div>
       <div class="sb-section">
@@ -357,6 +467,21 @@ footer{border-top:1px solid var(--border);padding:28px 0;display:flex;align-item
         </a>
       </div>
       <div class="sb-section">
+        <div class="sb-heading">Outdoors &amp; Adventure</div>
+        <a class="sb-link" href="https://www.alltrails.com" target="_blank" rel="noopener">
+          <img class="sb-icon" src="https://www.google.com/s2/favicons?domain=alltrails.com&sz=32" alt="" loading="lazy" onerror="this.style.opacity=0">
+          <span class="sb-name">AllTrails</span>
+        </a>
+        <a class="sb-link" href="https://www.outsideonline.com" target="_blank" rel="noopener">
+          <img class="sb-icon" src="https://www.google.com/s2/favicons?domain=outsideonline.com&sz=32" alt="" loading="lazy" onerror="this.style.opacity=0">
+          <span class="sb-name">Outside Online</span>
+        </a>
+        <a class="sb-link" href="https://www.rei.com/learn/expert-advice" target="_blank" rel="noopener">
+          <img class="sb-icon" src="https://www.google.com/s2/favicons?domain=rei.com&sz=32" alt="" loading="lazy" onerror="this.style.opacity=0">
+          <span class="sb-name">REI Expert Advice</span>
+        </a>
+      </div>
+      <div class="sb-section">
         <div class="sb-heading">Psychology Tests</div>
         <a class="sb-link" href="https://www.16personalities.com" target="_blank" rel="noopener">
           <img class="sb-icon" src="https://www.google.com/s2/favicons?domain=16personalities.com&sz=32" alt="" loading="lazy" onerror="this.style.opacity=0">
@@ -366,74 +491,28 @@ footer{border-top:1px solid var(--border);padding:28px 0;display:flex;align-item
           <img class="sb-icon" src="https://www.google.com/s2/favicons?domain=harvard.edu&sz=32" alt="" loading="lazy" onerror="this.style.opacity=0">
           <span class="sb-name">Harvard Implicit (IAT)</span>
         </a>
-        <a class="sb-link" href="https://www.idrlabs.com/tests.php" target="_blank" rel="noopener">
-          <img class="sb-icon" src="https://www.google.com/s2/favicons?domain=idrlabs.com&sz=32" alt="" loading="lazy" onerror="this.style.opacity=0">
-          <span class="sb-name">IDRlabs Tests</span>
-        </a>
         <a class="sb-link" href="https://www.authentichappiness.sas.upenn.edu/testcenter" target="_blank" rel="noopener">
           <img class="sb-icon" src="https://www.google.com/s2/favicons?domain=upenn.edu&sz=32" alt="" loading="lazy" onerror="this.style.opacity=0">
           <span class="sb-name">UPenn Authentic Happiness</span>
         </a>
-      </div>
-      <div class="sb-section">
-        <div class="sb-heading">Deep Reading</div>
-        <a class="sb-link" href="https://aeon.co" target="_blank" rel="noopener">
-          <img class="sb-icon" src="https://www.google.com/s2/favicons?domain=aeon.co&sz=32" alt="" loading="lazy" onerror="this.style.opacity=0">
-          <span class="sb-name">Aeon</span>
-        </a>
-        <a class="sb-link" href="https://longreads.com" target="_blank" rel="noopener">
-          <img class="sb-icon" src="https://www.google.com/s2/favicons?domain=longreads.com&sz=32" alt="" loading="lazy" onerror="this.style.opacity=0">
-          <span class="sb-name">Longreads</span>
-        </a>
-        <a class="sb-link" href="https://psyche.co" target="_blank" rel="noopener">
-          <img class="sb-icon" src="https://www.google.com/s2/favicons?domain=psyche.co&sz=32" alt="" loading="lazy" onerror="this.style.opacity=0">
-          <span class="sb-name">Psyche</span>
-        </a>
-        <a class="sb-link" href="https://www.theatlantic.com/science/" target="_blank" rel="noopener">
-          <img class="sb-icon" src="https://www.google.com/s2/favicons?domain=theatlantic.com&sz=32" alt="" loading="lazy" onerror="this.style.opacity=0">
-          <span class="sb-name">The Atlantic</span>
+        <a class="sb-link" href="https://www.primals.org/take-the-pi-50" target="_blank" rel="noopener">
+          <img class="sb-icon" src="https://www.google.com/s2/favicons?domain=primals.org&sz=32" alt="" loading="lazy" onerror="this.style.opacity=0">
+          <span class="sb-name">UPenn Primal World Beliefs</span>
         </a>
       </div>
       <div class="sb-section">
-        <div class="sb-heading">Nature &amp; Conservation</div>
-        <a class="sb-link" href="https://www.iucnredlist.org" target="_blank" rel="noopener">
-          <img class="sb-icon" src="https://www.google.com/s2/favicons?domain=iucnredlist.org&sz=32" alt="" loading="lazy" onerror="this.style.opacity=0">
-          <span class="sb-name">IUCN Red List</span>
+        <div class="sb-heading">Science &amp; Research</div>
+        <a class="sb-link" href="https://www.nature.com/news" target="_blank" rel="noopener">
+          <img class="sb-icon" src="https://www.google.com/s2/favicons?domain=nature.com&sz=32" alt="" loading="lazy" onerror="this.style.opacity=0">
+          <span class="sb-name">Nature News</span>
         </a>
-        <a class="sb-link" href="https://www.nationalgeographic.com/environment" target="_blank" rel="noopener">
-          <img class="sb-icon" src="https://www.google.com/s2/favicons?domain=nationalgeographic.com&sz=32" alt="" loading="lazy" onerror="this.style.opacity=0">
-          <span class="sb-name">National Geographic</span>
+        <a class="sb-link" href="https://nautil.us" target="_blank" rel="noopener">
+          <img class="sb-icon" src="https://www.google.com/s2/favicons?domain=nautil.us&sz=32" alt="" loading="lazy" onerror="this.style.opacity=0">
+          <span class="sb-name">Nautilus</span>
         </a>
-        <a class="sb-link" href="https://www.nature.org/en-us/newsroom/" target="_blank" rel="noopener">
-          <img class="sb-icon" src="https://www.google.com/s2/favicons?domain=nature.org&sz=32" alt="" loading="lazy" onerror="this.style.opacity=0">
-          <span class="sb-name">The Nature Conservancy</span>
-        </a>
-        <a class="sb-link" href="https://www.worldwildlife.org/stories" target="_blank" rel="noopener">
-          <img class="sb-icon" src="https://www.google.com/s2/favicons?domain=worldwildlife.org&sz=32" alt="" loading="lazy" onerror="this.style.opacity=0">
-          <span class="sb-name">WWF Stories</span>
-        </a>
-        <a class="sb-link" href="https://www.carbonbrief.org" target="_blank" rel="noopener">
-          <img class="sb-icon" src="https://www.google.com/s2/favicons?domain=carbonbrief.org&sz=32" alt="" loading="lazy" onerror="this.style.opacity=0">
-          <span class="sb-name">Carbon Brief</span>
-        </a>
-      </div>
-      <div class="sb-section">
-        <div class="sb-heading">Medical Science</div>
-        <a class="sb-link" href="https://www.mayoclinic.org" target="_blank" rel="noopener">
-          <img class="sb-icon" src="https://www.google.com/s2/favicons?domain=mayoclinic.org&sz=32" alt="" loading="lazy" onerror="this.style.opacity=0">
-          <span class="sb-name">Mayo Clinic</span>
-        </a>
-        <a class="sb-link" href="https://medlineplus.gov" target="_blank" rel="noopener">
-          <img class="sb-icon" src="https://www.google.com/s2/favicons?domain=medlineplus.gov&sz=32" alt="" loading="lazy" onerror="this.style.opacity=0">
-          <span class="sb-name">MedlinePlus (NIH)</span>
-        </a>
-        <a class="sb-link" href="https://www.nejm.org" target="_blank" rel="noopener">
-          <img class="sb-icon" src="https://www.google.com/s2/favicons?domain=nejm.org&sz=32" alt="" loading="lazy" onerror="this.style.opacity=0">
-          <span class="sb-name">New England Journal of Medicine</span>
-        </a>
-        <a class="sb-link" href="https://www.statnews.com" target="_blank" rel="noopener">
-          <img class="sb-icon" src="https://www.google.com/s2/favicons?domain=statnews.com&sz=32" alt="" loading="lazy" onerror="this.style.opacity=0">
-          <span class="sb-name">STAT News</span>
+        <a class="sb-link" href="https://www.scientificamerican.com" target="_blank" rel="noopener">
+          <img class="sb-icon" src="https://www.google.com/s2/favicons?domain=scientificamerican.com&sz=32" alt="" loading="lazy" onerror="this.style.opacity=0">
+          <span class="sb-name">Scientific American</span>
         </a>
       </div>
       <div class="sb-section">
@@ -459,63 +538,24 @@ footer{border-top:1px solid var(--border);padding:28px 0;display:flex;align-item
           <span class="sb-name">Roads &amp; Kingdoms</span>
         </a>
       </div>
-      <div class="sb-section">
-        <div class="sb-heading">Food &amp; Drink</div>
-        <a class="sb-link" href="https://www.bonappetit.com" target="_blank" rel="noopener">
-          <img class="sb-icon" src="https://www.google.com/s2/favicons?domain=bonappetit.com&sz=32" alt="" loading="lazy" onerror="this.style.opacity=0">
-          <span class="sb-name">Bon Appétit</span>
-        </a>
-        <a class="sb-link" href="https://www.eater.com" target="_blank" rel="noopener">
-          <img class="sb-icon" src="https://www.google.com/s2/favicons?domain=eater.com&sz=32" alt="" loading="lazy" onerror="this.style.opacity=0">
-          <span class="sb-name">Eater</span>
-        </a>
-        <a class="sb-link" href="https://food52.com" target="_blank" rel="noopener">
-          <img class="sb-icon" src="https://www.google.com/s2/favicons?domain=food52.com&sz=32" alt="" loading="lazy" onerror="this.style.opacity=0">
-          <span class="sb-name">Food52</span>
-        </a>
-        <a class="sb-link" href="https://web.archive.org/web/2017/https://luckypeach.com/" target="_blank" rel="noopener">
-          <img class="sb-icon" src="https://www.google.com/s2/favicons?domain=luckypeach.com&sz=32" alt="" loading="lazy" onerror="this.style.opacity=0">
-          <span class="sb-name">Lucky Peach Archive</span>
-        </a>
-        <a class="sb-link" href="https://www.seriouseats.com" target="_blank" rel="noopener">
-          <img class="sb-icon" src="https://www.google.com/s2/favicons?domain=seriouseats.com&sz=32" alt="" loading="lazy" onerror="this.style.opacity=0">
-          <span class="sb-name">Serious Eats</span>
-        </a>
-      </div>
-      <div class="sb-section">
-        <div class="sb-heading">Outdoors &amp; Adventure</div>
-        <a class="sb-link" href="https://www.alltrails.com" target="_blank" rel="noopener">
-          <img class="sb-icon" src="https://www.google.com/s2/favicons?domain=alltrails.com&sz=32" alt="" loading="lazy" onerror="this.style.opacity=0">
-          <span class="sb-name">AllTrails</span>
-        </a>
-        <a class="sb-link" href="https://www.backpacker.com" target="_blank" rel="noopener">
-          <img class="sb-icon" src="https://www.google.com/s2/favicons?domain=backpacker.com&sz=32" alt="" loading="lazy" onerror="this.style.opacity=0">
-          <span class="sb-name">Backpacker</span>
-        </a>
-        <a class="sb-link" href="https://gearjunkie.com" target="_blank" rel="noopener">
-          <img class="sb-icon" src="https://www.google.com/s2/favicons?domain=gearjunkie.com&sz=32" alt="" loading="lazy" onerror="this.style.opacity=0">
-          <span class="sb-name">Gear Junkie</span>
-        </a>
-        <a class="sb-link" href="https://www.outsideonline.com" target="_blank" rel="noopener">
-          <img class="sb-icon" src="https://www.google.com/s2/favicons?domain=outsideonline.com&sz=32" alt="" loading="lazy" onerror="this.style.opacity=0">
-          <span class="sb-name">Outside Online</span>
-        </a>
-        <a class="sb-link" href="https://www.rei.com/learn/expert-advice" target="_blank" rel="noopener">
-          <img class="sb-icon" src="https://www.google.com/s2/favicons?domain=rei.com&sz=32" alt="" loading="lazy" onerror="this.style.opacity=0">
-          <span class="sb-name">REI Expert Advice</span>
-        </a>
-        <a class="sb-link" href="https://thedyrt.com" target="_blank" rel="noopener">
-          <img class="sb-icon" src="https://www.google.com/s2/favicons?domain=thedyrt.com&sz=32" alt="" loading="lazy" onerror="this.style.opacity=0">
-          <span class="sb-name">The Dyrt</span>
-        </a>
-      </div>
   </aside>
 </div>
 
+<div id="funBitsRow" style="display:none;padding:32px 0 0;border-top:1px solid var(--border-lt)">
+  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:24px 40px">
+    <div class="fun-bit"><div class="fun-bit-label">Pointless wisdom</div><div class="fun-bit-text" id="dailyNonsense"></div></div>
+    <div class="fun-bit"><div class="fun-bit-label">You didn&#x27;t need to know</div><div class="fun-bit-text" id="antiCuriosity"></div></div>
+    <div class="fun-bit"><div class="fun-bit-label">Bad idea of the day</div><div class="fun-bit-text" id="historicalStupidity"></div></div>
+  </div>
+</div>
+
 <footer>
-  <span class="footer-l">Nicole's World</span>
+  <span class="footer-l"></span>
   <span class="footer-r">Made with curiosity</span>
 </footer>
+<div class="footer-disclaimer">
+  Knowledge dispersed at random velocity. Accuracy not guaranteed. Side effects may include unexpected dinner conversation topics, compulsive Googling, and a mild superiority complex. The Little Bird accepts no liability for facts retained.
+</div>
 </div>
 
 <!-- Share modal -->
@@ -534,12 +574,6 @@ footer{border-top:1px solid var(--border);padding:28px 0;display:flex;align-item
   <div class="img-modal">
     <div style="font-family:'DM Serif Display',serif;font-size:1.1rem;margin-bottom:4px">Save as image</div>
     <div style="font-size:12px;color:#999;margin-bottom:20px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis" id="imgPickerTitle"></div>
-
-    <div class="img-section-label">Language</div>
-    <div class="img-picker-grid">
-      <button class="img-picker-btn active" onclick="selectOpt(this,'lang','en')">EN English</button>
-      <button class="img-picker-btn" onclick="selectOpt(this,'lang','zh')">中文 Chinese</button>
-    </div>
 
     <div class="img-section-label">Style</div>
     <div class="img-picker-grid" id="styleGrid" style="grid-template-columns:1fr 1fr 1fr;gap:6px;margin-bottom:4px">
@@ -622,6 +656,8 @@ async function generate() {
     saveBatch(data);
     renderArchive();
     document.getElementById('archive').scrollIntoView({behavior:'smooth',block:'start'});
+    showCuriosityToast(data.items||[]);
+    feedCreature();
   } catch { showError('Network error. Please try again.'); }
   finally { btn.disabled=false; btn.textContent='Generate'; loader.classList.remove('show'); }
 }
@@ -734,10 +770,6 @@ function renderArchive() {
     card.className = 'card';
     const catColor = CAT_COLORS[item.category]||'#888';
     card.style.setProperty('--cat-color', catColor);
-    // Very faint tint: category color at 4% opacity as CSS variable
-    const hex = catColor.replace('#','');
-    const r=parseInt(hex.substr(0,2),16), g=parseInt(hex.substr(2,2),16), b=parseInt(hex.substr(4,2),16);
-    card.style.setProperty('--cat-tint', 'rgba('+r+','+g+','+b+',0.04)');
     const uid = 'c'+String(batch.id)+'_'+idx;
     _cardRegistry[uid] = item;
     card.innerHTML = buildCard(item, uid, stars.includes(uid));
@@ -773,7 +805,7 @@ function buildCard(item, uid, starred) {
       '</div>' +
     '</div>' +
     '<div class="card-title-en">'+esc(item.title_en)+'</div>' +
-    '<div class="card-title-zh">'+esc(item.title_zh)+'</div>' +
+
     '<div class="lang-tabs">' +
       '<button class="lang-tab active" onclick="switchLang(this,\'en\',\''+uid+'\')">EN</button>' +
       '<button class="lang-tab" onclick="switchLang(this,\'zh\',\''+uid+'\')">中文</button>' +
@@ -806,18 +838,36 @@ function switchLang(btn, lang, uid) {
 let _shareText = '';
 function openShareModal(item) {
   const title = item.title_en;
-  _shareText = item.emoji+' '+title+'\n\n'+item.content_en+'\n\n'+item.insight_en+'\n\n-- Curiosity Box';
+  _shareText = (item.emoji||'') + ' ' + title + '\n\n' + item.content_en + '\n\n' + item.insight_en + '\n\n— Curiosity Box';
   const encoded = encodeURIComponent(_shareText);
   const encodedUrl = encodeURIComponent('https://nicole-curiosity.vercel.app');
-  document.getElementById('shareModalSub').textContent = '"'+title+'"';
-  document.getElementById('shareModalGrid').innerHTML =
-    '<button class="modal-btn" onclick="openUrl(\'https://twitter.com/intent/tweet?text='+encoded+'\')">'+ iconX()+' Twitter / X</button>'+
-    '<button class="modal-btn" onclick="openUrl(\'https://www.facebook.com/sharer/sharer.php?u='+encodedUrl+'\')">'+ iconFacebook()+' Facebook</button>'+
-    '<button class="modal-btn" onclick="openUrl(\'https://api.whatsapp.com/send?text='+encoded+'\')">'+ iconWhatsApp()+' WhatsApp</button>'+
-    '<button class="modal-btn" onclick="openUrl(\'sms:?body='+encoded+'\')">'+ iconSMS()+' SMS</button>'+
-    '<button class="modal-btn full" onclick="doCopyShare()">'+iconCopy()+' Copy text</button>';
-  document.getElementById('shareModalNote').style.display='block';
-  document.getElementById('shareModalNote').textContent='WeChat / Instagram / Xiaohongshu: use Save as image, then share manually.';
+  document.getElementById('shareModalSub').textContent = '"' + title + '"';
+  const grid = document.getElementById('shareModalGrid');
+  grid.innerHTML = '';
+
+  function makeBtn(icon, label, url, full) {
+    const btn = document.createElement('button');
+    btn.className = 'modal-btn' + (full ? ' full' : '');
+    btn.innerHTML = icon + ' ' + label;
+    btn.addEventListener('click', function() { openUrl(url); });
+    grid.appendChild(btn);
+  }
+  function makeCopyBtn() {
+    const btn = document.createElement('button');
+    btn.className = 'modal-btn full';
+    btn.innerHTML = iconCopy() + ' Copy text';
+    btn.addEventListener('click', doCopyShare);
+    grid.appendChild(btn);
+  }
+
+  makeBtn(iconX(),        'Twitter / X', 'https://twitter.com/intent/tweet?text=' + encoded);
+  makeBtn(iconFacebook(), 'Facebook',    'https://www.facebook.com/sharer/sharer.php?u=' + encodedUrl);
+  makeBtn(iconWhatsApp(), 'WhatsApp',    'https://api.whatsapp.com/send?text=' + encoded);
+  makeBtn(iconSMS(),      'SMS',         'sms:?body=' + encoded);
+  makeCopyBtn();
+
+  document.getElementById('shareModalNote').style.display = 'block';
+  document.getElementById('shareModalNote').textContent = 'WeChat / Instagram / Xiaohongshu: use Save as image, then share manually.';
   document.getElementById('shareModal').classList.add('show');
 }
 function doCopyShare() { copyText(_shareText); }
@@ -932,7 +982,7 @@ function renderCanvas() {
     y += catSize*2.8;
 
     // Title
-    const titleText = _imgLang==='zh' ? item.title_zh : item.title_en;
+    const titleText = item.title_en;
     const titleFont = s.serif ? 'DM Serif Display, Georgia, serif' : (_imgStyle==='editorial'?'DM Sans, sans-serif':'DM Serif Display, Georgia, serif');
     const titleWeight = s.editorial ? '700' : '400';
     const titleSize = Math.round(W*0.048*scale);
@@ -940,19 +990,14 @@ function renderCanvas() {
     ctx.fillStyle=s.text;
     y = wrapText(ctx, titleText, pad, y, W-pad*2, titleSize*1.25) + titleSize*0.3;
 
-    // Subtitle (opposite language)
-    const subTitleText = _imgLang==='zh' ? item.title_en : item.title_zh;
-    const subSize = Math.round(W*0.02*scale);
-    ctx.font='300 '+subSize+'px DM Sans, sans-serif';
-    ctx.fillStyle=s.sub;
-    ctx.fillText(subTitleText, pad, y);
-    y += subSize*3.0;
+    // Gap after title
+    y += Math.round(W*0.02*scale)*1.5;
 
     // Divider
     ctx.fillStyle=s.lineColor||s.border; ctx.fillRect(pad,y,W-pad*2,1); y+=W*0.032;
 
     // Content
-    const contentText = _imgLang==='zh' ? item.content_zh : item.content_en;
+    const contentText = item.content_en;
     const bodySize = Math.round(W*0.028*scale);
     const bodyFont = s.serif ? 'DM Serif Display, Georgia, serif' : 'DM Sans, sans-serif';
     ctx.font='300 '+bodySize+'px '+bodyFont;
@@ -964,7 +1009,7 @@ function renderCanvas() {
     ctx.fillStyle=s.lineColor||s.border; ctx.fillRect(pad,y,W-pad*2,1); y+=W*0.025;
 
     // Insight
-    const insightText = _imgLang==='zh' ? item.insight_zh : item.insight_en;
+    const insightText = item.insight_en;
     const insightSize = Math.round(W*0.025*scale);
     ctx.font='italic 400 '+insightSize+'px DM Serif Display, Georgia, serif';
     ctx.fillStyle=s.sub;
@@ -1001,7 +1046,7 @@ function renderCanvas() {
   ctx.fillStyle=s.sub;
   ctx.font='400 '+footSize+'px DM Sans, sans-serif';
   ctx.fillText('Curiosity Box', pad, footY+footSize);
-  ctx.textAlign='right'; ctx.fillText("Nicole's Daily", W-pad, footY+footSize);
+  ctx.textAlign='right'; ctx.fillText('The Little Bird', W-pad, footY+footSize);
   ctx.textAlign='left'; ctx.globalAlpha=1;
 }
 
@@ -1040,7 +1085,172 @@ function iconWhatsApp() { return '<svg viewBox="0 0 24 24" width="16" height="16
 function iconSMS()      { return '<svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H6l-2 2V4h16v12z"/></svg>'; }
 function iconCopy()     { return '<svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>'; }
 
+// ── TODAY'S PICK ──────────────────────────────────────
+const PICKS = [
+  {name:"Atlas Obscura",url:"https://www.atlasobscura.com",tip:"The world's most curious corners, catalogued obsessively."},
+  {name:"Aeon",url:"https://aeon.co",tip:"Philosophy and science, beautifully written."},
+  {name:"IUCN Red List",url:"https://www.iucnredlist.org",tip:"The definitive record of what's disappearing."},
+  {name:"Carbon Brief",url:"https://www.carbonbrief.org",tip:"Climate data, no panic — just evidence."},
+  {name:"Nautilus",url:"https://nautil.us",tip:"Science told as story, not as textbook."},
+  {name:"Outside Online",url:"https://www.outsideonline.com",tip:"Adventure writing worth reading even if you stay inside."},
+  {name:"Roads & Kingdoms",url:"https://roadsandkingdoms.com",tip:"Food, politics, and travel braided together."},
+  {name:"Mayo Clinic",url:"https://www.mayoclinic.org",tip:"Medical truth, written for humans."},
+  {name:"Psyche",url:"https://psyche.co",tip:"The mind, examined slowly and generously."},
+  {name:"Smithsonian Magazine",url:"https://www.smithsonianmag.com",tip:"History, science, art — reliably good."},
+];
+
+function initTodayPick() {
+  const idx = new Date().getDate() % PICKS.length;
+  const p = PICKS[idx];
+  const el = document.getElementById('todayPickInner');
+  if (!el) return;
+  el.innerHTML = '<a class="sb-pick-link" href="'+p.url+'" target="_blank" rel="noopener"><span class="sb-pick-name">'+p.name+'</span></a><div class="sb-pick-tip">'+p.tip+'</div>';
+}
+
+// ── DAILY FUN BITS ────────────────────────────────────
+const NONSENSE = [
+  "Every second, you are technically arriving somewhere slightly earlier than you were a second ago.",
+  'The concept of "before breakfast" assumes you have had breakfast, which remains unverified.',
+  "Silence, if examined closely enough, turns out to contain a great deal of nothing.",
+  "A locked door is simply an unlocked door with higher expectations.",
+  "The present moment has already become the past. This sentence included.",
+  "Nothing is truly lost. It is merely in a location you have not checked yet.",
+  "A plan is a future event that has not yet decided whether to cooperate.",
+  'The word "obvious" is most commonly used by people explaining things that are not.',
+  "Every expert was once a beginner who simply refused to stop being confused.",
+  "Time flies, but it does not file a flight plan.",
+];
+const ANTI_CURIOSITY = [
+  "Honey never spoils. Neither does your sense of regret about that haircut.",
+  "A group of flamingos is called a flamboyance. You will never use this information.",
+  "Cleopatra lived closer in time to the Moon landing than to the construction of the Great Pyramid.",
+  "The inventor of the Frisbee was turned into a Frisbee after he died. (This is true.)",
+  "Bananas are berries. Strawberries are not. Botany has stopped apologising.",
+  "Oxford University is older than the Aztec Empire. Medieval exams probably also felt eternal.",
+  "Wombats produce cube-shaped droppings. No one commissioned this.",
+  "A day on Venus is longer than a year on Venus. Venus is not optimised for calendars.",
+  "The average cloud weighs about 500,000 kg. The sky is lying about being light.",
+  "Sea otters hold hands while sleeping so they don't drift apart. You are welcome for that.",
+];
+const STUPID_HISTORY = [
+  "1788: French soldiers were issued red trousers that could be spotted from 400 metres. The logic remains unclear.",
+  "1919: The Great Molasses Flood of Boston killed 21 people. Speed: 35 mph. The city smelled of syrup for years.",
+  "1962: The US military proposed Operation Northwoods — faking a Cuban attack on America. Kennedy said no.",
+  "1999: NASA's Mars Climate Orbiter crashed because one team used metric units and another used imperial. $327 million.",
+  "1788: Australia's first European settlers brought 29 sheep, 7 horses, and a brass band. Priorities noted.",
+  "1939: Britain considered dropping boxes of poisonous snakes on Germany. The plan was abandoned, presumably.",
+  "1631: A printer's error removed 'not' from the commandment. 1,000 Bibles were recalled.",
+  "1962: Coca-Cola launched in Ghana with the slogan Life begins with Coke — a slight overstatement.",
+  "1941: Mussolini declared war on the United States. His generals heard about it on the radio.",
+  "1974: A law was passed in Hartford, Connecticut, making it illegal to educate your dog. It remains on the books.",
+];
+
+function initFunBits() {
+  const d = new Date();
+  const seed = d.getFullYear()*1000 + d.getMonth()*31 + d.getDate();
+  const pick = (arr) => arr[seed % arr.length];
+  const n = document.getElementById('dailyNonsense');
+  const a = document.getElementById('antiCuriosity');
+  const s = document.getElementById('historicalStupidity');
+  if (n) n.textContent = pick(NONSENSE);
+  if (a) a.textContent = pick(ANTI_CURIOSITY);
+  if (s) s.textContent = pick(STUPID_HISTORY);
+  const row = document.getElementById('funBitsRow');
+  if (row) row.style.display = 'block';
+}
+
+// ── RANDOM WONDER ─────────────────────────────────────
+function openRandomWonder() {
+  const batches = loadBatches();
+  const all = batches.flatMap(b => (b.items||[]).map(item => item));
+  if (!all.length) { alert('Generate some wonders first!'); return; }
+  const item = all[Math.floor(Math.random()*all.length)];
+  const catColor = CAT_COLORS[item.category]||'#888';
+  document.getElementById('wonderCat').textContent = item.category.toUpperCase();
+  document.getElementById('wonderCat').style.color = catColor;
+  document.getElementById('wonderTitle').textContent = item.title_en;
+  document.getElementById('wonderBody').textContent = item.content_en;
+  document.getElementById('wonderInsight').textContent = item.insight_en;
+  document.getElementById('wonderOverlay').classList.add('show');
+  document.body.style.overflow = 'hidden';
+}
+function closeWonder() {
+  document.getElementById('wonderOverlay').classList.remove('show');
+  document.body.style.overflow = '';
+}
+document.addEventListener('keydown', e => { if(e.key==='Escape') closeWonder(); });
+
+// ── CURIOSITY TOAST ───────────────────────────────────
+function showCuriosityToast(items) {
+  if (!items.length) return;
+  const cats = items.map(i => i.category).filter(Boolean);
+  const counts = {};
+  cats.forEach(c => counts[c]=(counts[c]||0)+1);
+  const sorted = Object.entries(counts).sort((a,b)=>b[1]-a[1]);
+  let phrase = '';
+  if (sorted.length === 1) {
+    phrase = sorted[0][0].toLowerCase();
+  } else if (sorted.length === 2) {
+    phrase = sorted[0][0].toLowerCase() + ' and ' + sorted[1][0].toLowerCase();
+  } else {
+    const top = sorted.slice(0,2);
+    phrase = top[0][0].toLowerCase() + ', ' + top[1][0].toLowerCase() + ' and the strange in-between';
+  }
+  const toast = document.getElementById('curiosityToast');
+  toast.textContent = 'Your curiosity today leaned towards ' + phrase + '.';
+  toast.classList.add('show');
+  setTimeout(() => toast.classList.remove('show'), 4200);
+}
+
+// ── CREATURE ──────────────────────────────────────────
+let _creatureSize = 12;
+const CREATURE_KEY = 'ncb_creature_v1';
+function initCreature() {
+  try { _creatureSize = parseInt(localStorage.getItem(CREATURE_KEY)||'12'); } catch {}
+  _creatureSize = Math.min(Math.max(_creatureSize, 12), 52);
+  updateCreature();
+}
+function feedCreature() {
+  _creatureSize = Math.min(_creatureSize + 3, 52);
+  try { localStorage.setItem(CREATURE_KEY, String(_creatureSize)); } catch {}
+  const c = document.getElementById('creature');
+  if (!c) return;
+  c.classList.add('fed');
+  updateCreature();
+  setTimeout(() => c.classList.remove('fed'), 800);
+}
+function updateCreature() {
+  const c = document.getElementById('creature');
+  if (!c) return;
+  c.style.width = _creatureSize + 'px';
+  c.style.height = _creatureSize + 'px';
+  c.style.opacity = (0.15 + (_creatureSize-12)/130).toFixed(2);
+}
+
+// ── INIT ──────────────────────────────────────────────
+initTodayPick();
+initFunBits();
+initCreature();
+
+
 renderArchive();
 </script>
+<div class="creature-wrap"><div class="creature" id="creature" title=""></div></div>
+
+<!-- Random Wonder overlay -->
+<div class="wonder-overlay" id="wonderOverlay">
+  <div class="wonder-card">
+    <button class="wonder-close" onclick="closeWonder()">&#215;</button>
+    <div class="wonder-cat" id="wonderCat"></div>
+    <div class="wonder-title" id="wonderTitle"></div>
+    <div class="wonder-body" id="wonderBody"></div>
+    <div class="wonder-insight" id="wonderInsight"></div>
+    <button class="wonder-again" onclick="openRandomWonder()">&#9675; Another one</button>
+  </div>
+</div>
+
+<!-- Toast -->
+<div class="curiosity-toast" id="curiosityToast"></div>
+
 </body>
 </html>
