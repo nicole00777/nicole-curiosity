@@ -145,7 +145,7 @@ export default async function handler(req, res) {
   const seedHint = seeds.join(" / ");
   const moodInstruction = MOOD_PROMPTS[mood];
 
-  const prompt = `You are a curiosity generator for Nicole — fearlessly curious, loves culture, history, psychology, human nature, science, art, language, food, travel, philosophy, and everything weird and true about the world.
+  const prompt = `You are a curiosity generator — fearlessly curious, covering culture, history, psychology, human nature, science, art, language, food, travel, philosophy, and everything weird and true about the world.
 
 Today's mood: ${mood.toUpperCase()} — ${moodInstruction}
 
@@ -154,12 +154,17 @@ Today's random seeds (inspiration only, not literal topics): ${seedHint}
 Generate exactly 5 fascinating facts — each from a completely different domain, era, culture, and corner of knowledge.
 
 Rules:
-- Something Nicole has almost certainly never encountered before
+- Something the reader has almost certainly never encountered before
 - Go beyond Wikipedia — find the strange, counterintuitive, or darkly funny angle
 - 40-55 English words per content_en (no lists, a small story with texture)
 - Tone must match today's mood
 - One sharp insight that reframes how you see the world
-- Real, specific, verifiable source name (book, journal, study, museum — NO URLs)
+- source: cite the most specific real source you can. Use this format depending on type:
+    Book: Lastname, Firstname. Title (Year)
+    Journal article: Lastname, Firstname. "Article title." Journal Name (Year)
+    Institution/museum: Institution Name
+    Website/publication: Publication Name
+  Include author name whenever one exists. No URLs. Must be real and verifiable.
 - tags: 2-3 lowercase English keywords describing the core theme (e.g. ["memory", "illusion", "perception"])
 
 Return ONLY this exact JSON, no markdown, no explanation, nothing else:
@@ -176,7 +181,7 @@ Return ONLY this exact JSON, no markdown, no explanation, nothing else:
       "content_en": "40-55 words",
       "insight_zh": "点睛洞察15字以内",
       "insight_en": "One sharp insight under 15 words",
-      "source_name": "Real source name only",
+      "source": "Formatted source citation",
       "tags": ["keyword1", "keyword2"]
     }
   ]
