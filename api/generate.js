@@ -86,7 +86,7 @@ export default async function handler(req, res) {
 
   const prompt = `You are a curiosity generator for Nicole — a highly open, intellectually adventurous person who loves culture, history, psychology, human nature, natural science, art, aesthetics, language, food, travel, and philosophy.
 
-Generate exactly 5 fascinating facts — each from a completely different domain.
+Generate exactly 5 fascinating facts — each from a completely different domain. Every generation must feel fresh and surprising — never repeat topics, regions, eras, or disciplines you've used before. Actively seek out the obscure, the counterintuitive, and the delightfully weird corners of human knowledge.
 
 Each fact must:
 - Feel genuinely surprising and non-obvious
@@ -116,7 +116,7 @@ Return ONLY raw valid JSON, no markdown fences, no explanation:
   ]
 }
 
-Forbidden: repetitive topics, surface facts, motivational content, fabricated sources, any text outside the JSON.`;
+Forbidden: repetitive topics, surface facts, motivational content, fabricated sources, any text outside the JSON, anything that feels like a "typical fun fact", safe or predictable choices.`;
 
   try {
     const upstream = await fetch("https://api.anthropic.com/v1/messages", {
@@ -129,6 +129,7 @@ Forbidden: repetitive topics, surface facts, motivational content, fabricated so
       body: JSON.stringify({
         model: CLAUDE_MODEL,
         max_tokens: 2500,
+        temperature: 1.0,
         messages: [{ role: "user", content: prompt }],
       }),
     });
