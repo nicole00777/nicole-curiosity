@@ -4,248 +4,317 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="referrer" content="no-referrer">
-<title>Curiosity Box</title>
+<title>Curiosity Box — Nicole's Daily</title>
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #fafaf8;
-    --white: #ffffff;
-    --text: #1a1a1a;
-    --muted: #8a8a8a;
-    --light: #c8c8c4;
-    --border: #ebebeb;
-    --tag-bg: #f2f2f0;
+    --bg:        #f5f4f0;
+    --surface:   #ffffff;
+    --text:      #111111;
+    --secondary: #555555;
+    --tertiary:  #999999;
+    --border:    #e4e3de;
+    --border-lt: #eeedea;
+
+    /* Category palette — dusty, refined */
+    --psychology:  #6b8fa8;
+    --history:     #a07850;
+    --nature:      #5f8c6e;
+    --culture:     #8a6fa8;
+    --philosophy:  #4a7a9b;
+    --language:    #b08040;
+    --food:        #b86848;
+    --art:         #9060a0;
+    --science:     #3a7090;
+    --folklore:    #708050;
+    --default:     #888888;
+
+    --radius: 12px;
+    --radius-sm: 8px;
   }
 
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  html { font-size: 16px; }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { font-size: 16px; scroll-behavior: smooth; }
 
   body {
     background: var(--bg);
     color: var(--text);
-    font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-family: 'DM Sans', -apple-system, sans-serif;
     font-weight: 300;
     min-height: 100vh;
     -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 
-  .container {
-    max-width: 680px;
+  /* ═══════════════════════════════
+     LAYOUT
+  ═══════════════════════════════ */
+  .page {
+    max-width: 960px;
     margin: 0 auto;
-    padding: 0 24px;
+    padding: 0 40px;
   }
 
-  /* ── NAV ── */
+  /* ═══════════════════════════════
+     NAV
+  ═══════════════════════════════ */
   nav {
-    padding: 32px 0 0;
     display: flex;
     align-items: center;
     justify-content: space-between;
+    padding: 28px 0;
+    border-bottom: 1px solid var(--border);
   }
 
   .nav-logo {
     font-family: 'DM Serif Display', serif;
-    font-size: 1.05rem;
+    font-size: 1rem;
+    font-weight: 400;
     color: var(--text);
+    letter-spacing: 0.3px;
   }
 
-  .clear-btn {
-    font-family: 'DM Sans', sans-serif;
+  .nav-right {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+  }
+
+  .nav-link {
     font-size: 12px;
-    color: var(--light);
+    font-weight: 400;
+    color: var(--tertiary);
     background: none;
     border: none;
     cursor: pointer;
+    letter-spacing: 0.5px;
     transition: color 0.15s;
     display: none;
   }
 
-  .clear-btn:hover { color: #c0392b; }
-  .clear-btn.show { display: inline-block; }
+  .nav-link:hover { color: var(--text); }
+  .nav-link.danger:hover { color: #c0392b; }
+  .nav-link.show { display: inline; }
 
-  /* ── HEADER ── */
-  .page-header {
-    padding: 72px 0 40px;
+  /* ═══════════════════════════════
+     HERO
+  ═══════════════════════════════ */
+  .hero {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    padding: 72px 0 64px;
     border-bottom: 1px solid var(--border);
-    margin-bottom: 28px;
+    align-items: end;
   }
 
-  .eyebrow {
-    font-size: 11px;
-    letter-spacing: 2.5px;
+  .hero-left {}
+
+  .hero-kicker {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 3.5px;
     text-transform: uppercase;
-    color: var(--muted);
-    margin-bottom: 20px;
-    font-weight: 400;
+    color: var(--tertiary);
+    margin-bottom: 24px;
   }
 
-  h1 {
+  .hero-title {
     font-family: 'DM Serif Display', serif;
-    font-size: clamp(2.4rem, 5vw, 3.6rem);
+    font-size: clamp(2.8rem, 4.5vw, 4.2rem);
     font-weight: 400;
-    line-height: 1.1;
+    line-height: 1.06;
     letter-spacing: -0.5px;
     color: var(--text);
-    margin-bottom: 16px;
+    margin-bottom: 20px;
   }
 
-  h1 em { font-style: italic; color: var(--muted); }
-
-  .tagline {
-    font-size: 15px;
-    color: var(--muted);
-    font-weight: 300;
-    line-height: 1.6;
-    max-width: 420px;
-    margin-bottom: 32px;
+  .hero-title em {
+    font-style: italic;
+    color: var(--secondary);
   }
 
-  /* ── GENERATE AREA ── */
-  .gen-area {
+  .hero-sub {
+    font-size: 14px;
+    color: var(--secondary);
+    line-height: 1.75;
+    max-width: 320px;
+  }
+
+  .hero-right {
     display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 12px;
+    padding-bottom: 4px;
+  }
+
+  .gen-row {
+    display: flex;
+    gap: 8px;
     align-items: center;
-    gap: 10px;
-    flex-wrap: wrap;
+    width: 100%;
+    justify-content: flex-end;
   }
 
   .password-input {
     font-family: 'DM Sans', sans-serif;
-    font-size: 14px;
+    font-size: 13px;
     font-weight: 300;
     color: var(--text);
-    background: var(--white);
+    background: var(--surface);
     border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 10px 16px;
-    width: 160px;
+    border-radius: var(--radius-sm);
+    padding: 11px 16px;
+    width: 148px;
     outline: none;
-    transition: border-color 0.15s;
+    transition: border-color 0.2s;
   }
 
-  .password-input::placeholder { color: var(--light); }
-  .password-input:focus { border-color: var(--text); }
+  .password-input::placeholder { color: #ccc; }
+  .password-input:focus { border-color: #888; }
 
   .gen-btn {
     font-family: 'DM Sans', sans-serif;
-    font-size: 14px;
+    font-size: 12px;
     font-weight: 500;
+    letter-spacing: 0.5px;
     background: var(--text);
-    color: var(--white);
+    color: #fff;
     border: none;
-    border-radius: 8px;
-    padding: 11px 24px;
+    border-radius: var(--radius-sm);
+    padding: 12px 24px;
     cursor: pointer;
-    transition: opacity 0.15s;
+    transition: background 0.18s, transform 0.1s;
     white-space: nowrap;
   }
 
-  .gen-btn:hover { opacity: 0.75; }
-  .gen-btn:active { opacity: 0.6; }
-  .gen-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+  .gen-btn:hover { background: #2a2a2a; transform: translateY(-1px); }
+  .gen-btn:active { transform: translateY(0px); }
+  .gen-btn:disabled { opacity: 0.28; cursor: not-allowed; transform: none; }
 
   .error-msg {
-    width: 100%;
-    font-size: 13px;
+    font-size: 12px;
     color: #c0392b;
     min-height: 16px;
+    text-align: right;
+    width: 100%;
   }
 
-  /* ── LOADING ── */
-  .loading { display: none; padding: 44px 0 14px; text-align: center; }
+  /* ═══════════════════════════════
+     LOADING
+  ═══════════════════════════════ */
+  .loading {
+    display: none;
+    padding: 48px 0 16px;
+    text-align: center;
+  }
+
   .loading.show { display: block; }
 
-  .loading-bar {
-    width: 48px; height: 2px;
+  .loading-track {
+    width: 36px;
+    height: 1px;
     background: var(--border);
-    border-radius: 2px;
-    margin: 0 auto 18px;
+    margin: 0 auto 16px;
     overflow: hidden;
     position: relative;
   }
 
-  .loading-bar::after {
+  .loading-track::after {
     content: '';
-    position: absolute; left: -100%; width: 100%; height: 100%;
+    position: absolute;
+    left: -100%; width: 100%; height: 100%;
     background: var(--text);
-    animation: slide 1s ease-in-out infinite;
+    animation: sweep 1s ease-in-out infinite;
   }
 
-  .loading-text { font-size: 13px; color: var(--muted); font-weight: 300; }
+  .loading-label {
+    font-size: 11px;
+    color: var(--tertiary);
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+  }
 
-  /* ── ARCHIVE BAR ── */
-  .archive-bar {
+  /* ═══════════════════════════════
+     ARCHIVE TOOLBAR
+  ═══════════════════════════════ */
+  .toolbar {
     display: flex;
-    align-items: flex-end;
-    justify-content: space-between;
-    gap: 16px;
-    margin: 10px 0 28px;
-    padding-bottom: 14px;
-    border-bottom: 1px solid var(--border);
-  }
-
-  .archive-title {
-    font-family: 'DM Serif Display', serif;
-    font-size: 1.1rem;
-    color: var(--text);
-    margin-bottom: 2px;
-  }
-
-  .archive-sub {
-    font-size: 12px;
-    color: var(--muted);
-  }
-
-  .archive-right {
-    display: flex;
-    gap: 10px;
     align-items: center;
+    justify-content: space-between;
+    padding: 28px 0 24px;
+    gap: 16px;
     flex-wrap: wrap;
-    justify-content: flex-end;
+  }
+
+  .toolbar-left {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--tertiary);
+  }
+
+  .toolbar-right {
+    display: flex;
+    gap: 8px;
+    align-items: center;
   }
 
   .filter-select, .filter-input {
     font-family: 'DM Sans', sans-serif;
-    font-size: 13px;
+    font-size: 12px;
+    font-weight: 300;
     color: var(--text);
-    background: var(--white);
+    background: var(--surface);
     border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 10px 12px;
+    border-radius: var(--radius-sm);
+    padding: 8px 12px;
     outline: none;
+    transition: border-color 0.15s;
   }
 
-  .filter-input { width: 200px; }
-  .filter-select:focus, .filter-input:focus { border-color: var(--text); }
+  .filter-input { width: 180px; }
+  .filter-select:focus, .filter-input:focus { border-color: #888; }
 
-  /* ── DATE SECTION HEADER ── */
-  .section-header {
+  /* ═══════════════════════════════
+     DATE GROUP
+  ═══════════════════════════════ */
+  .date-group {
+    margin-bottom: 60px;
+    animation: riseIn 0.4s ease both;
+  }
+
+  .group-header {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-bottom: 24px;
     padding-bottom: 14px;
+    margin-bottom: 16px;
     border-bottom: 1px solid var(--border);
   }
 
-  .section-date {
-    font-size: 11px;
-    letter-spacing: 2px;
+  .group-date {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 2.5px;
     text-transform: uppercase;
-    color: var(--muted);
-    font-weight: 400;
+    color: var(--tertiary);
   }
 
-  .section-meta {
+  .group-meta {
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 14px;
     font-size: 11px;
-    color: var(--light);
+    color: var(--tertiary);
   }
 
-  .section-delete {
+  .group-delete {
     font-size: 11px;
-    color: var(--light);
+    color: var(--tertiary);
     background: none;
     border: none;
     cursor: pointer;
@@ -254,148 +323,202 @@
     padding: 0;
   }
 
-  .section-delete:hover { color: #c0392b; }
+  .group-delete:hover { color: #c0392b; }
 
-  /* ── DATE GROUP ── */
-  .date-group {
-    margin-bottom: 64px;
-    animation: fadeUp 0.4s ease both;
+  /* ═══════════════════════════════
+     CARDS — 2-column grid
+  ═══════════════════════════════ */
+  .cards-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
   }
 
-  /* ── CARDS ── */
+  /* First card spans full width */
+  .cards-grid .card:first-child {
+    grid-column: 1 / -1;
+  }
+
   .card {
-    background: var(--white);
+    background: var(--surface);
     border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 32px;
-    margin-bottom: 12px;
-    transition: box-shadow 0.2s;
+    border-radius: var(--radius);
+    padding: 24px;
+    position: relative;
+    overflow: hidden;
+    transition: box-shadow 0.2s, transform 0.18s;
+    cursor: default;
   }
 
-  .card:hover { box-shadow: 0 4px 24px rgba(0,0,0,0.05); }
+  .card:hover {
+    box-shadow: 0 8px 32px rgba(0,0,0,0.07);
+    transform: translateY(-2px);
+  }
 
-  .card-top {
+  /* Top accent bar — category color */
+  .card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: var(--cat-color, var(--default));
+    opacity: 0.7;
+  }
+
+  .card-header {
     display: flex;
-    align-items: flex-start;
+    align-items: center;
     justify-content: space-between;
-    margin-bottom: 18px;
+    margin-bottom: 14px;
   }
 
-  .card-left { display: flex; align-items: center; gap: 10px; }
-  .card-emoji { font-size: 20px; line-height: 1; }
+  .card-meta {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+  }
+
+  .card-emoji { font-size: 16px; line-height: 1; }
 
   .card-cat {
-    font-size: 11px;
+    font-size: 9px;
     font-weight: 500;
-    letter-spacing: 1.5px;
+    letter-spacing: 2px;
     text-transform: uppercase;
-    color: var(--muted);
+    color: var(--cat-color, var(--default));
   }
 
   .card-num {
-    font-size: 11px;
-    color: var(--light);
-    letter-spacing: 1px;
+    font-size: 10px;
+    color: var(--border);
+    letter-spacing: 0.5px;
   }
 
   .card-title-en {
     font-family: 'DM Serif Display', serif;
-    font-size: 1.3rem;
+    font-size: 1.15rem;
     font-weight: 400;
     line-height: 1.3;
     color: var(--text);
-    margin-bottom: 4px;
-    letter-spacing: -0.2px;
+    margin-bottom: 3px;
+    letter-spacing: -0.1px;
+  }
+
+  /* full-width first card gets bigger title */
+  .card:first-child .card-title-en {
+    font-size: 1.45rem;
   }
 
   .card-title-zh {
-    font-size: 13px;
-    color: var(--muted);
-    margin-bottom: 20px;
+    font-size: 11px;
+    color: var(--tertiary);
+    margin-bottom: 16px;
     font-weight: 300;
   }
 
+  /* lang toggle */
   .lang-tabs {
-    display: flex;
-    gap: 2px;
-    margin-bottom: 16px;
-    background: var(--tag-bg);
-    border-radius: 7px;
-    padding: 3px;
-    width: fit-content;
+    display: inline-flex;
+    gap: 1px;
+    margin-bottom: 12px;
+    background: #f0efeb;
+    border-radius: 6px;
+    padding: 2px;
   }
 
   .lang-tab {
     font-family: 'DM Sans', sans-serif;
-    font-size: 12px;
-    padding: 4px 14px;
+    font-size: 10px;
+    font-weight: 400;
+    letter-spacing: 0.5px;
+    padding: 4px 12px;
     border-radius: 5px;
     border: none;
     background: none;
-    color: var(--muted);
+    color: var(--tertiary);
     cursor: pointer;
     transition: all 0.15s;
   }
 
   .lang-tab.active {
-    background: var(--white);
+    background: var(--surface);
     color: var(--text);
-    box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.08);
   }
 
   .content-block { display: none; }
   .content-block.active { display: block; animation: fadeIn 0.2s ease both; }
 
   .card-content {
-    font-size: 15px;
-    color: #444;
+    font-size: 13.5px;
+    color: #2a2a2a;
     line-height: 1.85;
-    margin-bottom: 16px;
+    margin-bottom: 12px;
     font-weight: 300;
   }
 
   .card-insight {
-    font-size: 13.5px;
-    color: var(--muted);
+    font-size: 12.5px;
+    color: var(--secondary);
     font-style: italic;
     line-height: 1.65;
-    padding-top: 16px;
-    border-top: 1px solid var(--border);
-    margin-bottom: 16px;
+    padding-top: 12px;
+    border-top: 1px solid var(--border-lt);
+    margin-bottom: 12px;
+    font-family: 'DM Serif Display', serif;
+    font-weight: 400;
   }
 
   .card-source {
-    font-size: 12px;
-    color: var(--light);
+    font-size: 10.5px;
+    color: var(--tertiary);
   }
 
-  .card-source span {
-    color: var(--muted);
-  }
+  .card-source span { font-style: italic; }
 
-  /* ── EMPTY STATE ── */
+  /* ═══════════════════════════════
+     EMPTY STATE
+  ═══════════════════════════════ */
   .empty-state {
     text-align: center;
-    padding: 64px 0 80px;
-    color: var(--muted);
-    font-size: 14px;
+    padding: 72px 0 96px;
+    color: var(--tertiary);
+    font-size: 13px;
     font-weight: 300;
-    line-height: 1.8;
+    line-height: 2;
   }
 
-  /* ── FOOTER ── */
+  /* ═══════════════════════════════
+     FOOTER
+  ═══════════════════════════════ */
   footer {
     border-top: 1px solid var(--border);
     padding: 28px 0;
-    font-size: 12px;
-    color: var(--light);
-    letter-spacing: 0.5px;
-    margin-top: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 40px;
   }
 
-  /* ── ANIMATIONS ── */
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(12px); }
+  .footer-l {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--tertiary);
+  }
+
+  .footer-r {
+    font-size: 10px;
+    color: var(--border);
+    letter-spacing: 1px;
+  }
+
+  /* ═══════════════════════════════
+     ANIMATIONS
+  ═══════════════════════════════ */
+  @keyframes riseIn {
+    from { opacity: 0; transform: translateY(14px); }
     to   { opacity: 1; transform: translateY(0); }
   }
 
@@ -404,61 +527,94 @@
     to   { opacity: 1; }
   }
 
-  @keyframes slide {
+  @keyframes sweep {
     0%   { left: -100%; }
     100% { left: 100%; }
   }
 
-  @media (max-width: 600px) {
-    .card { padding: 22px 18px; }
-    h1 { font-size: 2.2rem; }
-    .gen-area { flex-direction: column; align-items: flex-start; }
-    .password-input { width: 100%; }
-    .archive-bar { align-items: flex-start; flex-direction: column; }
-    .archive-right { width: 100%; justify-content: flex-start; }
+  /* ═══════════════════════════════
+     RESPONSIVE
+  ═══════════════════════════════ */
+  @media (max-width: 720px) {
+    .page { padding: 0 20px; }
+
+    .hero {
+      grid-template-columns: 1fr;
+      gap: 40px;
+      padding: 48px 0 40px;
+    }
+
+    .hero-right {
+      align-items: flex-start;
+    }
+
+    .gen-row { justify-content: flex-start; }
+
+    .cards-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .card:first-child {
+      grid-column: auto;
+    }
+
+    .card:first-child .card-title-en {
+      font-size: 1.15rem;
+    }
+
+    .toolbar { flex-direction: column; align-items: flex-start; }
+    .toolbar-right { flex-wrap: wrap; }
     .filter-input { width: 100%; }
+
+    footer { flex-direction: column; gap: 6px; }
   }
 </style>
 </head>
 
 <body>
-<div class="container">
+<div class="page">
+
+  <!-- NAV -->
   <nav>
     <span class="nav-logo">Curiosity Box</span>
-    <button class="clear-btn" id="clearBtn" onclick="clearAll()">Clear all</button>
+    <div class="nav-right">
+      <button class="nav-link danger" id="clearBtn" onclick="clearAll()">Clear all</button>
+    </div>
   </nav>
 
-  <div class="page-header">
-    <div class="eyebrow">Nicole's Daily</div>
-    <h1>Five things<br>worth <em>knowing.</em></h1>
-    <p class="tagline">Surprising, sharp, and a little wicked — one curiosity box per day.</p>
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-left">
+      <div class="hero-kicker">Nicole's Daily</div>
+      <h1 class="hero-title">Five things<br>worth <em>knowing.</em></h1>
+      <p class="hero-sub">Surprising, sharp, and a little wicked —<br>one curiosity box per day.</p>
+    </div>
 
-    <div class="gen-area">
-      <input
-        type="password"
-        class="password-input"
-        id="passwordInput"
-        placeholder="Password"
-        onkeydown="if(event.key==='Enter') generate()"
-      />
-      <button class="gen-btn" id="genBtn" onclick="generate()">Generate</button>
+    <div class="hero-right">
+      <div class="gen-row">
+        <input
+          type="password"
+          class="password-input"
+          id="passwordInput"
+          placeholder="Password"
+          onkeydown="if(event.key==='Enter') generate()"
+        />
+        <button class="gen-btn" id="genBtn" onclick="generate()">Generate</button>
+      </div>
       <div class="error-msg" id="errorMsg"></div>
     </div>
   </div>
 
-  <!-- Loading -->
+  <!-- LOADING -->
   <div class="loading" id="loading">
-    <div class="loading-bar"></div>
-    <p class="loading-text">Collecting wonders…</p>
+    <div class="loading-track"></div>
+    <p class="loading-label">Collecting wonders</p>
   </div>
 
-  <!-- Archive controls -->
-  <div class="archive-bar">
-    <div>
-      <div class="archive-title">Archive</div>
-      <div class="archive-sub">Saved in this browser · newest first</div>
-    </div>
-    <div class="archive-right">
+  <!-- TOOLBAR -->
+  <div class="toolbar">
+    <span class="toolbar-left">Archive</span>
+    <div class="toolbar-right">
       <select id="filterCategory" class="filter-select" onchange="renderArchive()">
         <option value="ALL">All categories</option>
         <option value="Psychology">Psychology</option>
@@ -482,24 +638,41 @@
     </div>
   </div>
 
-  <!-- Archive list -->
+  <!-- ARCHIVE -->
   <div id="archive"></div>
 
-  <!-- Empty state -->
+  <!-- EMPTY -->
   <div class="empty-state" id="emptyState">
-    Nothing here yet.<br>Enter your password and generate today's wonders.
+    Nothing yet.<br>Enter your password and generate today's wonders.
   </div>
 
-  <footer>Made with curiosity · Nicole's World</footer>
+  <footer>
+    <span class="footer-l">Nicole's World</span>
+    <span class="footer-r">Made with curiosity</span>
+  </footer>
+
 </div>
 
 <script>
   const STORAGE_KEY = 'ncb_archive_v1';
 
+  const CAT_COLORS = {
+    Psychology:  'var(--psychology)',
+    History:     'var(--history)',
+    Nature:      'var(--nature)',
+    Culture:     'var(--culture)',
+    Philosophy:  'var(--philosophy)',
+    Language:    'var(--language)',
+    Food:        'var(--food)',
+    Art:         'var(--art)',
+    Science:     'var(--science)',
+    Folklore:    'var(--folklore)',
+  };
+
   // ── GENERATE ──
   async function generate() {
-    const password = document.getElementById('passwordInput').value.trim();
-    if (!password) { showError('Enter password'); return; }
+    const pw  = document.getElementById('passwordInput').value.trim();
+    if (!pw) { showError('Enter password'); return; }
 
     const btn    = document.getElementById('genBtn');
     const loader = document.getElementById('loading');
@@ -511,18 +684,18 @@
     errEl.textContent = '';
 
     try {
-      const res = await fetch('/api/generate', {
+      const res  = await fetch('/api/generate', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          password,
+          password: pw,
           timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
           ts: Date.now()
         })
       });
 
       const data = await res.json();
-      if (!res.ok) { showError(data.error || 'Generation failed. Please try again.'); return; }
+      if (!res.ok) { showError(data.error || 'Generation failed.'); return; }
 
       saveBatch(data);
       renderArchive();
@@ -553,17 +726,17 @@
   function saveBatch(data) {
     try {
       const batches = loadBatches();
-      const batchId = Date.now();
-      batches.unshift({ id: batchId, date: data.date, items: data.items, savedAt: batchId });
+      const id = Date.now();
+      batches.unshift({ id, date: data.date, items: data.items, savedAt: id });
       localStorage.setItem(STORAGE_KEY, JSON.stringify(batches.slice(0, 365)));
     } catch {}
   }
 
-  function deleteBatch(batchId) {
+  function deleteBatch(id) {
     if (!confirm('Delete this batch?')) return;
     try {
-      const batches = loadBatches().filter(b => String(b.id) !== String(batchId));
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(batches));
+      localStorage.setItem(STORAGE_KEY,
+        JSON.stringify(loadBatches().filter(b => String(b.id) !== String(id))));
       renderArchive();
     } catch {}
   }
@@ -576,10 +749,10 @@
 
   // ── RENDER ──
   function renderArchive() {
-    const batches = loadBatches();
+    const batches   = loadBatches();
     const container = document.getElementById('archive');
-    const emptyState = document.getElementById('emptyState');
-    const clearBtn = document.getElementById('clearBtn');
+    const empty     = document.getElementById('emptyState');
+    const clearBtn  = document.getElementById('clearBtn');
 
     const cat = (document.getElementById('filterCategory')?.value || 'ALL').trim();
     const q   = (document.getElementById('filterQuery')?.value || '').trim().toLowerCase();
@@ -587,26 +760,24 @@
     container.innerHTML = '';
 
     if (!batches.length) {
-      emptyState.style.display = 'block';
+      empty.style.display = 'block';
       clearBtn.classList.remove('show');
       return;
     }
 
-    emptyState.style.display = 'none';
+    empty.style.display = 'none';
     clearBtn.classList.add('show');
 
-    // Flatten and filter
+    // Flatten + filter
     let flat = [];
     for (const batch of batches) {
-      for (const item of (batch.items || [])) {
-        flat.push({ batch, item });
-      }
+      for (const item of (batch.items || [])) flat.push({ batch, item });
     }
 
     flat = flat.filter(({ item }) => {
       if (cat !== 'ALL' && String(item.category) !== cat) return false;
       if (!q) return true;
-      const hay = [item.title_en, item.title_zh, item.content_en, item.content_zh, item.insight_en, item.insight_zh]
+      const hay = [item.title_en, item.title_zh, item.content_en, item.content_zh]
         .map(v => String(v || '').toLowerCase()).join(' ');
       return hay.includes(q);
     });
@@ -617,46 +788,54 @@
     }
 
     // Group by batch
-    let currentBatchId = null;
-    let currentGroupEl = null;
+    let curId = null, curGrid = null;
+    let cardIdx = 0;
 
     flat.forEach(({ batch, item }, idx) => {
-      if (String(batch.id) !== String(currentBatchId)) {
-        currentBatchId = batch.id;
+      if (String(batch.id) !== String(curId)) {
+        curId = batch.id;
+        cardIdx = 0;
 
         const group = document.createElement('div');
         group.className = 'date-group';
-        group.style.animationDelay = (idx * 0.02) + 's';
+        group.style.animationDelay = (idx * 0.03) + 's';
 
         const timeStr = new Date(batch.savedAt || Date.now())
           .toLocaleString(undefined, { hour: '2-digit', minute: '2-digit' });
 
         const header = document.createElement('div');
-        header.className = 'section-header';
+        header.className = 'group-header';
         header.innerHTML = `
-          <span class="section-date">${esc(batch.date || '')}</span>
-          <span class="section-meta">
+          <span class="group-date">${esc(batch.date || '')}</span>
+          <span class="group-meta">
             <span>${esc(timeStr)}</span>
-            <button class="section-delete" onclick="deleteBatch('${esc(String(batch.id))}')">Delete</button>
+            <button class="group-delete" onclick="deleteBatch('${esc(String(batch.id))}')">Delete</button>
           </span>
         `;
         group.appendChild(header);
+
+        const grid = document.createElement('div');
+        grid.className = 'cards-grid';
+        group.appendChild(grid);
         container.appendChild(group);
-        currentGroupEl = group;
+        curGrid = grid;
       }
 
       const card = document.createElement('div');
       card.className = 'card';
-      card.innerHTML = buildCard(item, `b${String(currentBatchId)}_${idx}`);
-      currentGroupEl.appendChild(card);
+      card.style.setProperty('--cat-color', CAT_COLORS[item.category] || 'var(--default)');
+
+      const uid = `c${String(curId)}_${idx}`;
+      card.innerHTML = buildCard(item, uid);
+      curGrid.appendChild(card);
+      cardIdx++;
     });
   }
 
-  // ── BUILD CARD ──
   function buildCard(item, uid) {
     return `
-      <div class="card-top">
-        <div class="card-left">
+      <div class="card-header">
+        <div class="card-meta">
           <span class="card-emoji">${esc(item.emoji)}</span>
           <span class="card-cat">${esc(item.category)}</span>
         </div>
@@ -676,15 +855,8 @@
         <p class="card-content">${esc(item.content_zh)}</p>
         <div class="card-insight">${esc(item.insight_zh)}</div>
       </div>
-      ${buildSource(item)}
+      ${item.source_name ? `<div class="card-source">Source: <span>${esc(item.source_name)}</span></div>` : ''}
     `;
-  }
-
-  // Source: text only, no broken links
-  function buildSource(item) {
-    const name = esc(item.source_name || '');
-    if (!name) return '';
-    return `<div class="card-source">Source: <span>${name}</span></div>`;
   }
 
   function switchLang(btn, lang, uid) {
@@ -695,7 +867,6 @@
     document.getElementById(lang + '-' + uid).classList.add('active');
   }
 
-  // ── XSS PROTECTION ──
   function esc(str) {
     if (typeof str !== 'string') return '';
     return str
@@ -703,7 +874,6 @@
       .replace(/"/g,'&quot;').replace(/'/g,'&#039;');
   }
 
-  // ── INIT ──
   renderArchive();
 </script>
 </body>
