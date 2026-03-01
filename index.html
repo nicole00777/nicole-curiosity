@@ -657,14 +657,21 @@ async function generate() {
       body: JSON.stringify({password:pw, timezone:Intl.DateTimeFormat().resolvedOptions().timeZone, ts:Date.now(), mood:_currentMood})
     });
     const data = await res.json();
-    if (!res.ok) { showError(data.error || 'Generation failed.'); return; }
+    if (!res.ok) {
+      const err = data.error || 'Generation failed.';
+      const isJsonFail = err.toLowerCase().includes('json') || err.toLowerCase().includes('parse');
+      showError(isJsonFail
+        ? 'The AI had a small existential crisis. Completely normal — try again.'
+        : err);
+      return;
+    }
     _showCount = PAGE_SIZE;
     saveBatch(data);
     renderArchive();
     document.getElementById('archive').scrollIntoView({behavior:'smooth',block:'start'});
     showCuriosityToast(data.items||[]);
     feedCreature();
-  } catch { showError('Network error. Please try again.'); }
+  } catch { showError('Something got lost in transit. Give it another go.'); }
   finally { btn.disabled=false; btn.textContent='Generate'; loader.classList.remove('show'); }
 }
 
