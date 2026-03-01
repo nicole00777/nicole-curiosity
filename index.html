@@ -549,6 +549,29 @@ footer{border-top:1px solid var(--border);padding:28px 0;display:flex;align-item
         </a>
       </div>
       <div class="sb-section">
+        <div class="sb-heading">Philosophy</div>
+        <a class="sb-link" href="https://www.existentialcomics.com" target="_blank" rel="noopener">
+          <img class="sb-icon" src="https://www.google.com/s2/favicons?domain=existentialcomics.com&sz=32" alt="" loading="lazy" onerror="this.style.opacity=0">
+          <span class="sb-name">Existential Comics</span>
+        </a>
+        <a class="sb-link" href="https://iep.utm.edu" target="_blank" rel="noopener">
+          <img class="sb-icon" src="https://www.google.com/s2/favicons?domain=iep.utm.edu&sz=32" alt="" loading="lazy" onerror="this.style.opacity=0">
+          <span class="sb-name">Internet Encyclopedia of Philosophy</span>
+        </a>
+        <a class="sb-link" href="https://philosophybites.com" target="_blank" rel="noopener">
+          <img class="sb-icon" src="https://www.google.com/s2/favicons?domain=philosophybites.com&sz=32" alt="" loading="lazy" onerror="this.style.opacity=0">
+          <span class="sb-name">Philosophy Bites</span>
+        </a>
+        <a class="sb-link" href="https://plato.stanford.edu" target="_blank" rel="noopener">
+          <img class="sb-icon" src="https://www.google.com/s2/favicons?domain=plato.stanford.edu&sz=32" alt="" loading="lazy" onerror="this.style.opacity=0">
+          <span class="sb-name">Stanford Encyclopedia of Philosophy</span>
+        </a>
+        <a class="sb-link" href="https://www.philosophersmag.com" target="_blank" rel="noopener">
+          <img class="sb-icon" src="https://www.google.com/s2/favicons?domain=philosophersmag.com&sz=32" alt="" loading="lazy" onerror="this.style.opacity=0">
+          <span class="sb-name">The Philosopher's Magazine</span>
+        </a>
+      </div>
+      <div class="sb-section">
         <div class="sb-heading">Psychology Tests</div>
         <a class="sb-link" href="https://www.16personalities.com" target="_blank" rel="noopener">
           <img class="sb-icon" src="https://www.google.com/s2/favicons?domain=16personalities.com&sz=32" alt="" loading="lazy" onerror="this.style.opacity=0">
@@ -1590,31 +1613,35 @@ function updatePlanet() {
     circle.setAttribute('stroke-width', activeCat===cat ? '2' : '0');
     g.appendChild(circle);
 
-    // Label — only if bubble is big enough
-    if (r >= 16) {
+    // Icon label — always show if bubble big enough
+    if (r >= 12) {
+      const icon = CAT_ICONS[cat] || '○';
       const text = document.createElementNS('http://www.w3.org/2000/svg','text');
       text.setAttribute('x', pos.x);
       text.setAttribute('y', pos.y + 1);
       text.setAttribute('text-anchor','middle');
       text.setAttribute('dominant-baseline','middle');
       text.setAttribute('fill','#fff');
-      text.setAttribute('font-size', Math.max(7, Math.min(9, r*0.35)));
+      text.setAttribute('font-size', Math.max(9, Math.min(16, r*0.55)));
       text.setAttribute('font-family','DM Sans, sans-serif');
-      text.setAttribute('font-weight','500');
-      text.setAttribute('letter-spacing','0.5');
-      text.textContent = cat.slice(0,4).toUpperCase();
+      text.textContent = icon;
       g.appendChild(text);
     }
+    // Full category name as SVG title (tooltip)
+    const title = document.createElementNS('http://www.w3.org/2000/svg','title');
+    title.textContent = cat + ' (' + count + ')';
+    g.appendChild(title);
 
-    // Count badge
+    // Count — small number outside bubble
     const badge = document.createElementNS('http://www.w3.org/2000/svg','text');
-    badge.setAttribute('x', pos.x + r*0.5);
-    badge.setAttribute('y', pos.y - r*0.5);
+    badge.setAttribute('x', pos.x + r*0.62);
+    badge.setAttribute('y', pos.y - r*0.62);
     badge.setAttribute('text-anchor','middle');
     badge.setAttribute('fill', color);
-    badge.setAttribute('font-size','7');
+    badge.setAttribute('font-size','7.5');
     badge.setAttribute('font-family','DM Sans, sans-serif');
-    badge.setAttribute('opacity','0.8');
+    badge.setAttribute('font-weight','500');
+    badge.setAttribute('opacity','0.9');
     badge.textContent = count;
     g.appendChild(badge);
 
