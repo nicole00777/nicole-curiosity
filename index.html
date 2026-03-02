@@ -16,6 +16,7 @@
 <meta name="twitter:description" content="Five things worth knowing. Surprising, sharp, and a little wicked.">
 <meta name="twitter:image" content="https://curiositybox.vercel.app/og-image.png">
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 <style>
 :root{
   --bg:#f5f4f0;--surface:#fff;--text:#111;--secondary:#555;--tertiary:#999;
@@ -367,6 +368,11 @@ footer{border-top:1px solid var(--border);padding:28px 0;display:flex;align-item
       <button class="gen-btn" id="genBtn" onclick="generate()">Generate</button>
     </div>
     <div class="error-msg" id="errorMsg"></div>
+    <div id="authArea" style="margin-top:6px;min-height:24px;">
+      <button id="authBtn" onclick="handleAuthClick()" style="background:none;border:none;cursor:pointer;font-size:12px;color:var(--tertiary);font-family:'DM Sans',sans-serif;padding:0;opacity:0.6;transition:opacity .15s;" onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=0.6">
+        Sign in to sync stars ✦
+      </button>
+    </div>
   </div>
 </div>
 
@@ -873,16 +879,101 @@ function loadBatches() { try { return JSON.parse(localStorage.getItem(STORAGE_KE
 function loadStars()   { try { return JSON.parse(localStorage.getItem(STARS_KEY)||'[]'); }   catch { return []; } }
 function saveStars(s)  { localStorage.setItem(STARS_KEY, JSON.stringify(s)); }
 
-function toggleStar(uid) {
-  const stars = loadStars();
-  const idx = stars.indexOf(uid);
-  if (idx === -1) stars.push(uid); else stars.splice(idx, 1);
-  saveStars(stars);
-  const btn = document.querySelector('[data-star="' + uid + '"]');
-  if (btn) {
+// ── Supabase ──────────────────────────────────────────────────────────────
+const SUPA_URL = 'https://uvokhnntfeodxaozsqce.supabase.co';
+const SUPA_KEY = 'sb_publishable_d_2JWl4Fjoba4dpbnWfvEw_KyI_1sy8';
+const _supa = supabase.createClient(SUPA_URL, SUPA_KEY);
+let _currentUser = null;
+let _cloudStars = null; // null = not loaded yet
+
+async function initAuth() {
+  const { data: { session } } = await _supa.auth.getSession();
+  _currentUser = session?.user || null;
+  updateAuthUI();
+  if (_currentUser) await syncStarsFromCloud();
+
+  _supa.auth.onAuthStateChange(async (_event, session) => {
+    const wasLoggedIn = !!_currentUser;
+    _currentUser = session?.user || null;
+    updateAuthUI();
+    if (_currentUser && !wasLoggedIn) {
+      await migrateLocalStarsToCloud();
+      await syncStarsFromCloud();
+      renderArchive();
+    } else if (!_currentUser) {
+      _cloudStars = null;
+      renderArchive();
+    }
+  });
+}
+
+function updateAuthUI() {
+  const btn = document.getElementById('authBtn');
+  if (!btn) return;
+  if (_currentUser) {
+    const email = _currentUser.email || _currentUser.user_metadata?.full_name || 'you';
+    btn.textContent = '✦ ' + email + ' · Sign out';
+    btn.title = 'Sign out';
+  } else {
+    btn.textContent = 'Sign in to sync stars ✦';
+    btn.title = 'Sign in with Google or email';
+  }
+}
+
+async function handleAuthClick() {
+  if (_currentUser) {
+    await _supa.auth.signOut();
+  } else {
+    await _supa.auth.signInWithOAuth({
+      provider: 'google',
+      options: { redirectTo: window.location.origin }
+    });
+  }
+}
+
+async function syncStarsFromCloud() {
+  if (!_currentUser) return;
+  const { data, error } = await _supa.from('stars').select('uid');
+  if (!error && data) {
+    _cloudStars = data.map(r => r.uid);
+  }
+}
+
+async function migrateLocalStarsToCloud() {
+  if (!_currentUser) return;
+  const local = loadStars();
+  if (!local.length) return;
+  const rows = local.map(uid => ({ user_id: _currentUser.id, uid }));
+  await _supa.from('stars').upsert(rows, { onConflict: 'user_id,uid' });
+}
+
+function getStars() {
+  if (_currentUser && _cloudStars !== null) return _cloudStars;
+  return loadStars();
+}
+
+async function toggleStar(uid) {
+  if (_currentUser) {
+    const stars = _cloudStars || [];
     const isStarred = stars.includes(uid);
-    btn.classList.toggle('starred', isStarred);
-    btn.innerHTML = isStarred ? '★' : '☆';
+    if (isStarred) {
+      await _supa.from('stars').delete().eq('uid', uid).eq('user_id', _currentUser.id);
+      _cloudStars = stars.filter(s => s !== uid);
+    } else {
+      await _supa.from('stars').insert({ user_id: _currentUser.id, uid });
+      _cloudStars = [...stars, uid];
+    }
+    const newStarred = _cloudStars.includes(uid);
+    const btn = document.querySelector('[data-star="' + uid + '"]');
+    if (btn) { btn.classList.toggle('starred', newStarred); btn.innerHTML = newStarred ? '★' : '☆'; }
+  } else {
+    const stars = loadStars();
+    const idx = stars.indexOf(uid);
+    if (idx === -1) stars.push(uid); else stars.splice(idx, 1);
+    saveStars(stars);
+    const isStarred = stars.includes(uid);
+    const btn = document.querySelector('[data-star="' + uid + '"]');
+    if (btn) { btn.classList.toggle('starred', isStarred); btn.innerHTML = isStarred ? '★' : '☆'; }
   }
 }
 
@@ -913,7 +1004,7 @@ function renderArchive() {
   const clearBtn = document.getElementById('clearBtn');
   const cat = (document.getElementById('filterCategory')?.value||'ALL').trim();
   const q = (document.getElementById('filterQuery')?.value||'').trim().toLowerCase();
-  const stars = loadStars();
+  const stars = getStars();
 
   container.innerHTML = '';
   if (!batches.length) { empty.style.display='block'; clearBtn.classList.remove('show'); return; }
@@ -1894,6 +1985,7 @@ function initFlappy() {
 
 
 renderArchive();
+initAuth();
 </script>
 <div class="creature-wrap"><div class="creature" id="creature" title=""></div></div>
 <button id="flappyBtn" onclick="openFlappy()" title="Play Flappy Bird" style="position:fixed;bottom:20px;right:48px;background:none;border:none;cursor:pointer;font-size:18px;opacity:0.22;transition:opacity .2s;z-index:200;line-height:1;padding:4px;display:none" onmouseover="this.style.opacity=.7" onmouseout="this.style.opacity=.22">&#128038;</button>
