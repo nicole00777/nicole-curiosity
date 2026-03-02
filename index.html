@@ -105,17 +105,17 @@ nav::before{content:'';position:fixed;top:0;left:0;right:0;height:2px;background
 [data-theme="amber"] nav{border-bottom-color:rgba(255,200,100,.3)}
 [data-theme="amber"] .page::before,[data-theme="amber"] .page::after{background:linear-gradient(180deg,transparent 0%,rgba(255,200,100,.25) 8%,rgba(255,200,100,.25) 92%,transparent 100%)}
 
-/* Sidebar: wrap each section in card bg so it's readable on orange */
-[data-theme="amber"] .sb-section{background:var(--card-bg);border-radius:10px;padding:12px 14px;margin-bottom:10px}
-[data-theme="amber"] .sb-section .sb-heading{color:#6a3800 !important;border-bottom-color:rgba(100,50,0,.15) !important}
-[data-theme="amber"] .sb-section .sb-link{color:#3a1800;border-bottom-color:rgba(100,50,0,.1)}
-[data-theme="amber"] .sb-section .sb-link:hover{color:#1c0a00}
-[data-theme="amber"] .sb-section .sb-name{color:#3a1800}
+/* Sidebar: no card bg, light text directly on orange */
+[data-theme="amber"] .sb-section{background:none;padding:0;border-radius:0;margin-bottom:24px}
+[data-theme="amber"] .sb-section .sb-heading{color:var(--text) !important;opacity:.9;border-bottom-color:rgba(255,220,150,.35) !important}
+[data-theme="amber"] .sb-section .sb-link{color:var(--secondary);border-bottom-color:rgba(255,220,150,.2)}
+[data-theme="amber"] .sb-section .sb-link:hover{color:var(--text)}
+[data-theme="amber"] .sb-section .sb-name{color:var(--secondary)}
 [data-theme="amber"] .sb-planet-label{color:var(--secondary)}
-[data-theme="amber"] .sb-pick-label{color:#6a3800}
-[data-theme="amber"] .sb-pick{background:var(--card-bg);border-color:rgba(100,50,0,.2);border-left-color:#a05020}
-[data-theme="amber"] .sb-pick-name{color:#1c0a00}
-[data-theme="amber"] .sb-pick-tip{color:#5a3010}
+[data-theme="amber"] .sb-pick-label{color:var(--secondary)}
+[data-theme="amber"] .sb-pick{background:rgba(255,255,255,.12);border-color:rgba(255,220,150,.3);border-left-color:rgba(255,220,150,.7)}
+[data-theme="amber"] .sb-pick-name{color:var(--text)}
+[data-theme="amber"] .sb-pick-tip{color:var(--secondary)}
 
 /* Inside white cards: force dark text */
 [data-theme="amber"] .card{color:#1c0a00}
