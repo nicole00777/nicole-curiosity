@@ -988,6 +988,7 @@ const CAT_ICONS = {
 const MOOD_LABELS = {any:'any',surprise:'surprise me',dark:'dark',funny:'funny',contemplative:'contemplative',beautiful:'beautiful',unsettling:'unsettling'};
 
 const _cardRegistry = {};
+const _summaryRegistry = {};
 
 function selectMood(btn) {
   document.querySelectorAll('.mood-chip').forEach(c => c.classList.remove('active'));
@@ -1862,6 +1863,7 @@ function openSummaryModal(data) {
     div.className = 'summary-card';
     div.style.setProperty('--sc-color', color);
     const srcText = item.source || item.source_name || '';
+    _summaryRegistry[i] = item;
     div.innerHTML =
       '<div class="summary-card-cat">' + esc(CAT_ICONS[item.category]||'○') + ' ' + esc(item.category) + '</div>' +
       '<div class="summary-card-title">' + esc(item.title_en) + '</div>' +
@@ -1876,8 +1878,8 @@ function openSummaryModal(data) {
       (srcText ? '<div style="font-size:11px;font-weight:300;color:var(--tertiary);margin-top:10px;font-style:italic;letter-spacing:.2px">' + esc(srcText) + '</div>' : '') +
       '<div style="display:flex;align-items:center;gap:8px;margin-top:14px;padding-top:12px;border-top:1px solid var(--border-lt)">' +
         '<button class="star-btn" data-star="summary-' + i + '" onclick="toggleSummaryStar(this,' + i + ')" style="font-size:16px;opacity:.4">☆</button>' +
-        '<button class="share-btn" onclick="openShareModal(' + JSON.stringify(item) + ')" style="font-size:11px">Share</button>' +
-        '<button class="share-btn" onclick="generateImageCard(' + JSON.stringify(item) + ')" style="font-size:11px">Save image</button>' +
+        '<button class="share-btn" data-sidx="' + i + '" onclick="openShareModal(_summaryRegistry[+this.dataset.sidx])">' + iconShare() + ' Share</button>' +
+        '<button class="share-btn" data-sidx="' + i + '" onclick="generateImageCard(_summaryRegistry[+this.dataset.sidx])">' + iconImage() + ' Save image</button>' +
       '</div>';
     container.appendChild(div);
   });
