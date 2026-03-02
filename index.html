@@ -124,6 +124,7 @@ nav::before{content:'';position:fixed;top:0;left:0;right:0;height:2px;background
 .card-tags{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:10px}
 .tag{font-size:9.5px;font-weight:400;color:var(--cat-color,var(--c-default));background:transparent;border:1px solid var(--cat-color,var(--c-default));border-radius:20px;padding:2px 9px;opacity:.6;cursor:pointer;font-family:'DM Sans',sans-serif;transition:opacity .15s,background .15s,color .15s;letter-spacing:.3px}
 .tag:hover{opacity:1;background:var(--cat-color,var(--c-default));color:#fff}
+.tag.active-tag{opacity:1;background:var(--cat-color,var(--c-default));color:#fff}
 
 /* SHARE BAR */
 .share-bar{display:flex;align-items:center;gap:6px;padding-top:12px;border-top:1px solid var(--border-lt);flex-wrap:wrap}
@@ -309,6 +310,9 @@ footer{border-top:1px solid var(--border);padding:28px 0;display:flex;align-item
   .cards-grid{grid-template-columns:1fr}.cards-grid .card:first-child{grid-column:auto}
   .card:first-child .card-title-en{font-size:1.15rem}.toolbar{flex-direction:column;align-items:flex-start}
   .filter-input{width:100%}footer{flex-direction:column;gap:6px}.modal-grid{grid-template-columns:1fr}.sidebar{grid-template-columns:1fr}
+  #funBitsRow > div{grid-template-columns:1fr !important;gap:16px !important}
+  .summary-modal{padding:24px}
+  .detail-modal{padding:24px}
 }
 </style>
 <script defer src="https://cdn.vercel-insights.com/v1/script.js"></script>
@@ -367,6 +371,7 @@ footer{border-top:1px solid var(--border);padding:28px 0;display:flex;align-item
         <span class="toolbar-title">Archive</span>
         <button class="star-filter-btn" id="starFilterBtn" onclick="toggleStarFilter()" title="Show starred only">&#9733;</button>
         <button class="star-filter-btn" onclick="openRandomWonder()" title="Random wonder" style="margin-left:4px;font-size:13px;opacity:.4">&#9675;</button>
+        <button class="star-filter-btn" id="tagClearBtn" onclick="clearTagFilter()" title="Clear tag filter" style="display:none;margin-left:4px;font-size:10px;opacity:.6;letter-spacing:.5px;font-family:'DM Sans',sans-serif">&#x2715; tag</button>
       </div>
       <div class="toolbar-right">
         <select id="filterCategory" class="filter-select" onchange="_showCount=10;renderArchive()">
@@ -735,9 +740,14 @@ footer{border-top:1px solid var(--border);padding:28px 0;display:flex;align-item
       <button class="img-picker-btn" onclick="selectOpt(this,'ratio','16:9')"><span class="ratio-icon ratio-land"></span> 16:9</button>
     </div>
 
-    <canvas id="imgCanvas" style="width:100%;border-radius:10px;box-shadow:0 4px 20px rgba(0,0,0,.12);display:block;margin-bottom:16px"></canvas>
+    <canvas id="imgCanvas" style="display:none"></canvas>
+    <img id="imgPreview" style="width:100%;border-radius:10px;box-shadow:0 4px 20px rgba(0,0,0,.12);display:block;margin-bottom:8px" alt="Curiosity Card">
+    <div style="font-size:10px;color:#bbb;text-align:center;margin-bottom:12px" id="imgSaveHint">
+      <span class="desktop-hint">Click to download</span>
+      <span class="mobile-hint" style="display:none">Long press image to save to Photos</span>
+    </div>
     <div style="display:flex;gap:8px;justify-content:center">
-      <button class="img-dl-btn" onclick="downloadCanvas()">Save to Photos</button>
+      <button class="img-dl-btn" onclick="downloadCanvas()">Save</button>
       <button class="img-close-btn" onclick="closeModal('imgPickerModal')">Close</button>
     </div>
   </div>
@@ -773,6 +783,32 @@ function selectMood(btn) {
   _currentMood = btn.dataset.mood;
 }
 
+// TAG FILTER
+let _activeTag = '';
+
+function filterByTag(tag) {
+  _activeTag = tag;
+  _showCount = PAGE_SIZE;
+  document.getElementById('filterQuery').value = tag;
+  const btn = document.getElementById('tagClearBtn');
+  if (btn) btn.style.display = tag ? '' : 'none';
+  document.querySelectorAll('.tag').forEach(t => {
+    t.classList.toggle('active-tag', t.dataset.tag === tag);
+  });
+  renderArchive();
+  document.getElementById('archive').scrollIntoView({behavior:'smooth', block:'start'});
+}
+
+function clearTagFilter() {
+  _activeTag = '';
+  document.getElementById('filterQuery').value = '';
+  const btn = document.getElementById('tagClearBtn');
+  if (btn) btn.style.display = 'none';
+  document.querySelectorAll('.tag').forEach(t => t.classList.remove('active-tag'));
+  _showCount = PAGE_SIZE;
+  renderArchive();
+}
+
 function toggleStarFilter() {
   _starFilterOn = !_starFilterOn;
   _showCount = PAGE_SIZE;
@@ -791,7 +827,13 @@ async function generate() {
   try {
     const res = await fetch('/api/generate', {
       method: 'POST', headers: {'Content-Type':'application/json'},
-      body: JSON.stringify({password:pw, timezone:Intl.DateTimeFormat().resolvedOptions().timeZone, ts:Date.now(), mood:_currentMood})
+      body: JSON.stringify({
+        password: pw,
+        timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+        ts: Date.now(),
+        mood: _currentMood,
+        recentTitles: loadBatches().slice(0,6).flatMap(b => (b.items||[]).map(i => i.title_en)).filter(Boolean).slice(0,30)
+      })
     });
     const data = await res.json();
     if (!res.ok) {
@@ -970,7 +1012,7 @@ function buildCard(item, uid, starred) {
       '<p class="card-content">'+esc(item.content_zh)+'</p>' +
       '<div class="card-insight">'+esc(item.insight_zh)+'</div>' +
     '</div>' +
-    (item.tags && item.tags.length ? '<div class="card-tags">' + item.tags.map(t => '<span class="tag">'+esc(t)+'</span>').join('') + '</div>' : '') +
+    (item.tags && item.tags.length ? '<div class="card-tags">' + item.tags.map(t => { var cls = 'tag' + (_activeTag===t ? ' active-tag' : ''); return '<span class="'+cls+'" data-tag="'+esc(t)+'" onclick="filterByTag(this.dataset.tag)">'+esc(t)+'</span>'; }).join('') + '</div>' : '') +
     src +
     '<div class="share-bar"><span class="share-label">Share</span>' +
       '<button class="share-btn" data-uid="'+uid+'" onclick="openShareModal(_cardRegistry[this.dataset.uid])">'+iconShare()+' Share</button>' +
@@ -1202,6 +1244,20 @@ function renderCanvas() {
   ctx.fillText('Curiosity Box', pad, footY+footSize);
   ctx.textAlign='right'; ctx.fillText('The Little Bird', W-pad, footY+footSize);
   ctx.textAlign='left'; ctx.globalAlpha=1;
+
+  // Update img preview for mobile long-press save
+  const preview = document.getElementById('imgPreview');
+  if (preview) {
+    preview.src = canvas.toDataURL('image/jpeg', 0.96);
+    preview.style.aspectRatio = W+'/'+H;
+  }
+  // Show appropriate hint
+  const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+  const hint = document.getElementById('imgSaveHint');
+  if (hint) {
+    hint.querySelector('.desktop-hint').style.display = isMobile ? 'none' : '';
+    hint.querySelector('.mobile-hint').style.display = isMobile ? '' : 'none';
+  }
 }
 
 function wrapText(ctx, text, x, y, maxW, lineH) {
@@ -1519,10 +1575,7 @@ function openDetail(uid) {
       btn.textContent = t;
       btn.addEventListener('click', () => {
         closeDetail();
-        document.getElementById('filterQuery').value = t;
-        _showCount = 10;
-        renderArchive();
-        document.getElementById('archive').scrollIntoView({behavior:'smooth',block:'start'});
+        filterByTag(t);
       });
       tagsEl.appendChild(btn);
     });
@@ -1645,9 +1698,194 @@ function updatePlanet() {
 }
 
 
+// ── FLAPPY BIRD ───────────────────────────────
+let _flappyRunning = false, _flappyRAF = null;
+
+function openFlappy() {
+  document.getElementById('flappyOverlay').style.display = 'flex';
+  document.body.style.overflow = 'hidden';
+  initFlappy();
+}
+function closeFlappy() {
+  document.getElementById('flappyOverlay').style.display = 'none';
+  document.body.style.overflow = '';
+  _flappyRunning = false;
+  if (_flappyRAF) cancelAnimationFrame(_flappyRAF);
+}
+
+function initFlappy() {
+  const canvas = document.getElementById('flappyCanvas');
+  const ctx = canvas.getContext('2d');
+  const W = canvas.width, H = canvas.height;
+  const BG = '#f5f4f0', PIPE_COLOR = '#5f8c6e', BIRD_COLOR = '#a07850';
+  const GRAVITY = 0.38, JUMP = -7.2, PIPE_W = 48, GAP = 145, PIPE_SPEED = 2.2;
+
+  let bird = {x:80, y:H/2, vy:0, r:14};
+  let pipes = [], score = 0, best = parseInt(localStorage.getItem('ncb_flappy_best')||'0');
+  let state = 'idle'; // idle | playing | dead
+  let frame = 0;
+
+  function addPipe() {
+    const top = 60 + Math.random() * (H - GAP - 120);
+    pipes.push({x: W+10, top, scored: false});
+  }
+  addPipe();
+
+  function jump() {
+    if (state === 'idle') { state = 'playing'; document.getElementById('flappyMsg').style.display = 'none'; }
+    if (state === 'playing') bird.vy = JUMP;
+    if (state === 'dead') { resetFlappy(); }
+  }
+
+  function resetFlappy() {
+    bird = {x:80, y:H/2, vy:0, r:14};
+    pipes = []; score = 0; frame = 0; state = 'playing';
+    addPipe();
+    document.getElementById('flappyMsg').style.display = 'none';
+  }
+
+  canvas.onclick = jump;
+  canvas.ontouchstart = (e) => { e.preventDefault(); jump(); };
+
+  const keyHandler = (e) => { if (e.code === 'Space') { e.preventDefault(); jump(); } };
+  document.addEventListener('keydown', keyHandler);
+
+  _flappyRunning = true;
+
+  function drawBird() {
+    ctx.save();
+    ctx.translate(bird.x, bird.y);
+    ctx.rotate(Math.min(Math.max(bird.vy * 0.06, -0.4), 0.8));
+    // Body
+    ctx.beginPath();
+    ctx.ellipse(0, 0, bird.r, bird.r*0.82, 0, 0, Math.PI*2);
+    ctx.fillStyle = BIRD_COLOR;
+    ctx.fill();
+    // Wing
+    ctx.beginPath();
+    ctx.ellipse(-2, 3, bird.r*0.5, bird.r*0.32, -0.3, 0, Math.PI*2);
+    ctx.fillStyle = '#8a6040';
+    ctx.fill();
+    // Eye
+    ctx.beginPath();
+    ctx.arc(bird.r*0.45, -bird.r*0.2, 3.5, 0, Math.PI*2);
+    ctx.fillStyle = '#fff';
+    ctx.fill();
+    ctx.beginPath();
+    ctx.arc(bird.r*0.55, -bird.r*0.2, 2, 0, Math.PI*2);
+    ctx.fillStyle = '#222';
+    ctx.fill();
+    // Beak
+    ctx.beginPath();
+    ctx.moveTo(bird.r*0.8, bird.r*0.1);
+    ctx.lineTo(bird.r*1.3, bird.r*0.25);
+    ctx.lineTo(bird.r*0.8, bird.r*0.4);
+    ctx.fillStyle = '#c8843a';
+    ctx.fill();
+    ctx.restore();
+  }
+
+  function drawPipe(p) {
+    const radius = 6;
+    // Top pipe
+    ctx.fillStyle = PIPE_COLOR;
+    ctx.beginPath();
+    ctx.roundRect(p.x, 0, PIPE_W, p.top - 8, [0,0,radius,radius]);
+    ctx.fill();
+    ctx.fillStyle = '#4a7a5a';
+    ctx.fillRect(p.x - 4, p.top - 24, PIPE_W + 8, 24);
+    // Bottom pipe
+    const botY = p.top + GAP;
+    ctx.fillStyle = PIPE_COLOR;
+    ctx.beginPath();
+    ctx.roundRect(p.x, botY + 8, PIPE_W, H - botY - 8, [radius,radius,0,0]);
+    ctx.fill();
+    ctx.fillStyle = '#4a7a5a';
+    ctx.fillRect(p.x - 4, botY, PIPE_W + 8, 24);
+  }
+
+  function loop() {
+    if (!_flappyRunning) return;
+    ctx.fillStyle = BG;
+    ctx.fillRect(0,0,W,H);
+
+    // Ground
+    ctx.fillStyle = '#e0deda';
+    ctx.fillRect(0, H-24, W, 24);
+    ctx.fillStyle = '#5f8c6e';
+    ctx.fillRect(0, H-24, W, 3);
+
+    frame++;
+    if (state === 'playing') {
+      bird.vy += GRAVITY;
+      bird.y += bird.vy;
+
+      // Add pipes
+      if (pipes.length === 0 || pipes[pipes.length-1].x < W - 200) addPipe();
+
+      pipes.forEach(p => {
+        p.x -= PIPE_SPEED;
+        if (!p.scored && p.x + PIPE_W < bird.x) {
+          score++;
+          p.scored = true;
+          if (score > best) { best = score; localStorage.setItem('ncb_flappy_best', best); }
+        }
+        // Collision
+        if (bird.x + bird.r*0.7 > p.x && bird.x - bird.r*0.7 < p.x + PIPE_W) {
+          if (bird.y - bird.r*0.7 < p.top || bird.y + bird.r*0.7 > p.top + GAP) state = 'dead';
+        }
+        drawPipe(p);
+      });
+      pipes = pipes.filter(p => p.x > -PIPE_W - 10);
+
+      if (bird.y + bird.r > H - 24) { bird.y = H - 24 - bird.r; state = 'dead'; }
+      if (bird.y - bird.r < 0) { bird.y = bird.r; bird.vy = 0; }
+    } else {
+      pipes.forEach(p => drawPipe(p));
+    }
+
+    drawBird();
+
+    // Score
+    ctx.fillStyle = '#333';
+    ctx.font = "500 22px 'DM Sans', sans-serif";
+    ctx.textAlign = 'center';
+    ctx.fillText(score, W/2, 44);
+    ctx.font = "300 11px 'DM Sans', sans-serif";
+    ctx.fillStyle = '#aaa';
+    ctx.fillText('best: ' + best, W/2, 60);
+    ctx.textAlign = 'left';
+
+    if (state === 'dead') {
+      ctx.fillStyle = 'rgba(245,244,240,0.82)';
+      ctx.fillRect(0,0,W,H);
+      ctx.fillStyle = '#111';
+      ctx.font = "400 1.4rem 'DM Serif Display', serif";
+      ctx.textAlign = 'center';
+      ctx.fillText('You fell.', W/2, H/2 - 28);
+      ctx.font = "300 13px 'DM Sans', sans-serif";
+      ctx.fillStyle = '#666';
+      ctx.fillText('Score: ' + score + '  |  Best: ' + best, W/2, H/2 + 4);
+      ctx.fillStyle = '#aaa';
+      ctx.fillText('Tap to try again', W/2, H/2 + 36);
+      ctx.textAlign = 'left';
+    }
+
+    _flappyRAF = requestAnimationFrame(loop);
+  }
+
+  if (_flappyRAF) cancelAnimationFrame(_flappyRAF);
+  // Clean up old key listener on re-init
+  canvas._keyHandler && document.removeEventListener('keydown', canvas._keyHandler);
+  canvas._keyHandler = keyHandler;
+  loop();
+}
+
+
 renderArchive();
 </script>
 <div class="creature-wrap"><div class="creature" id="creature" title=""></div></div>
+<button id="flappyBtn" onclick="openFlappy()" title="Play Flappy Bird" style="position:fixed;bottom:20px;right:48px;background:none;border:none;cursor:pointer;font-size:18px;opacity:0.22;transition:opacity .2s;z-index:200;line-height:1;padding:4px" onmouseover="this.style.opacity=.7" onmouseout="this.style.opacity=.22">&#127823;</button>
 
 <!-- Random Wonder overlay -->
 <div class="wonder-overlay" id="wonderOverlay">
@@ -1664,5 +1902,17 @@ renderArchive();
 <!-- Toast -->
 <div class="curiosity-toast" id="curiosityToast"></div>
 
+
+<!-- Flappy Bird -->
+<div id="flappyOverlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:2000;align-items:center;justify-content:center;flex-direction:column">
+  <div style="position:relative">
+    <button onclick="closeFlappy()" style="position:absolute;top:-36px;right:0;background:none;border:none;color:#888;font-size:18px;cursor:pointer;font-family:DM Sans,sans-serif">&#215; close</button>
+    <canvas id="flappyCanvas" width="320" height="480" style="border-radius:12px;display:block;touch-action:none"></canvas>
+    <div id="flappyMsg" style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;color:#fff;font-family:DM Serif Display,serif;pointer-events:none">
+      <div style="font-size:1.6rem;margin-bottom:8px">Flappy Box</div>
+      <div style="font-size:13px;color:#aaa;font-family:DM Sans,sans-serif">Tap or press Space to start</div>
+    </div>
+  </div>
+</div>
 </body>
 </html>
