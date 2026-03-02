@@ -39,9 +39,9 @@
   --border:rgba(255,200,100,.4);--border-lt:rgba(255,220,150,.2);
   --nav-bg:#d96c08;--input-bg:#fff8f0;--btn-bg:#1c0a00;--btn-text:#fff8f0;
   --modal-bg:#fff8f0;--overlay-bg:rgba(80,20,0,.6);
-  --c-psychology:#1a4a70;--c-history:#6a3800;--c-nature:#1a5a30;
-  --c-culture:#4a1a6a;--c-philosophy:#0a3a60;--c-language:#5a3800;
-  --c-food:#6a1800;--c-art:#3a0a50;--c-science:#0a2a50;--c-folklore:#1a4000;
+  --c-psychology:#1e5c8a;--c-history:#5a3000;--c-nature:#1a5c38;
+  --c-culture:#4a1878;--c-philosophy:#1a4878;--c-language:#4a3200;
+  --c-food:#5a1200;--c-art:#3a1060;--c-science:#0a3060;--c-folklore:#1a4810;
   --c-default:#3a2210;
   --grad:linear-gradient(90deg,#fff0e0,#ffd890,#f0b050,#ffd890,#fff0e0);
 }
@@ -91,7 +91,13 @@ nav::before{content:'';position:fixed;top:0;left:0;right:0;height:2px;background
 /* On orange bg */
 [data-theme="amber"] .mood-chip{border-color:rgba(255,210,120,.5);color:var(--text)}
 [data-theme="amber"] .mood-chip:hover{background:rgba(255,255,255,.15)}
-[data-theme="amber"] .mood-chip.active{background:#1c0a00;color:#fff8f0;border-color:#1c0a00}
+[data-theme="amber"] .mood-chip.active[data-mood="any"]{background:#1c0a00;color:#fff8f0;border-color:#1c0a00}
+[data-theme="amber"] .mood-chip.active[data-mood="surprise"]{background:#2a6080;color:#fff;border-color:#2a6080}
+[data-theme="amber"] .mood-chip.active[data-mood="dark"]{background:#2a2050;color:#fff;border-color:#2a2050}
+[data-theme="amber"] .mood-chip.active[data-mood="funny"]{background:#1a7a50;color:#fff;border-color:#1a7a50}
+[data-theme="amber"] .mood-chip.active[data-mood="contemplative"]{background:#3a5090;color:#fff;border-color:#3a5090}
+[data-theme="amber"] .mood-chip.active[data-mood="beautiful"]{background:#5a3080;color:#fff;border-color:#5a3080}
+[data-theme="amber"] .mood-chip.active[data-mood="unsettling"]{background:#1a5060;color:#fff;border-color:#1a5060}
 [data-theme="amber"] .hero-kicker,[data-theme="amber"] .hero-sub{color:var(--secondary)}
 [data-theme="amber"] .toolbar-title,[data-theme="amber"] .group-date{color:var(--secondary)}
 [data-theme="amber"] .group-delete{color:var(--secondary)}
@@ -106,16 +112,16 @@ nav::before{content:'';position:fixed;top:0;left:0;right:0;height:2px;background
 [data-theme="amber"] .page::before,[data-theme="amber"] .page::after{background:linear-gradient(180deg,transparent 0%,rgba(255,200,100,.25) 8%,rgba(255,200,100,.25) 92%,transparent 100%)}
 
 /* Sidebar: wrap each section in card bg so it's readable on orange */
-[data-theme="amber"] .sb-section{background:var(--card-bg);border-radius:10px;padding:12px 14px;margin-bottom:10px}
-[data-theme="amber"] .sb-section .sb-heading{color:#6a3800 !important;border-bottom-color:rgba(100,50,0,.15) !important}
-[data-theme="amber"] .sb-section .sb-link{color:#3a1800;border-bottom-color:rgba(100,50,0,.1)}
-[data-theme="amber"] .sb-section .sb-link:hover{color:#1c0a00}
-[data-theme="amber"] .sb-section .sb-name{color:#3a1800}
-[data-theme="amber"] .sb-planet-label{color:var(--secondary)}
-[data-theme="amber"] .sb-pick-label{color:#6a3800}
-[data-theme="amber"] .sb-pick{background:var(--card-bg);border-color:rgba(100,50,0,.2);border-left-color:#a05020}
-[data-theme="amber"] .sb-pick-name{color:#1c0a00}
-[data-theme="amber"] .sb-pick-tip{color:#5a3010}
+[data-theme="amber"] .sb-section{background:none;padding:0;border-radius:0;margin-bottom:24px}
+[data-theme="amber"] .sb-section .sb-heading{color:#fff0e0 !important;border-bottom-color:rgba(255,220,150,.3) !important}
+[data-theme="amber"] .sb-section .sb-link{color:#ffd890;border-bottom-color:rgba(255,220,150,.15)}
+[data-theme="amber"] .sb-section .sb-link:hover{color:#fff0e0}
+[data-theme="amber"] .sb-section .sb-name{color:#ffd890}
+[data-theme="amber"] .sb-planet-label{color:#fff0e0}
+[data-theme="amber"] .sb-pick-label{color:#ffd890}
+[data-theme="amber"] .sb-pick{background:none;border-color:rgba(255,220,150,.3);border-left-color:#ffd890}
+[data-theme="amber"] .sb-pick-name{color:#fff0e0}
+[data-theme="amber"] .sb-pick-tip{color:#ffd890}
 
 /* Inside white cards: force dark text */
 [data-theme="amber"] .card{color:#1c0a00}
@@ -137,8 +143,7 @@ nav::before{content:'';position:fixed;top:0;left:0;right:0;height:2px;background
 [data-theme="amber"] .sidebar-block .sb-heading{color:#6a4820}
 [data-theme="amber"] .sidebar-block .sb-name{color:#1c0a00}
 [data-theme="amber"] .sidebar-block a{color:#1c0a00}
-[data-theme="amber"] .sb-pick-name{color:#1c0a00}
-[data-theme="amber"] .sb-pick-tip{color:#5a3010}
+
 
 /* Fun bits (white bg) */
 [data-theme="amber"] .fun-bit{color:#1c0a00}
@@ -496,7 +501,7 @@ footer{border-top:1px solid var(--border);padding:28px 0;display:flex;align-item
     </div>
     <div class="error-msg" id="errorMsg"></div>
     <div id="authArea" style="margin-top:10px;min-height:32px;">
-      <button id="authBtn" onclick="handleAuthClick()" style="background:transparent;border:1.5px solid #b8b4aa;cursor:pointer;font-size:12px;color:#7a7570;font-family:'DM Sans',sans-serif;padding:7px 16px;border-radius:8px;letter-spacing:.3px;transition:border-color .15s,color .15s,transform .1s;" onmouseover="this.style.borderColor='#7a7570';this.style.color='#3a3a36'" onmouseout="this.style.borderColor='#b8b4aa';this.style.color='#7a7570'" onmousedown="this.style.transform='scale(.97)'" onmouseup="this.style.transform='scale(1)'">
+      <button id="authBtn" onclick="handleAuthClick()" style="background:transparent;border:1.5px solid #b8b4aa;cursor:pointer;font-size:12px;color:#7a7570;font-family:'DM Sans',sans-serif;padding:7px 16px;border-radius:8px;letter-spacing:.3px;transition:border-color .15s,color .15s,transform .1s;" onmouseover="this.style.opacity='.85'" onmouseout="this.style.opacity='1'" onmousedown="this.style.transform='scale(.97)'" onmouseup="this.style.transform='scale(1)'">
         Sign in to sync stars ✦
       </button>
     </div>
@@ -914,6 +919,27 @@ const CAT_COLORS = {
   Food:'#b86848',Art:'#9060a0',Science:'#3a7090',Folklore:'#708050',
 };
 
+// Amber theme uses contrasting colors on orange background
+const CAT_COLORS_AMBER = {
+  Psychology:'#2a7ab0',History:'#5a3a10',Nature:'#1a7848',
+  Culture:'#6a2a90',Philosophy:'#1a5898',Language:'#4a3808',
+  Food:'#6a1808',Art:'#4a1870',Science:'#0a4070',Folklore:'#2a5818',
+};
+
+function getCatColor(cat) {
+  const theme = document.documentElement.getAttribute('data-theme');
+  if (theme === 'amber') return CAT_COLORS_AMBER[cat] || '#3a2210';
+  if (theme === 'olive') {
+    const oliveMap = {Psychology:'#90d0b8',History:'#e0c080',Nature:'#90e070',Culture:'#b8d890',Philosophy:'#80d0b0',Language:'#e0d878',Food:'#e09870',Art:'#a8d888',Science:'#70c0a8',Folklore:'#a8e068'};
+    return oliveMap[cat] || '#b0c888';
+  }
+  if (theme === 'ocean') {
+    const oceanMap = {Psychology:'#70b8e0',History:'#d8b870',Nature:'#60d890',Culture:'#a880e0',Philosophy:'#60b8e0',Language:'#e0d060',Food:'#e08870',Art:'#b070e0',Science:'#50b0d8',Folklore:'#80d870'};
+    return oceanMap[cat] || '#90aac8';
+  }
+  return CAT_COLORS[cat] || '#888';
+}
+
 const CAT_ICONS = {
   Psychology:'\u25D0',History:'\u25A0',Nature:'\u25CF',Culture:'\u25C7',
   Philosophy:'\u25CB',Language:'\u25AE',Food:'\u25B2',Art:'\u25B3',
@@ -1048,16 +1074,18 @@ function updateAuthUI() {
     btn.textContent = '✦ ' + email + ' · Sign out';
     btn.title = 'Sign out';
     btn.style.background = 'transparent';
-    btn.style.color = '#7a7570';
-    btn.style.border = '1.5px solid #b8b4aa';
+    const _t1 = document.documentElement.getAttribute('data-theme');
+    btn.style.color = _t1==='amber'?'#fff0e0':_t1==='olive'?'#b8c890':_t1==='ocean'?'#8aacc0':'#7a7570';
+    btn.style.border = _t1==='amber'?'1.5px solid rgba(255,240,200,.7)':_t1==='olive'?'1.5px solid #788858':_t1==='ocean'?'1.5px solid #4a6880':'1.5px solid #b8b4aa';
     btn.style.padding = '7px 16px';
     btn.style.borderRadius = '8px';
   } else {
     btn.textContent = 'Sign in to sync stars ✦';
     btn.title = 'Sign in with Google or email';
     btn.style.background = 'transparent';
-    btn.style.color = '#7a7570';
-    btn.style.border = '1.5px solid #b8b4aa';
+    const _t2 = document.documentElement.getAttribute('data-theme');
+    btn.style.color = _t2==='amber'?'#fff0e0':_t2==='olive'?'#b8c890':_t2==='ocean'?'#8aacc0':'#7a7570';
+    btn.style.border = _t2==='amber'?'1.5px solid rgba(255,240,200,.7)':_t2==='olive'?'1.5px solid #788858':_t2==='ocean'?'1.5px solid #4a6880':'1.5px solid #b8b4aa';
     btn.style.padding = '7px 16px';
     btn.style.borderRadius = '8px';
   }
@@ -1944,7 +1972,7 @@ function updatePlanet() {
 
   const W = 180, H = 130;
   const entries = ORDER.filter(c => counts[c] > 0)
-    .map(c => ({cat:c, count:counts[c], color:CAT_COLORS[c]}))
+    .map(c => ({cat:c, count:counts[c], color:getCatColor(c)}))
     .sort((a,b) => b.count - a.count);
 
   const maxCount = entries[0]?.count || 1;
@@ -2231,7 +2259,7 @@ function setTheme(theme) {
   const authBtn = document.getElementById('authBtn');
   if (authBtn) {
     const colors = {
-      amber: { border:"rgba(255,220,120,.6)", text:'#ffd890' },
+      amber: { border:'rgba(255,240,200,.7)', text:'#fff0e0' },
       light: { border:'#b8b4aa', text:'#7a7570' },
       olive: { border:'#788858', text:'#b8c890' },
       ocean: { border:'#4a6880', text:'#8aacc0' },
