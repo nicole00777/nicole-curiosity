@@ -47,11 +47,11 @@
 }
 /* ── Olive ── deep olive-green bg */
 [data-theme="olive"]{
-  --bg:#3a4a1e;--surface:#424f22;--card-bg:#4a5828;
+  --bg:#3a4a1e;--surface:#424f22;--card-bg:#506030;
   --text:#eef0d8;--secondary:#b8c890;--tertiary:#788858;
   --border:#58682e;--border-lt:#4e5c26;
   --nav-bg:#303e18;--input-bg:#3e4e20;--btn-bg:#eef0d8;--btn-text:#3a4a1e;
-  --modal-bg:#4a5828;--overlay-bg:rgba(0,0,0,.6);
+  --modal-bg:#3e5020;--overlay-bg:rgba(0,0,0,.6);
   --c-psychology:#90d0b8;--c-history:#e0c080;--c-nature:#90e070;
   --c-culture:#b8d890;--c-philosophy:#80d0b0;--c-language:#e0d878;
   --c-food:#e09870;--c-art:#a8d888;--c-science:#70c0a8;--c-folklore:#a8e068;
@@ -61,11 +61,11 @@
 
 /* ── Ocean ── deep navy bg */
 [data-theme="ocean"]{
-  --bg:#0f1f2e;--surface:#162434;--card-bg:#1c2e40;
+  --bg:#0f1f2e;--surface:#162434;--card-bg:#1e3248;
   --text:#d8e8f0;--secondary:#8aacc0;--tertiary:#4a6880;
   --border:#1e3048;--border-lt:#182840;
   --nav-bg:#0a1828;--input-bg:#162434;--btn-bg:#d8e8f0;--btn-text:#0f1f2e;
-  --modal-bg:#1c2e40;--overlay-bg:rgba(0,0,0,.65);
+  --modal-bg:#162840;--overlay-bg:rgba(0,0,0,.65);
   --c-psychology:#70b8e0;--c-history:#d8b870;--c-nature:#60d890;
   --c-culture:#a880e0;--c-philosophy:#60b8e0;--c-language:#e0d060;
   --c-food:#e08870;--c-art:#b070e0;--c-science:#50b0d8;--c-folklore:#80d870;
@@ -176,8 +176,8 @@ nav::before{content:'';position:fixed;top:0;left:0;right:0;height:2px;background
 
 /* MOOD */
 .mood-label{font-size:9px;font-weight:500;letter-spacing:2px;text-transform:uppercase;color:var(--secondary);text-align:right;width:100%}
-.mood-row{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}
-.mood-chip{font-family:'DM Sans',sans-serif;font-size:12px;font-weight:300;color:var(--tertiary);background:none;border:1px solid var(--border);border-radius:20px;padding:5px 12px;cursor:pointer;transition:all .18s;letter-spacing:0}
+.mood-row{display:flex;gap:4px;flex-wrap:nowrap;justify-content:flex-end;overflow:visible}
+.mood-chip{font-family:'DM Sans',sans-serif;font-size:11px;font-weight:300;color:var(--tertiary);background:none;border:1px solid var(--border);border-radius:20px;padding:4px 10px;cursor:pointer;transition:all .18s;letter-spacing:0;white-space:nowrap}
 .mood-chip:hover{border-color:var(--secondary);color:var(--secondary)}
 .mood-chip.active[data-mood="any"]{background:#444;color:#fff;border-color:#444}
 .mood-chip.active[data-mood="surprise"]{background:#e07b3a;color:#fff;border-color:#e07b3a}
@@ -489,6 +489,137 @@ footer{border-top:1px solid var(--border);padding:28px 0;display:flex;align-item
 [data-theme="amber"] .summary-modal .share-btn:hover{background:rgba(0,0,0,.35);color:#fff0e0}
 [data-theme="amber"] .summary-modal .star-btn{color:rgba(255,240,220,.5)}
 [data-theme="amber"] .summary-modal .star-btn.starred{color:#ffd890}
+
+/* ── Olive: text contrast fixes ── */
+[data-theme="olive"] .card{color:#eef0d8}
+[data-theme="olive"] .card-title-en{color:#eef0d8}
+[data-theme="olive"] .card-content{color:#dde4c0}
+[data-theme="olive"] .card-insight{color:#b8c890}
+[data-theme="olive"] .card-source{color:#a0b878}
+[data-theme="olive"] .card-cat{opacity:1}
+[data-theme="olive"] .card-num{color:#788858}
+[data-theme="olive"] .group-date{color:#b8c890}
+[data-theme="olive"] .toolbar-title{color:#b8c890}
+[data-theme="olive"] .hero-kicker{color:#b8c890}
+[data-theme="olive"] .hero-sub{color:#b8c890}
+[data-theme="olive"] .mood-label{color:#b8c890}
+[data-theme="olive"] .footer-l,[data-theme="olive"] .footer-r{color:#b8c890}
+[data-theme="olive"] .footer-disclaimer{color:#a0b870}
+
+/* Olive sidebar: bright headings, readable names */
+[data-theme="olive"] .sb-section .sb-heading{color:#c8e080 !important;border-bottom-color:rgba(200,224,128,.25) !important}
+[data-theme="olive"] .sb-section .sb-name{color:#b8c890}
+[data-theme="olive"] .sb-link{color:#b8c890}
+[data-theme="olive"] .sb-link:hover{color:#eef0d8}
+[data-theme="olive"] .sb-planet-label{color:#c8e080}
+[data-theme="olive"] .sb-pick-label{color:#c8e080}
+[data-theme="olive"] .sb-pick{border-color:rgba(200,224,128,.25);border-left-color:#c8e080;background:rgba(255,255,255,.06)}
+[data-theme="olive"] .sb-pick-name{color:#eef0d8}
+[data-theme="olive"] .sb-pick-tip{color:#b8c890}
+
+/* Olive fun bits: readable text */
+[data-theme="olive"] .fun-bit:nth-child(1){background:rgba(255,255,255,.07);border-color:rgba(200,224,128,.15)}
+[data-theme="olive"] .fun-bit:nth-child(2){background:rgba(255,255,255,.07);border-color:rgba(144,224,112,.15)}
+[data-theme="olive"] .fun-bit:nth-child(3){background:rgba(255,255,255,.07);border-color:rgba(128,208,176,.15)}
+[data-theme="olive"] .fun-bit:nth-child(1) .fun-bit-label{color:#e09870}
+[data-theme="olive"] .fun-bit:nth-child(2) .fun-bit-label{color:#90e070}
+[data-theme="olive"] .fun-bit:nth-child(3) .fun-bit-label{color:#80d0b0}
+[data-theme="olive"] .fun-bit-text{color:#dde4c0}
+
+/* Olive modals: dark bg with light text */
+[data-theme="olive"] .summary-modal{color:#eef0d8}
+[data-theme="olive"] .summary-lean{color:#b8c890}
+[data-theme="olive"] .summary-lean strong{color:#eef0d8}
+[data-theme="olive"] .summary-card{background:rgba(255,255,255,.07);border-color:rgba(200,224,128,.15);color:#eef0d8}
+[data-theme="olive"] .summary-card-title{color:#eef0d8}
+[data-theme="olive"] .summary-card-body{color:#dde4c0}
+[data-theme="olive"] .summary-card-insight{color:#b8c890;border-top-color:rgba(200,224,128,.15)}
+[data-theme="olive"] .summary-lang-tabs{background:rgba(0,0,0,.2)}
+[data-theme="olive"] .summary-lang-tab{color:#788858}
+[data-theme="olive"] .summary-lang-tab.active{background:rgba(255,255,255,.12);color:#eef0d8;box-shadow:none}
+[data-theme="olive"] .summary-save-btn{background:#c8e080;color:#2a3810}
+[data-theme="olive"] .summary-save-btn:hover{background:#ddf090}
+[data-theme="olive"] .detail-modal{color:#eef0d8}
+[data-theme="olive"] .detail-close{color:#788858}
+[data-theme="olive"] .detail-close:hover{color:#eef0d8}
+[data-theme="olive"] .detail-title{color:#eef0d8}
+[data-theme="olive"] .detail-content{color:#dde4c0}
+[data-theme="olive"] .detail-insight{color:#b8c890;border-color:rgba(200,224,128,.15)}
+[data-theme="olive"] .detail-source{color:#a0b878}
+[data-theme="olive"] .detail-lang-tabs{background:rgba(0,0,0,.2)}
+[data-theme="olive"] .detail-lang-tab{color:#788858}
+[data-theme="olive"] .detail-lang-tab.active{background:rgba(255,255,255,.12);color:#eef0d8;box-shadow:none}
+[data-theme="olive"] .detail-tags .detail-tag{border-color:rgba(200,224,128,.3);color:#b8c890}
+[data-theme="olive"] .detail-tags .detail-tag:hover{background:rgba(255,255,255,.1);color:#eef0d8}
+[data-theme="olive"] .summary-modal .share-btn{color:#b8c890;background:rgba(255,255,255,.08);border:none}
+[data-theme="olive"] .summary-modal .share-btn:hover{background:rgba(255,255,255,.15);color:#eef0d8}
+[data-theme="olive"] .summary-modal .star-btn{color:#788858}
+[data-theme="olive"] .summary-modal .star-btn.starred{color:#c8e080}
+
+/* ── Ocean: text contrast fixes ── */
+[data-theme="ocean"] .card{color:#d8e8f0}
+[data-theme="ocean"] .card-title-en{color:#d8e8f0}
+[data-theme="ocean"] .card-content{color:#c0d8ec}
+[data-theme="ocean"] .card-insight{color:#8aacc0}
+[data-theme="ocean"] .card-source{color:#7098b8}
+[data-theme="ocean"] .card-num{color:#4a6880}
+[data-theme="ocean"] .group-date{color:#8aacc0}
+[data-theme="ocean"] .toolbar-title{color:#8aacc0}
+[data-theme="ocean"] .hero-kicker{color:#8aacc0}
+[data-theme="ocean"] .hero-sub{color:#8aacc0}
+[data-theme="ocean"] .mood-label{color:#8aacc0}
+[data-theme="ocean"] .footer-l,[data-theme="ocean"] .footer-r{color:#8aacc0}
+[data-theme="ocean"] .footer-disclaimer{color:#7098b8}
+
+/* Ocean sidebar: bright ice-blue headings, readable names */
+[data-theme="ocean"] .sb-section .sb-heading{color:#90d0f0 !important;border-bottom-color:rgba(144,208,240,.25) !important}
+[data-theme="ocean"] .sb-section .sb-name{color:#8aacc0}
+[data-theme="ocean"] .sb-link{color:#8aacc0}
+[data-theme="ocean"] .sb-link:hover{color:#d8e8f0}
+[data-theme="ocean"] .sb-planet-label{color:#90d0f0}
+[data-theme="ocean"] .sb-pick-label{color:#90d0f0}
+[data-theme="ocean"] .sb-pick{border-color:rgba(144,208,240,.25);border-left-color:#90d0f0;background:rgba(255,255,255,.05)}
+[data-theme="ocean"] .sb-pick-name{color:#d8e8f0}
+[data-theme="ocean"] .sb-pick-tip{color:#8aacc0}
+
+/* Ocean fun bits */
+[data-theme="ocean"] .fun-bit:nth-child(1){background:rgba(255,255,255,.05);border-color:rgba(144,208,240,.12)}
+[data-theme="ocean"] .fun-bit:nth-child(2){background:rgba(255,255,255,.05);border-color:rgba(96,216,144,.12)}
+[data-theme="ocean"] .fun-bit:nth-child(3){background:rgba(255,255,255,.05);border-color:rgba(168,128,224,.12)}
+[data-theme="ocean"] .fun-bit:nth-child(1) .fun-bit-label{color:#70b8e0}
+[data-theme="ocean"] .fun-bit:nth-child(2) .fun-bit-label{color:#60d890}
+[data-theme="ocean"] .fun-bit:nth-child(3) .fun-bit-label{color:#a880e0}
+[data-theme="ocean"] .fun-bit-text{color:#c0d8ec}
+
+/* Ocean modals */
+[data-theme="ocean"] .summary-modal{color:#d8e8f0}
+[data-theme="ocean"] .summary-lean{color:#8aacc0}
+[data-theme="ocean"] .summary-lean strong{color:#d8e8f0}
+[data-theme="ocean"] .summary-card{background:rgba(255,255,255,.06);border-color:rgba(144,208,240,.12);color:#d8e8f0}
+[data-theme="ocean"] .summary-card-title{color:#d8e8f0}
+[data-theme="ocean"] .summary-card-body{color:#c0d8ec}
+[data-theme="ocean"] .summary-card-insight{color:#8aacc0;border-top-color:rgba(144,208,240,.15)}
+[data-theme="ocean"] .summary-lang-tabs{background:rgba(0,0,0,.25)}
+[data-theme="ocean"] .summary-lang-tab{color:#4a6880}
+[data-theme="ocean"] .summary-lang-tab.active{background:rgba(255,255,255,.1);color:#d8e8f0;box-shadow:none}
+[data-theme="ocean"] .summary-save-btn{background:#70b8e0;color:#0a1828}
+[data-theme="ocean"] .summary-save-btn:hover{background:#90d0f0}
+[data-theme="ocean"] .detail-modal{color:#d8e8f0}
+[data-theme="ocean"] .detail-close{color:#4a6880}
+[data-theme="ocean"] .detail-close:hover{color:#d8e8f0}
+[data-theme="ocean"] .detail-title{color:#d8e8f0}
+[data-theme="ocean"] .detail-content{color:#c0d8ec}
+[data-theme="ocean"] .detail-insight{color:#8aacc0;border-color:rgba(144,208,240,.15)}
+[data-theme="ocean"] .detail-source{color:#7098b8}
+[data-theme="ocean"] .detail-lang-tabs{background:rgba(0,0,0,.25)}
+[data-theme="ocean"] .detail-lang-tab{color:#4a6880}
+[data-theme="ocean"] .detail-lang-tab.active{background:rgba(255,255,255,.1);color:#d8e8f0;box-shadow:none}
+[data-theme="ocean"] .detail-tags .detail-tag{border-color:rgba(144,208,240,.3);color:#8aacc0}
+[data-theme="ocean"] .detail-tags .detail-tag:hover{background:rgba(255,255,255,.08);color:#d8e8f0}
+[data-theme="ocean"] .summary-modal .share-btn{color:#8aacc0;background:rgba(255,255,255,.07);border:none}
+[data-theme="ocean"] .summary-modal .share-btn:hover{background:rgba(255,255,255,.14);color:#d8e8f0}
+[data-theme="ocean"] .summary-modal .star-btn{color:#4a6880}
+[data-theme="ocean"] .summary-modal .star-btn.starred{color:#70b8e0}
 </style>
 <script defer src="https://cdn.vercel-insights.com/v1/script.js"></script>
 <!-- Google tag (gtag.js) -->
@@ -505,14 +636,20 @@ footer{border-top:1px solid var(--border);padding:28px 0;display:flex;align-item
 
 <nav>
   <span class="nav-logo">Curiosity Box</span>
-  <div style="display:flex;align-items:center;gap:12px">
+  <div style="display:flex;align-items:center;gap:14px">
+    <div id="todayDate" style="font-family:'DM Sans',sans-serif;font-size:11px;font-weight:300;letter-spacing:.3px;color:var(--tertiary);white-space:nowrap"></div>
     <div id="themeSwitcher" style="display:flex;gap:5px;align-items:center;">
       <button onclick="setTheme('amber')"  id="themeAmber"  title="Amber"   style="width:18px;height:18px;border-radius:50%;background:#e8740a;border:2px solid #d96c08;cursor:pointer;transition:transform .15s,border-color .15s,border-width .15s;" onmouseover="this.style.transform='scale(1.2)'" onmouseout="this.style.transform='scale(1)'"></button>
       <button onclick="setTheme('light')"  id="themeLight"  title="Linen"   style="width:18px;height:18px;border-radius:50%;background:#f5f4f0;border:2px solid #aaa;cursor:pointer;transition:transform .15s,border-color .15s,border-width .15s;" onmouseover="this.style.transform='scale(1.2)'" onmouseout="this.style.transform='scale(1)'"></button>
       <button onclick="setTheme('olive')"  id="themeOlive"  title="Olive"   style="width:18px;height:18px;border-radius:50%;background:#3a4a1e;border:2px solid #6a8030;cursor:pointer;transition:transform .15s,border-color .15s,border-width .15s;" onmouseover="this.style.transform='scale(1.2)'" onmouseout="this.style.transform='scale(1)'"></button>
       <button onclick="setTheme('ocean')"  id="themeOcean"  title="Ocean"   style="width:18px;height:18px;border-radius:50%;background:#0f1f2e;border:2px solid #2a5080;cursor:pointer;transition:transform .15s,border-color .15s,border-width .15s;" onmouseover="this.style.transform='scale(1.2)'" onmouseout="this.style.transform='scale(1)'"></button>
     </div>
-    <button class="nav-link danger" id="clearBtn" onclick="clearAll()">Clear all</button>
+    <div style="position:relative">
+      <button id="settingsBtn" onclick="toggleSettingsMenu()" title="Settings" style="background:none;border:none;cursor:pointer;color:var(--tertiary);font-size:16px;line-height:1;padding:4px 6px;transition:color .15s;display:flex;align-items:center;" onmouseover="this.style.color='var(--text)'" onmouseout="this.style.color='var(--tertiary)'">&#8943;</button>
+      <div id="settingsMenu" style="display:none;position:absolute;right:0;top:calc(100% + 8px);background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:6px;min-width:160px;box-shadow:0 8px 24px rgba(0,0,0,.12);z-index:200;">
+        <button class="nav-link danger" id="clearBtn" onclick="clearAll();toggleSettingsMenu()" style="display:block;width:100%;text-align:left;padding:8px 12px;border-radius:6px;font-size:12px;letter-spacing:.3px;color:#c0392b;transition:background .15s;" onmouseover="this.style.background='var(--border)'" onmouseout="this.style.background='none'">Clear history</button>
+      </div>
+    </div>
   </div>
 </nav>
 
@@ -1831,6 +1968,32 @@ updatePlanet();
 initTodayPick();
 initFunBits();
 initCreature();
+initTodayDate();
+
+function initTodayDate() {
+  const el = document.getElementById('todayDate');
+  if (!el) return;
+  const now = new Date();
+  const days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+  const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  el.textContent = days[now.getDay()] + ', ' + months[now.getMonth()] + ' ' + now.getDate();
+}
+
+function toggleSettingsMenu() {
+  const m = document.getElementById('settingsMenu');
+  if (!m) return;
+  const isOpen = m.style.display !== 'none';
+  m.style.display = isOpen ? 'none' : 'block';
+  if (!isOpen) {
+    setTimeout(() => document.addEventListener('click', function closeMenu(e) {
+      if (!document.getElementById('settingsBtn').contains(e.target) &&
+          !document.getElementById('settingsMenu').contains(e.target)) {
+        document.getElementById('settingsMenu').style.display = 'none';
+        document.removeEventListener('click', closeMenu);
+      }
+    }), 10);
+  }
+}
 
 
 // ── PENDING BATCH ─────────────────────────────
