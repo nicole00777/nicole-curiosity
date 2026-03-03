@@ -47,14 +47,14 @@
 }
 /* ── Olive ── deep olive-green bg */
 [data-theme="olive"]{
-  --bg:#3a4a1e;--surface:#424f22;--card-bg:#506030;
+  --bg:#3a4a1e;--surface:#424f22;--card-bg:#e8f0e0;
   --text:#eef0d8;--secondary:#b8c890;--tertiary:#788858;
   --border:#58682e;--border-lt:#4e5c26;
   --nav-bg:#303e18;--input-bg:#3e4e20;--btn-bg:#eef0d8;--btn-text:#3a4a1e;
   --modal-bg:#3e5020;--overlay-bg:rgba(0,0,0,.6);
-  --c-psychology:#70e8d0;--c-history:#f0d060;--c-nature:#a0f070;
-  --c-culture:#d0f090;--c-philosophy:#80f0c0;--c-language:#f8e860;
-  --c-food:#f8a870;--c-art:#c0f880;--c-science:#70d8c0;--c-folklore:#c0f860;
+  --c-psychology:#2a8870;--c-history:#8a6010;--c-nature:#2a7830;
+  --c-culture:#5a8820;--c-philosophy:#1a8060;--c-language:#7a7010;
+  --c-food:#a85020;--c-art:#3a7820;--c-science:#1a7860;--c-folklore:#4a7818;
   --c-default:#b0c888;
   --grad:linear-gradient(90deg,#90d0b8,#90e070,#e0c080,#b8d890,#e09870);
 }
@@ -669,28 +669,28 @@ footer{border-top:1px solid var(--border);padding:28px 0;display:flex;align-item
 [data-theme="ocean"] .error-msg{color:#ff9878}
 [data-theme="ocean"] .filter-select,[data-theme="ocean"] .filter-input{background:#162434;color:#d8e8f0;border-color:rgba(144,208,240,.2)}
 
-/* Olive archive cards: light text on dark olive card bg */
-[data-theme="olive"] .card{color:#eef0d8;background:#506030;border-color:#58682e}
-[data-theme="olive"] .card-title-en{color:#eef0d8}
-[data-theme="olive"] .card-content{color:#dde4c0}
-[data-theme="olive"] .card-insight{color:#b8c890;font-style:italic}
-[data-theme="olive"] .card-source{color:#a0b878}
+/* Olive archive cards: dark text on light green-white card bg */
+[data-theme="olive"] .card{color:#1e2810;background:#e8f0e0;border-color:#c8d8b8}
+[data-theme="olive"] .card-title-en{color:#1e2810}
+[data-theme="olive"] .card-content{color:#2a3818}
+[data-theme="olive"] .card-insight{color:#3a5828;font-style:italic}
+[data-theme="olive"] .card-source{color:#4a6838}
 [data-theme="olive"] .card-cat{color:var(--cat-color)}
-[data-theme="olive"] .card-num{color:#788858}
-[data-theme="olive"] .star-btn{color:#788858}
-[data-theme="olive"] .star-btn.starred{color:#c8e080}
-[data-theme="olive"] .card .lang-tabs{background:rgba(0,0,0,.2)}
-[data-theme="olive"] .card .lang-tab{color:#a0b878;background:none}
-[data-theme="olive"] .card .lang-tab.active{background:rgba(255,255,255,.15);color:#eef0d8;box-shadow:none}
-[data-theme="olive"] .card .share-label{color:#a0b878}
-[data-theme="olive"] .card .share-btn{color:#b8c890;background:rgba(0,0,0,.2);border:none}
-[data-theme="olive"] .card .share-btn:hover{background:rgba(0,0,0,.35);color:#eef0d8}
+[data-theme="olive"] .card-num{color:#6a8848}
+[data-theme="olive"] .star-btn{color:#6a8848}
+[data-theme="olive"] .star-btn.starred{color:#4a7a28}
+[data-theme="olive"] .card .lang-tabs{background:rgba(0,0,0,.08)}
+[data-theme="olive"] .card .lang-tab{color:#4a6838;background:none}
+[data-theme="olive"] .card .lang-tab.active{background:#3a4a1e;color:#eef0d8;box-shadow:none}
+[data-theme="olive"] .card .share-label{color:#4a6838}
+[data-theme="olive"] .card .share-btn{color:#2a3818;background:rgba(0,0,0,.08);border:none}
+[data-theme="olive"] .card .share-btn:hover{background:rgba(0,0,0,.15);color:#1e2810}
 [data-theme="olive"] .card .tag{color:var(--cat-color);border-color:var(--cat-color);opacity:1}
-[data-theme="olive"] .card .tag:hover{opacity:1;background:var(--cat-color);color:#fff}
-[data-theme="olive"] .card .card-title-zh{color:#a0b878}
-[data-theme="olive"] .card .share-bar{border-top-color:rgba(200,224,128,.15)}
-[data-theme="olive"] .card:hover{box-shadow:0 12px 40px rgba(0,0,0,.35)}
-[data-theme="olive"] .group-mood{background:rgba(0,0,0,.2);border-color:rgba(200,224,128,.2);color:#b8c890}
+[data-theme="olive"] .card .tag:hover{background:var(--cat-color);color:#fff}
+[data-theme="olive"] .card .card-title-zh{color:#4a6838}
+[data-theme="olive"] .card .share-bar{border-top-color:rgba(0,0,0,.08)}
+[data-theme="olive"] .card:hover{box-shadow:0 12px 40px rgba(0,0,0,.15)}
+[data-theme="olive"] .group-mood{background:#dde8cc;border-color:#c0d0a8;color:#3a5020}
 [data-theme="olive"] .filter-select,[data-theme="olive"] .filter-input{background:#3a4a1e;color:#eef0d8;border-color:#58682e}
 /* Ocean archive cards: light text on dark card bg */
 [data-theme="ocean"] .card{color:#d8e8f0;background:rgba(255,255,255,.05);border-color:rgba(144,208,240,.1)}
@@ -1231,7 +1231,7 @@ function getCatColor(cat) {
   const theme = document.documentElement.getAttribute('data-theme');
   if (theme === 'amber') return CAT_COLORS_AMBER[cat] || '#3a2210';
   if (theme === 'olive') {
-    const oliveMap = {Psychology:'#70e8d0',History:'#f0d060',Nature:'#a0f070',Culture:'#d0f090',Philosophy:'#80f0c0',Language:'#f8e860',Food:'#f8a870',Art:'#c0f880',Science:'#70d8c0',Folklore:'#c0f860'};
+    const oliveMap = {Psychology:'#2a8870',History:'#8a6010',Nature:'#2a7830',Culture:'#5a8820',Philosophy:'#1a8060',Language:'#7a7010',Food:'#a85020',Art:'#3a7820',Science:'#1a7860',Folklore:'#4a7818'};
     return oliveMap[cat] || '#b0c888';
   }
   if (theme === 'ocean') {
