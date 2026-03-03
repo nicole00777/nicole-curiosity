@@ -47,10 +47,10 @@
 }
 /* ── Olive ── deep olive-green bg */
 [data-theme="olive"]{
-  --bg:#3a4a1e;--surface:#424f22;--card-bg:#e8f0e0;
+  --bg:#3a4a1e;--surface:#424f22;--card-bg:#d8e8c8;
   --text:#eef0d8;--secondary:#b8c890;--tertiary:#788858;
   --border:#58682e;--border-lt:#4e5c26;
-  --nav-bg:#303e18;--input-bg:#3e4e20;--btn-bg:#eef0d8;--btn-text:#3a4a1e;
+  --nav-bg:#303e18;--input-bg:#3e4e20;--btn-bg:#d8e8c8;--btn-text:#2a3810;
   --modal-bg:#3e5020;--overlay-bg:rgba(0,0,0,.6);
   --c-psychology:#2a8870;--c-history:#8a6010;--c-nature:#2a7830;
   --c-culture:#5a8820;--c-philosophy:#1a8060;--c-language:#7a7010;
@@ -670,7 +670,7 @@ footer{border-top:1px solid var(--border);padding:28px 0;display:flex;align-item
 [data-theme="ocean"] .filter-select,[data-theme="ocean"] .filter-input{background:#162434;color:#d8e8f0;border-color:rgba(144,208,240,.2)}
 
 /* Olive archive cards: dark text on light green-white card bg */
-[data-theme="olive"] .card{color:#1e2810;background:#e8f0e0;border-color:#c8d8b8}
+[data-theme="olive"] .card{color:#1e2810;background:#d8e8c8;border-color:#b8ccaa}
 [data-theme="olive"] .card-title-en{color:#1e2810}
 [data-theme="olive"] .card-content{color:#2a3818}
 [data-theme="olive"] .card-insight{color:#3a5828;font-style:italic}
@@ -728,9 +728,9 @@ footer{border-top:1px solid var(--border);padding:28px 0;display:flex;align-item
 [data-theme="olive"] .img-section-label{color:#c8e080}
 [data-theme="olive"] .img-picker-btn{color:#b8c890;background:rgba(255,255,255,.07);border-color:transparent}
 [data-theme="olive"] .img-picker-btn:hover{background:rgba(255,255,255,.14);color:#eef0d8}
-[data-theme="olive"] .img-picker-btn.active{background:#c8e080;border-color:#c8e080;color:#1e2810}
-[data-theme="olive"] .img-dl-btn{background:#c8e080;color:#1e2810}
-[data-theme="olive"] .img-dl-btn:hover{background:#ddf090}
+[data-theme="olive"] .img-picker-btn.active{background:#424f22;border-color:#6a8030;color:#eef0d8}
+[data-theme="olive"] .img-dl-btn{background:#424f22;color:#eef0d8}
+[data-theme="olive"] .img-dl-btn:hover{background:#3a4a1e}
 [data-theme="olive"] .img-close-btn{background:rgba(255,255,255,.08);color:#b8c890;border:none}
 [data-theme="olive"] .img-close-btn:hover{background:rgba(255,255,255,.15)}
 [data-theme="olive"] #imgSaveHint{color:#a0b870}
@@ -763,7 +763,7 @@ footer{border-top:1px solid var(--border);padding:28px 0;display:flex;align-item
 <nav>
   <span class="nav-logo">Curiosity Box</span>
   <div style="display:flex;align-items:center;gap:14px">
-    <div id="todayDate" style="font-family:'DM Sans',sans-serif;font-size:11px;font-weight:300;letter-spacing:.3px;color:var(--tertiary);white-space:nowrap"></div>
+    <div id="todayDate" style="font-family:'DM Sans',sans-serif;font-size:9px;font-weight:500;letter-spacing:2px;text-transform:uppercase;color:var(--secondary);white-space:nowrap"></div>
     <div id="themeSwitcher" style="display:flex;gap:5px;align-items:center;">
       <button onclick="setTheme('light')"  id="themeLight"  title="Linen"   style="width:18px;height:18px;border-radius:50%;background:#f5f4f0;border:2px solid #aaa;cursor:pointer;transition:transform .15s,border-color .15s,border-width .15s;" onmouseover="this.style.transform='scale(1.2)'" onmouseout="this.style.transform='scale(1)'"></button>
       <button onclick="setTheme('amber')"  id="themeAmber"  title="Amber"   style="width:18px;height:18px;border-radius:50%;background:#e8740a;border:2px solid #d96c08;cursor:pointer;transition:transform .15s,border-color .15s,border-width .15s;" onmouseover="this.style.transform='scale(1.2)'" onmouseout="this.style.transform='scale(1)'"></button>
@@ -2129,7 +2129,7 @@ function initTodayDate() {
   const now = new Date();
   const days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
   const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-  el.textContent = days[now.getDay()] + ', ' + months[now.getMonth()] + ' ' + now.getDate();
+  el.textContent = 'Today is ' + days[now.getDay()] + ', ' + months[now.getMonth()] + ' ' + now.getDate();
 }
 
 function toggleSettingsMenu() {
