@@ -1427,6 +1427,7 @@ function selectMood(btn) {
 
 // TAG FILTER
 let _activeTag = '';
+let _pendingBatch = null;
 
 function filterByTag(tag) {
   _activeTag = tag;
@@ -2351,9 +2352,6 @@ function toggleSettingsMenu() {
   }
 }
 
-
-// ── PENDING BATCH ─────────────────────────────
-let _pendingBatch = null;
 
 // ── SUMMARY MODAL ─────────────────────────────
 function openSummaryModal(data) {
