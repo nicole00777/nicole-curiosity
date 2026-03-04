@@ -170,7 +170,7 @@ nav::before{content:'';position:fixed;top:0;left:0;right:0;height:2px;background
 .password-input{font-family:'DM Sans',sans-serif;font-size:13px;font-weight:300;background:var(--input-bg);border:1px solid var(--border);border-radius:var(--radius-sm);padding:11px 16px;width:148px;outline:none;transition:border-color .2s,background .2s}
 .password-input::placeholder{color:var(--tertiary)}.password-input:focus{border-color:var(--secondary);background:var(--surface)}
 .gen-btn{font-family:'DM Sans',sans-serif;font-size:14px;font-weight:500;letter-spacing:.3px;background:var(--btn-bg);color:var(--btn-text);border:none;border-radius:var(--radius-sm);padding:12px 24px;cursor:pointer;transition:background .3s,color .3s,transform .1s,opacity .18s;white-space:nowrap;position:relative}
-.gen-btn::before{content:'';position:absolute;inset:-2px;border-radius:calc(var(--radius-sm) + 2px);background:var(--grad);background-size:200% 100%;z-index:-1;opacity:0.7;animation:borderPulse 3s ease-in-out infinite,rainbowFlow 4s linear infinite}
+.gen-btn::before{content:'';position:absolute;inset:-2px;border-radius:calc(var(--radius-sm) + 2px);background:var(--grad);background-size:200% 100%;z-index:-1;opacity:0.7;animation:borderPulse 8s ease-in-out infinite,rainbowFlow 8s linear infinite}
 @keyframes rainbowFlow{0%{background-position:0% 50%}100%{background-position:200% 50%}}
 @keyframes borderPulse{0%,100%{opacity:0.5;filter:blur(2px)}50%{opacity:0.9;filter:blur(4px)}}
 .gen-btn:disabled{opacity:.5;cursor:not-allowed;transform:none}
