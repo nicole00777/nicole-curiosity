@@ -83,6 +83,7 @@ body{background:var(--bg);color:var(--text);transition:background .3s,color .3s;
 .page::before{left:calc(50% - 600px)}.page::after{right:calc(50% - 600px)}
 
 /* NAV */
+/* ── Navigation ─────────────────────────────────────── */
 nav{display:flex;align-items:center;justify-content:space-between;padding:28px 0;border-bottom:1px solid var(--border);background:var(--bg)}
 nav::before{content:'';position:fixed;top:0;left:0;right:0;height:2px;background:var(--grad);z-index:100}
 
@@ -173,6 +174,7 @@ nav::before{content:'';position:fixed;top:0;left:0;right:0;height:2px;background
 .nav-link:hover{color:var(--text)}.nav-link.danger:hover{color:#c0392b}.nav-link.show{display:inline}
 
 /* ── Hero ───────────────────────────────────────────── */
+/* ── Hero ───────────────────────────────────────────── */
 .hero{display:grid;grid-template-columns:1fr 1fr;padding:64px 0 56px;border-bottom:1px solid var(--border);align-items:end}
 .hero-kicker{font-size:11px;font-weight:500;letter-spacing:2.5px;text-transform:uppercase;color:var(--secondary);margin-bottom:24px}
 .hero-title{font-family:'DM Serif Display',serif;font-size:clamp(2.8rem,4.5vw,4.2rem);font-weight:400;line-height:1.06;letter-spacing:-.5px;margin-bottom:16px}
@@ -180,6 +182,7 @@ nav::before{content:'';position:fixed;top:0;left:0;right:0;height:2px;background
 .hero-sub{font-size:14px;color:var(--secondary);line-height:1.75;max-width:320px}
 .hero-right{display:flex;flex-direction:column;align-items:flex-end;gap:16px;padding-bottom:0}
 
+/* ── Mood Chips ─────────────────────────────────────── */
 /* ── Mood Chips ─────────────────────────────────────── */
 .mood-label{font-size:9px;font-weight:500;letter-spacing:2px;text-transform:uppercase;color:var(--secondary);text-align:right;width:100%}
 .mood-row{display:flex;gap:4px;flex-wrap:nowrap;justify-content:flex-end;overflow:visible}
@@ -193,6 +196,7 @@ nav::before{content:'';position:fixed;top:0;left:0;right:0;height:2px;background
 .mood-chip.active[data-mood="beautiful"]{background:#5f8c6e;color:#fff;border-color:#5f8c6e}
 .mood-chip.active[data-mood="unsettling"]{background:#7a5a8a;color:#fff;border-color:#7a5a8a}
 
+/* ── Generate Row ───────────────────────────────────── */
 .gen-row{display:flex;gap:8px;align-items:center}
 .password-input{font-family:'DM Sans',sans-serif;font-size:13px;font-weight:300;background:var(--input-bg);border:1px solid var(--border);border-radius:var(--radius-sm);padding:11px 16px;width:148px;outline:none;transition:border-color .2s,background .2s}
 .password-input::placeholder{color:var(--tertiary)}.password-input:focus{border-color:var(--secondary);background:var(--surface)}
@@ -202,6 +206,7 @@ nav::before{content:'';position:fixed;top:0;left:0;right:0;height:2px;background
 .error-msg:not(:empty)::before{content:'⚠';font-size:12px}
 
 /* ── Loading State ──────────────────────────────────── */
+/* ── Loading State ──────────────────────────────────── */
 .loading{display:none;padding:48px 0 16px;text-align:center}.loading.show{display:block}
 .loading-track{width:36px;height:1px;background:var(--border);margin:0 auto 16px;overflow:hidden;position:relative}
 .loading-track::after{content:'';position:absolute;left:-100%;width:100%;height:100%;background:var(--text);animation:sweep 1s ease-in-out infinite}
@@ -210,6 +215,7 @@ nav::before{content:'';position:fixed;top:0;left:0;right:0;height:2px;background
 /* ── Layout ─────────────────────────────────────────── */
 .main-layout{display:grid;grid-template-columns:1fr 200px;gap:48px;align-items:start;border-left:none}
 
+/* ── Archive Toolbar ────────────────────────────────── */
 /* ── Archive Toolbar ────────────────────────────────── */
 .toolbar{display:flex;align-items:center;justify-content:space-between;padding:32px 0 24px;gap:16px;flex-wrap:wrap}
 .toolbar-left{display:flex;align-items:center;gap:10px}
@@ -233,6 +239,7 @@ nav::before{content:'';position:fixed;top:0;left:0;right:0;height:2px;background
 /* ── Cards ──────────────────────────────────────────── */
 .cards-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .cards-grid .card:first-child{grid-column:1/-1}
+/* ── Cards ──────────────────────────────────────────── */
 .card{
   border:1px solid var(--border);border-radius:var(--radius);padding:24px;
   position:relative;overflow:hidden;transition:box-shadow .2s,transform .18s;
@@ -265,10 +272,12 @@ nav::before{content:'';position:fixed;top:0;left:0;right:0;height:2px;background
 
 /* ── Tags ───────────────────────────────────────────── */
 .card-tags{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:8px}
+/* ── Tags ───────────────────────────────────────────── */
 .tag{font-size:11px;font-weight:500;color:var(--cat-color,var(--c-default));background:transparent;border:1px solid var(--cat-color,var(--c-default));border-radius:20px;padding:3px 10px;opacity:.8;cursor:pointer;font-family:'DM Sans',sans-serif;transition:opacity .15s,background .15s,color .15s;letter-spacing:.5px}
 .tag:hover{opacity:1;background:var(--cat-color,var(--c-default));color:#fff}
 .tag.active-tag{opacity:1;background:var(--cat-color,var(--c-default));color:#fff}
 
+/* ── Share Bar ──────────────────────────────────────── */
 /* ── Share Bar ──────────────────────────────────────── */
 .share-bar{display:flex;align-items:center;gap:8px;padding-top:16px;border-top:1px solid var(--border-lt);flex-wrap:wrap}
 .share-label{font-size:11px;font-weight:500;letter-spacing:1.5px;text-transform:uppercase;color:var(--secondary);margin-right:2px}
@@ -280,6 +289,7 @@ nav::before{content:'';position:fixed;top:0;left:0;right:0;height:2px;background
 .load-more-btn{display:block;width:100%;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:300;color:var(--secondary);background:var(--input-bg);border:1px solid var(--border);border-radius:var(--radius-sm);padding:16px;cursor:pointer;transition:background .15s,color .15s,border-color .15s;margin-bottom:48px;letter-spacing:.3px}
 .load-more-btn:hover{background:var(--accent);color:var(--accent-text);border-color:var(--accent)}
 
+/* ── Sidebar ────────────────────────────────────────── */
 /* ── Sidebar ────────────────────────────────────────── */
 .sidebar{position:sticky;top:40px;padding-top:48px;border-left:1px solid var(--border);padding-left:32px;margin-left:-16px}
 .sb-section{margin-bottom:24px}
@@ -401,6 +411,7 @@ nav::before{content:'';position:fixed;top:0;left:0;right:0;height:2px;background
 .wonder-again:hover{color:var(--text)}
 
 /* FUN BITS */
+/* ── Fun Bits ───────────────────────────────────────── */
 .fun-bits{border-top:1px solid var(--border-lt);padding:28px 0 0;margin-top:8px}
 .fun-bit{border-radius:var(--radius);padding:18px 20px}
 .fun-bit:nth-child(1){background:var(--surface);border:1px solid var(--border)}
@@ -437,6 +448,7 @@ nav::before{content:'';position:fixed;top:0;left:0;right:0;height:2px;background
 .empty-state-icon{font-size:32px;display:block;margin-bottom:16px;opacity:.4;filter:grayscale(1)}
 .empty-state-title{font-family:'DM Serif Display',serif;font-size:1.1rem;color:var(--secondary);display:block;margin-bottom:8px}
 .empty-state-sub{font-size:13px;color:var(--tertiary);display:block}
+/* ── Footer ─────────────────────────────────────────── */
 footer{border-top:1px solid var(--border);padding:28px 0;display:flex;align-items:center;justify-content:space-between;margin-top:40px}
 .footer-l{font-size:13px;font-weight:500;letter-spacing:1.5px;text-transform:uppercase;color:var(--secondary)}
 .footer-r{font-size:13px;font-weight:300;letter-spacing:.3px;color:var(--secondary)}
