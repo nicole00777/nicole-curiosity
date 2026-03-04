@@ -1,22 +1,58 @@
-# Changelog - Curiosity Box
+# Changelog — Curiosity Box
 
 ---
 
-## [1.8] 2026-03-03 - Bug Fixes & Performance
+## [1.9] 2026-03-04 — UI Polish & Image Styles
+
+### Rainbow Animations
+- "Made with curiosity" footer text animates with flowing rainbow gradient (8s loop)
+- Top nav bar and footer divider display static rainbow gradient via `--grad`
+- Generate button has rainbow glow pulse animation; stops when disabled
+- `--grad` (knowing. section) and `--grad-footer` (footer text) are independent per theme
+
+### Tag Visibility
+- Active and hover tags now show `color: #fff` with text-shadow on all themes
+- Amber active tag uses dark brown background for contrast on warm background
+- Ocean and Olive themes: `font-weight: 500` on active/hover tags
+- Search highlight inside tags no longer occludes text
+
+### Auth UI
+- Email input replaced with **avatar circle** (first letter of email, 32px, theme-colored)
+- Clicking avatar opens dropdown with email address and Sign Out button
+- Click-outside closes the dropdown automatically
+
+### Save as Image — Styles
+- **Dark** style replaced with **Neon**: dark bg, cyan/magenta glow, Orbitron font, grid lines
+- **Headline** style replaced with **Minimal**: large centered italic quote, accent line, title below
+- Category label hidden in Neon, Parchment, Minimal, Light, Ink, Gradient styles
+- Neon source text: white with cyan glow for high contrast
+- Ink insight and source text brightness increased for legibility on dark background
+- Minimal: two-pass rendering for true vertical centering; quote font enlarged to `0.050W`
+- English body and insight text rendered with **justify** alignment across all styles
+
+### Other Polish
+- Static "SHARE" label removed from share bar
+- Image picker hover uses `--surface` for theme-aware background
+- "Wonder again" hover adds `letter-spacing: 3px`
+- Share button hover improved for Amber and Ocean card themes
+
+---
+
+## [1.8] 2026-03-03 — Bug Fixes & Performance
 
 ### Bug Fixes
-- Fixed _pendingBatch variable declaration order causing JS error
+- Fixed `_pendingBatch` variable declaration order causing JS error on load
 - Archive data not displaying and Generate failing were both caused by this error
 
 ### Performance
 - Font preconnect added for Google Fonts (faster font load, less flicker)
 
 ### Security
-- vercel.json updated with CSP, X-Frame-Options, X-Content-Type-Options, Referrer-Policy headers
+- `vercel.json` updated with CSP, X-Frame-Options, X-Content-Type-Options, Referrer-Policy headers
 
 ---
 
-## [1.7] 2026-03-03 - Accessibility, UX & Dark Mode
+## [1.7] 2026-03-03 — Accessibility, UX & Dark Mode
 
 ### Keyboard & Focus
 - Modal open: focus moves to close/action button automatically
@@ -33,38 +69,37 @@
 - Dark background, white text, red left border for clear visibility
 
 ### Generate Button
-- Disabled state now shows 50% opacity + not-allowed cursor
+- Disabled state shows 50% opacity + `not-allowed` cursor
 - More visually obvious when generation is in progress
 
 ### Ocean Dark Mode
 - Background deepened, text softened for less eye strain
 - Card backgrounds brightened for better layer contrast
 - Image brightness reduced to 88%
-- Card content line-height increased to 1.85 (1.9 on mobile)
+- Card content `line-height` increased to 1.85 (1.9 on mobile)
 - Mood chip touch target increased to 44px on mobile
-- Auto-switches to Ocean when system is in dark mode
-- Reverts to Linen when system switches back to light mode
+- Auto-switches to Ocean when system is in dark mode; reverts to Linen on light mode
 
 ### Amber Readability
-- Card background changed from near-white to warm beige (#f5e8d0)
-- Card text softened from near-black to warm brown (#3a2010)
-- Card content line-height increased to 1.85
+- Card background changed from near-white to warm beige (`#f5e8d0`)
+- Card text softened from near-black to warm brown (`#3a2010`)
+- Card content `line-height` increased to 1.85
 
 ### Default Theme
 - New users land on Linen (white) by default
 - Returning users keep their saved theme
 
 ### CSS Architecture
-- Shared tokens (--radius, --space-*, --transition-*) moved to :root
+- Shared tokens (`--radius`, `--space-*`, `--transition-*`) moved to `:root`
 - Search highlight styles added per theme
-- prefers-reduced-motion: all animations disabled for sensitive users
+- `prefers-reduced-motion`: all animations disabled for sensitive users
 - Print styles: hides UI chrome, shows clean card content only
 - Font fallback stack improved for cross-platform coverage
-- Olive and Ocean --tertiary contrast improved toward WCAG AA
+- Olive and Ocean `--tertiary` contrast improved toward WCAG AA
 
 ---
 
-## [1.6] 2026-03-03 - UX Polish & Bug Fixes
+## [1.6] 2026-03-03 — UX Polish & Bug Fixes
 
 ### Visual
 - Ocean save-as-image modal: selected state border-only, muted Save button
@@ -77,32 +112,31 @@
 
 ---
 
-## [1.5] 2026-03-03 - Security, Stability and Maintainability
+## [1.5] 2026-03-03 — Security, Stability & Maintainability
 
 ### Security
-- API requests time out after 30s via AbortController
+- API requests time out after 30s via `AbortController`
 - Password input limited to 64 characters
-- autocomplete=current-password added
+- `autocomplete=current-password` added
 
 ### Stability
 - Offline/online toast notifications
-- localStorage writes wrapped in try/catch
-- Empty catch blocks now log console.error
+- `localStorage` writes wrapped in try/catch
+- Empty catch blocks now log `console.error`
 - Abort errors handled with distinct message
 
 ### Maintainability
-- JS constants at top of script: MAX_BATCHES, API_TIMEOUT_MS, MAX_PW_LENGTH
+- JS constants at top of script: `MAX_BATCHES`, `API_TIMEOUT_MS`, `MAX_PW_LENGTH`
 - CSS has 12 labeled section comments
-- Spacing scale variables: --space-xs through --space-xl
+- Spacing scale variables: `--space-xs` through `--space-xl`
 
 ---
 
-## [1.4] 2026-03-03 - UX Improvements
+## [1.4] 2026-03-03 — UX Improvements
 
 ### Error Handling
 - Warning icon added to error messages via CSS
-- Network errors use toast
-- showToast() helper added
+- Network errors use toast; `showToast()` helper added
 
 ### Empty States
 - Archive empty: icon + call to action
@@ -110,15 +144,15 @@
 - Starred empty: helpful hint
 
 ### Accessibility
-- focus-visible keyboard styles
-- aria-label on Generate, Settings, filter buttons
-- aria-live on loading area
-- role=status on empty states
-- lang=en on html tag
+- `focus-visible` keyboard styles
+- `aria-label` on Generate, Settings, filter buttons
+- `aria-live` on loading area
+- `role=status` on empty states
+- `lang=en` on html tag
 
 ---
 
-## [1.3] 2026-03-03 - Visual Design System
+## [1.3] 2026-03-03 — Visual Design System
 
 ### Spacing
 - All padding/margin/gap on 8px grid
@@ -128,16 +162,16 @@
 - Removed intermediate sizes like 9px, 12.5px
 
 ### Colors
-- --accent and --accent-text in all themes
-- Linen: all hardcoded colors use CSS variables
+- `--accent` and `--accent-text` added to all themes
+- Linen: all hardcoded colors replaced with CSS variables
 
 ---
 
-## [1.2] 2026-03-03 - Mobile Optimization
+## [1.2] 2026-03-03 — Mobile Optimization
 
 - Sticky archive toolbar
 - Password input flexible width
-- Touch targets minimum 44x44px
+- Touch targets minimum 44×44px
 - Theme dots 24px
 - Date hidden on mobile nav
 - 16px body text (prevents iOS zoom)
@@ -145,23 +179,23 @@
 
 ---
 
-## [1.1] 2026-03-03 - Theme and UI Polish
+## [1.1] 2026-03-03 — Theme and UI Polish
 
-- Date format: TODAY IS WEEKDAY, DATE
-- Olive: card/button color #d8e8c8
+- Date format: `TODAY IS WEEKDAY, DATE`
+- Olive: card/button color `#d8e8c8`
 - Amber: fun bits contrast improved, warm pastel bubbles
 - Ocean: save modal border-only selection, muted save button
 - Knowledge Diet bubbles theme-aware colors
 
 ---
 
-## [1.0] 2026-03-02 - Initial Build
+## [1.0] 2026-03-02 — Initial Build
 
 - 5-theme system: Linen, Amber, Olive, Ocean
 - Anthropic API generation with password
 - Archive: search, filter, star, date groups
 - EN/Chinese toggle per card
-- Save as image: 6 styles x 3 ratios
+- Save as image: 6 styles × 3 ratios
 - Sidebar: bubbles, picks, reading links
 - Fun bits section
 - Supabase auth
