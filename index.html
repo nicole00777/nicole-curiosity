@@ -20,7 +20,7 @@
 <link rel="preload" href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
 <noscript><link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"></noscript>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&family=Dancing+Script:wght@400;600&family=EB+Garamond:ital,wght@0,400;1,400&family=Playfair+Display:ital,wght@0,700;1,400&family=Space+Grotesk:wght@300;400;500&family=Lora:ital,wght@0,400;1,400&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;600&family=Bebas+Neue&display=swap" rel="stylesheet"></noscript>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 <style>
 :root{
@@ -161,12 +161,12 @@ nav::before{content:'';position:fixed;top:0;left:0;right:0;height:2px;background
 
 
 /* Fun bits (white bg) */
-[data-theme="amber"] .fun-bit{color:#1c0a00;background:rgba(255,255,255,.15);border-color:rgba(255,220,150,.3)}
+[data-theme="amber"] .fun-bit{color:var(--card-text);background:rgba(255,255,255,.88);border-color:rgba(255,255,255,.5)}
 [data-theme="amber"] .fun-bit:nth-child(1){background:rgba(255,255,255,.15);border-color:rgba(255,220,150,.3)}
 [data-theme="amber"] .fun-bit:nth-child(2){background:rgba(255,255,255,.15);border-color:rgba(255,220,150,.3)}
 [data-theme="amber"] .fun-bit:nth-child(3){background:rgba(255,255,255,.15);border-color:rgba(255,220,150,.3)}
-[data-theme="amber"] .fun-bit-label{color:var(--text)}
-[data-theme="amber"] .fun-bit-text{color:var(--text)}
+[data-theme="amber"] .fun-bit-label{color:var(--card-text-3)}
+[data-theme="amber"] .fun-bit-text{color:var(--card-text)}
 
 
 
@@ -412,13 +412,13 @@ nav::before{content:'';position:fixed;top:0;left:0;right:0;height:2px;background
 .curiosity-toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 
 /* RANDOM WONDER */
-.wonder-overlay{display:none;position:fixed;inset:0;background:rgba(245,244,240,.96);z-index:900;align-items:center;justify-content:center;backdrop-filter:blur(2px)}
+.wonder-overlay{display:none;position:fixed;inset:0;background:var(--bg);z-index:900;align-items:center;justify-content:center}
 .wonder-overlay.show{display:flex}
 .wonder-card{max-width:560px;width:90%;padding:48px;position:relative}
 .wonder-close{position:absolute;top:16px;right:16px;background:none;border:none;cursor:pointer;font-size:20px;color:var(--tertiary);line-height:1;padding:4px}
 .wonder-close:hover{color:var(--text)}
 .wonder-cat{font-size:9px;font-weight:500;letter-spacing:2px;text-transform:uppercase;margin-bottom:16px}
-.wonder-title{font-family:'DM Serif Display',serif;font-size:1.6rem;line-height:1.2;margin-bottom:8px}
+.wonder-title{font-family:'DM Serif Display',serif;font-size:1.6rem;line-height:1.2;margin-bottom:8px;color:var(--text)}
 .wonder-body{font-size:14px;color:var(--text);line-height:1.85;margin-bottom:16px;font-weight:300}
 .wonder-insight{font-family:'DM Serif Display',serif;font-size:13px;color:var(--secondary);font-style:italic;line-height:1.65;padding-top:14px;border-top:1px solid var(--border-lt)}
 .wonder-again{margin-top:28px;font-family:'DM Sans',sans-serif;font-size:9px;font-weight:500;letter-spacing:2px;text-transform:uppercase;color:var(--tertiary);background:none;border:none;cursor:pointer;padding:0;transition:color .15s}
@@ -455,7 +455,7 @@ nav::before{content:'';position:fixed;top:0;left:0;right:0;height:2px;background
 .refresh-btn.spinning{transform:rotate(360deg)}
 
 /* FOOTER */
-.footer-disclaimer{font-size:13px;font-weight:300;color:var(--secondary);text-align:center;margin-top:24px;margin-bottom:16px;line-height:1.8;font-style:italic;letter-spacing:.2px}
+.footer-disclaimer{font-size:13px;font-weight:300;color:var(--secondary);text-align:center;margin-top:24px;margin-bottom:16px;line-height:1.8;font-style:italic;letter-spacing:.2px;max-width:600px;margin-left:auto;margin-right:auto;opacity:.8}
 
 /* EMPTY + FOOTER */
 .empty-state{text-align:center;padding:72px 0 96px;color:var(--tertiary);font-size:13px;line-height:2}
@@ -919,7 +919,7 @@ button:focus-visible,a:focus-visible{outline:2px solid var(--secondary);outline-
   <div style="display:flex;align-items:center;gap:14px">
     <div id="todayDate" style="font-family:'DM Sans',sans-serif;font-size:9px;font-weight:500;letter-spacing:2px;text-transform:uppercase;color:var(--secondary);white-space:nowrap"></div>
     <div id="themeSwitcher" style="display:flex;gap:5px;align-items:center;">
-      <button onclick="setTheme('light')"  id="themeLight"  title="Linen"   style="width:18px;height:18px;border-radius:50%;background:#f5f4f0;border:2px solid #aaa;cursor:pointer;transition:transform .15s,border-color .15s,border-width .15s;" onmouseover="this.style.transform='scale(1.2)'" onmouseout="this.style.transform='scale(1)'"></button>
+      <button onclick="setTheme('light')"  id="themeLight"  title="Linen"   style="width:18px;height:18px;border-radius:50%;background:#f5f4f0;border:2px solid #888;cursor:pointer;transition:transform .15s,border-color .15s,border-width .15s;" onmouseover="this.style.transform='scale(1.2)'" onmouseout="this.style.transform='scale(1)'"></button>
       <button onclick="setTheme('amber')"  id="themeAmber"  title="Amber"   style="width:18px;height:18px;border-radius:50%;background:#e8740a;border:2px solid #d96c08;cursor:pointer;transition:transform .15s,border-color .15s,border-width .15s;" onmouseover="this.style.transform='scale(1.2)'" onmouseout="this.style.transform='scale(1)'"></button>
       <button onclick="setTheme('olive')"  id="themeOlive"  title="Olive"   style="width:18px;height:18px;border-radius:50%;background:#3a4a1e;border:2px solid #6a8030;cursor:pointer;transition:transform .15s,border-color .15s,border-width .15s;" onmouseover="this.style.transform='scale(1.2)'" onmouseout="this.style.transform='scale(1)'"></button>
       <button onclick="setTheme('ocean')"  id="themeOcean"  title="Ocean"   style="width:18px;height:18px;border-radius:50%;background:#0f1f2e;border:2px solid #2a5080;cursor:pointer;transition:transform .15s,border-color .15s,border-width .15s;" onmouseover="this.style.transform='scale(1.2)'" onmouseout="this.style.transform='scale(1)'"></button>
@@ -1341,10 +1341,17 @@ button:focus-visible,a:focus-visible{outline:2px solid var(--secondary);outline-
       <button class="img-picker-btn" onclick="selectOpt(this,'style','parchment')"><span class="picker-swatch" style="background:#f2ead8"></span> Parchment</button>
       <button class="img-picker-btn" onclick="selectOpt(this,'style','ink')"><span class="picker-swatch" style="background:#1a1a2e"></span> Ink</button>
       <button class="img-picker-btn" onclick="selectOpt(this,'style','editorial')"><span class="picker-swatch" style="background:#fff;border:2px solid #111"></span> Editorial</button>
+      <button class="img-picker-btn" onclick="selectOpt(this,'style','gradient')"><span class="picker-swatch" style="background:linear-gradient(135deg,#667eea,#764ba2)"></span> Gradient</button>
+      <button class="img-picker-btn" onclick="selectOpt(this,'style','headline')"><span class="picker-swatch" style="background:#111;color:#fff;font-weight:900;font-size:9px;display:flex;align-items:center;justify-content:center;letter-spacing:1px">BIG</span> Headline</button>
     </div>
 
+    <div class="img-section-label">Language</div>
+    <div class="img-picker-grid" style="grid-template-columns:1fr 1fr;gap:6px;margin-bottom:16px">
+      <button class="img-picker-btn active" onclick="selectOpt(this,'lang','en')">EN</button>
+      <button class="img-picker-btn" onclick="selectOpt(this,'lang','zh')">中文</button>
+    </div>
     <div class="img-section-label">Ratio</div>
-    <div class="img-picker-grid three" style="margin-bottom:20px">
+    <div class="img-picker-grid" style="grid-template-columns:1fr 1fr 1fr;gap:6px;margin-bottom:20px">
       <button class="img-picker-btn active" onclick="selectOpt(this,'ratio','1:1')"><span class="ratio-icon ratio-sq"></span> 1:1</button>
       <button class="img-picker-btn" onclick="selectOpt(this,'ratio','4:5')"><span class="ratio-icon ratio-port"></span> 4:5</button>
       <button class="img-picker-btn" onclick="selectOpt(this,'ratio','16:9')"><span class="ratio-icon ratio-land"></span> 16:9</button>
@@ -1904,22 +1911,32 @@ let _imgItem=null, _imgLang='en', _imgStyle='category', _imgRatio='1:1';
 
 // Style definitions: each returns {bg, text, sub, border, accent?, serif?, lineColor?}
 const STYLES = {
-  category:  item => ({bg:CAT_COLORS[item.category]||'#888', text:'#fff', sub:'rgba(255,255,255,0.6)', border:'rgba(255,255,255,0.18)', lineColor:'rgba(255,255,255,0.25)', serif:false}),
-  dark:      ()   => ({bg:'#0f0f0f', text:'#f0f0f0', sub:'rgba(240,240,240,0.5)', border:'rgba(255,255,255,0.1)', lineColor:'rgba(255,255,255,0.12)', serif:false}),
-  light:     item => ({bg:'#f5f4f0', text:'#111', sub:'#777', border:'rgba(0,0,0,0.08)', accent:CAT_COLORS[item.category]||'#888', lineColor:'rgba(0,0,0,0.1)', serif:false}),
-  parchment: ()   => ({bg:'#f2ead8', text:'#2c1f0e', sub:'#7a6040', border:'rgba(100,70,20,0.15)', lineColor:'rgba(100,70,20,0.2)', serif:true}),
-  ink:       item => ({bg:'#1a1a2e', text:'#e8e4dc', sub:'rgba(232,228,220,0.55)', border:'rgba(232,228,220,0.12)', accent:CAT_COLORS[item.category]||'#888', lineColor:'rgba(232,228,220,0.15)', serif:true}),
-  editorial: item => ({bg:'#ffffff', text:'#111', sub:'#555', border:'rgba(0,0,0,0.12)', accent:CAT_COLORS[item.category]||'#111', lineColor:'#111', serif:false, editorial:true}),
+  category:  item => ({bg:CAT_COLORS[item.category]||'#888', text:'#fff', sub:'rgba(255,255,255,0.6)', border:'rgba(255,255,255,0.18)', lineColor:'rgba(255,255,255,0.25)', serif:false,
+    titleFont:'DM Serif Display, Georgia, serif', bodyFont:'DM Sans, sans-serif', insightFont:'DM Serif Display, Georgia, serif', zhTitleFont:'STSong, serif', zhBodyFont:'PingFang SC, sans-serif'}),
+  dark:      ()   => ({bg:'#0f0f0f', text:'#f0f0f0', sub:'rgba(240,240,240,0.5)', border:'rgba(255,255,255,0.1)', lineColor:'rgba(255,255,255,0.12)', serif:false,
+    titleFont:'Space Grotesk, sans-serif', bodyFont:'Space Grotesk, sans-serif', insightFont:'Space Grotesk, sans-serif', zhTitleFont:'PingFang SC, sans-serif', zhBodyFont:'PingFang SC, sans-serif'}),
+  light:     item => ({bg:'#f5f4f0', text:'#111', sub:'#777', border:'rgba(0,0,0,0.08)', accent:CAT_COLORS[item.category]||'#888', lineColor:'rgba(0,0,0,0.1)', serif:false,
+    titleFont:'Lora, Georgia, serif', bodyFont:'Lora, Georgia, serif', insightFont:'Lora, Georgia, serif', zhTitleFont:'STSong, serif', zhBodyFont:'STSong, serif'}),
+  parchment: ()   => ({bg:'#f2ead8', text:'#2c1f0e', sub:'#7a6040', border:'rgba(100,70,20,0.15)', lineColor:'rgba(100,70,20,0.2)', serif:true,
+    titleFont:'Dancing Script, cursive', bodyFont:'EB Garamond, Georgia, serif', insightFont:'Dancing Script, cursive', zhTitleFont:'STKaiti, STSong, serif', zhBodyFont:'STSong, serif'}),
+  ink:       item => ({bg:'#1a1a2e', text:'#e8e4dc', sub:'rgba(232,228,220,0.55)', border:'rgba(232,228,220,0.12)', accent:CAT_COLORS[item.category]||'#888', lineColor:'rgba(232,228,220,0.15)', serif:true,
+    titleFont:'EB Garamond, Georgia, serif', bodyFont:'EB Garamond, Georgia, serif', insightFont:'EB Garamond, Georgia, serif', zhTitleFont:'STSong, serif', zhBodyFont:'STSong, serif'}),
+  editorial: item => ({bg:'#ffffff', text:'#111', sub:'#555', border:'rgba(0,0,0,0.12)', accent:CAT_COLORS[item.category]||'#111', lineColor:'#111', serif:false, editorial:true,
+    titleFont:'Libre Baskerville, Georgia, serif', bodyFont:'Libre Baskerville, Georgia, serif', insightFont:'Libre Baskerville, Georgia, serif', zhTitleFont:'STSong, serif', zhBodyFont:'STSong, serif'}),
+  gradient:  item => ({bg:'gradient', text:'#fff', sub:'rgba(255,255,255,0.7)', border:'rgba(255,255,255,0.2)', lineColor:'rgba(255,255,255,0.3)', serif:false, gradColors:[CAT_COLORS[item.category]||'#667eea','#764ba2'],
+    titleFont:'Plus Jakarta Sans, sans-serif', bodyFont:'Plus Jakarta Sans, sans-serif', insightFont:'Plus Jakarta Sans, sans-serif', zhTitleFont:'PingFang SC, sans-serif', zhBodyFont:'PingFang SC, sans-serif'}),
+  headline:  item => ({bg:CAT_COLORS[item.category]||'#111', text:'#fff', sub:'rgba(255,255,255,0.75)', border:'rgba(255,255,255,0.2)', lineColor:'rgba(255,255,255,0.3)', serif:false, headline:true,
+    titleFont:'Bebas Neue, Impact, sans-serif', bodyFont:'DM Sans, sans-serif', insightFont:'DM Sans, sans-serif', zhTitleFont:'PingFang SC, sans-serif', zhBodyFont:'PingFang SC, sans-serif'}),
 };
 
-// Per-ratio font scale factors
-const RATIO_SCALE = {'1:1':1.0, '4:5':0.95, '16:9':0.72};
+// Per-ratio font scale factors (1:1 and 4:5 get larger fonts)
+const RATIO_SCALE = {'1:1':1.15, '4:5':1.05, '16:9':0.72};
 
 // Canvas dimensions - 16:9 taller to fit content
 const RATIOS = {'1:1':[1080,1080], '4:5':[1080,1350], '16:9':[1280,900]};
 
 function selectOpt(btn, type, val) {
-  btn.closest('.img-picker-grid, .img-picker-grid.three').querySelectorAll('.img-picker-btn').forEach(b=>b.classList.remove('active'));
+  btn.closest('.img-picker-grid').querySelectorAll('.img-picker-btn').forEach(b=>b.classList.remove('active'));
   btn.classList.add('active');
   if (type==='lang') _imgLang=val;
   else if (type==='style') _imgStyle=val;
@@ -1949,7 +1966,11 @@ function renderCanvas() {
   const ctx = canvas.getContext('2d');
 
   // Background
-  ctx.fillStyle=s.bg; ctx.fillRect(0,0,W,H);
+  if (s.bg === 'gradient') {
+    const grd = ctx.createLinearGradient(0,0,W,H);
+    grd.addColorStop(0, s.gradColors[0]); grd.addColorStop(1, s.gradColors[1]);
+    ctx.fillStyle=grd; ctx.fillRect(0,0,W,H);
+  } else { ctx.fillStyle=s.bg; ctx.fillRect(0,0,W,H); }
 
   // Style-specific decoration
   if (s.editorial) {
@@ -1964,6 +1985,8 @@ function renderCanvas() {
   } else if (_imgStyle==='ink') {
     ctx.fillStyle = s.accent||'#5a7fa0';
     ctx.fillRect(0,0,W,7);
+  } else if (_imgStyle==='headline') {
+    ctx.fillStyle='rgba(0,0,0,0.25)'; ctx.fillRect(0,H*0.55,W,H*0.45);
   }
 
   const pad = s.editorial ? W*0.11 : W*0.1;
@@ -1973,10 +1996,16 @@ function renderCanvas() {
 
   // Auto-scale: measure content at base size, shrink if overflows
   // Base sizes (relative to W)
-  function drawAll(scale) {
-    let y = H*0.10;
+  const isZh = _imgLang === 'zh';
+
+  function drawAll(scale, offsetY=0) {
     ctx.clearRect(0,0,W,H);
-    ctx.fillStyle=s.bg; ctx.fillRect(0,0,W,H);
+    // Background
+    if (s.bg === 'gradient') {
+      const grd = ctx.createLinearGradient(0,0,W,H);
+      grd.addColorStop(0, s.gradColors[0]); grd.addColorStop(1, s.gradColors[1]);
+      ctx.fillStyle=grd; ctx.fillRect(0,0,W,H);
+    } else { ctx.fillStyle=s.bg; ctx.fillRect(0,0,W,H); }
 
     // Re-draw decoration
     if (s.editorial) {
@@ -1988,9 +2017,16 @@ function renderCanvas() {
       for(let i=0;i<H;i+=28){ctx.beginPath();ctx.moveTo(0,i);ctx.lineTo(W,i);ctx.stroke();}
     } else if (_imgStyle==='ink') {
       ctx.fillStyle=s.accent||'#5a7fa0'; ctx.fillRect(0,0,W,7);
+    } else if (_imgStyle==='headline') {
+      ctx.fillStyle='rgba(0,0,0,0.25)'; ctx.fillRect(0,H*0.55,W,H*0.45);
     }
 
-    // Category
+    let y = H*0.10 + offsetY;
+    const tFont = isZh ? s.zhTitleFont : s.titleFont;
+    const bFont = isZh ? s.zhBodyFont : s.bodyFont;
+    const iFont = isZh ? s.zhBodyFont : s.insightFont;
+
+    // Category (always English)
     const catSize = Math.round(W*0.020*scale);
     ctx.font='500 '+catSize+'px DM Sans, sans-serif';
     ctx.letterSpacing = '2px';
@@ -2002,13 +2038,24 @@ function renderCanvas() {
     y += catSize*3.0;
 
     // Title
-    const titleText = item.title_en;
-    const titleFont = s.serif ? 'DM Serif Display, Georgia, serif' : (_imgStyle==='editorial'?'DM Sans, sans-serif':'DM Serif Display, Georgia, serif');
-    const titleWeight = s.editorial ? '700' : '400';
-    const titleSize = Math.round(W*0.042*scale);
-    ctx.font=titleWeight+' '+titleSize+'px '+titleFont;
+    const titleText = isZh ? (item.title_zh||item.title_en) : item.title_en;
+    const titleWeight = (s.headline||s.editorial) ? '700' : '400';
+    const titleSize = s.headline ? Math.round(W*0.072*scale) : Math.round(W*0.042*scale);
+    ctx.font=titleWeight+' '+titleSize+'px '+tFont;
     ctx.fillStyle=s.text;
     y = wrapText(ctx, titleText, pad, y, W-pad*2, titleSize*1.22) + titleSize*0.2;
+
+    if (s.headline) {
+      // Headline style: just big title + insight, minimal
+      y += Math.round(W*0.025*scale);
+      ctx.fillStyle=s.lineColor||s.border; ctx.globalAlpha=0.4; ctx.fillRect(pad,y,W*0.15,3); ctx.globalAlpha=1; y+=W*0.035;
+      const insightText = isZh ? (item.insight_zh||item.insight_en) : item.insight_en;
+      const insightSize = Math.round(W*0.030*scale);
+      ctx.font='400 '+insightSize+'px '+bFont;
+      ctx.fillStyle=s.sub;
+      y = wrapText(ctx, insightText, pad, y, W-pad*2, insightSize*1.6) + insightSize*0.2;
+      return y;
+    }
 
     // Gap after title
     y += Math.round(W*0.018*scale);
@@ -2017,10 +2064,9 @@ function renderCanvas() {
     ctx.fillStyle=s.lineColor||s.border; ctx.globalAlpha=0.5; ctx.fillRect(pad,y,W-pad*2,1); ctx.globalAlpha=1; y+=W*0.030;
 
     // Content
-    const contentText = item.content_en;
+    const contentText = isZh ? (item.content_zh||item.content_en) : item.content_en;
     const bodySize = Math.round(W*0.031*scale);
-    const bodyFont = s.serif ? 'DM Serif Display, Georgia, serif' : 'DM Sans, sans-serif';
-    ctx.font='300 '+bodySize+'px '+bodyFont;
+    ctx.font='300 '+bodySize+'px '+bFont;
     ctx.fillStyle=s.text;
     y = wrapTextJustify(ctx, contentText, pad, y, W-pad*2, bodySize*1.85) + bodySize*0.2;
 
@@ -2029,20 +2075,20 @@ function renderCanvas() {
     ctx.fillStyle=s.lineColor||s.border; ctx.globalAlpha=0.5; ctx.fillRect(pad,y,W-pad*2,1); ctx.globalAlpha=1; y+=W*0.022;
 
     // Insight
-    const insightText = item.insight_en;
+    const insightText = isZh ? (item.insight_zh||item.insight_en) : item.insight_en;
     const insightSize = Math.round(W*0.024*scale);
-    ctx.font='italic 400 '+insightSize+'px DM Serif Display, Georgia, serif';
+    const insightStyle = (_imgStyle==='parchment'||_imgStyle==='ink'||_imgStyle==='light') ? 'italic ' : '';
+    ctx.font=insightStyle+'400 '+insightSize+'px '+iFont;
     ctx.fillStyle=s.sub;
     y = wrapText(ctx, insightText, pad, y, W-pad*2, insightSize*1.65) + insightSize*0.2;
 
-    // Source
+    // Source (always English)
     const canvasSrc = item.source || item.source_name || '';
     if (canvasSrc) {
       y += W*0.018;
       const srcSize = Math.round(W*0.022*scale);
       ctx.font='300 '+srcSize+'px DM Sans, sans-serif';
       ctx.fillStyle=s.sub; ctx.globalAlpha=0.5;
-      // Truncate source if too long
       let srcText = '— '+canvasSrc;
       while (ctx.measureText(srcText).width > W-pad*2 && srcText.length > 10) {
         srcText = srcText.slice(0, -4) + '…';
@@ -2052,17 +2098,22 @@ function renderCanvas() {
       y += srcSize*2.2;
     }
 
-    return y; // returns final y position
+    return y;
   }
 
   // Try at scale 1.0, shrink until content fits above footer zone
   let scale = 1.0;
-  let finalY = drawAll(scale);
+  let finalY = drawAll(scale, 0);
   while (finalY > contentH && scale > 0.55) {
     scale -= 0.04;
-    finalY = drawAll(scale);
+    finalY = drawAll(scale, 0);
   }
-  // One final draw with settled scale (drawAll already drew it)
+  // Vertically center the content block
+  const contentBlockH = finalY - H*0.10;
+  const availableH = contentH - H*0.10;
+  const offsetY = Math.max(0, (availableH - contentBlockH) / 2);
+  // Final draw with vertical centering
+  drawAll(scale, offsetY);
 
   // Footer — always pinned to bottom
   const footSize = Math.round(W*0.016*scale);
@@ -2070,7 +2121,8 @@ function renderCanvas() {
   ctx.fillStyle=s.lineColor||s.border; ctx.globalAlpha=0.25;
   ctx.fillRect(pad, footY-10, W-pad*2, 1); ctx.globalAlpha=0.4;
   ctx.fillStyle=s.sub;
-  ctx.font='300 '+footSize+'px DM Sans, sans-serif';
+  const footFont = isZh ? (s.zhBodyFont||'PingFang SC, sans-serif') : (s.bodyFont||'DM Sans, sans-serif');
+  ctx.font='300 '+footSize+'px '+footFont;
   ctx.fillText('Curiosity Box', pad, footY+footSize);
   ctx.textAlign='right'; ctx.fillText('The Little Bird', W-pad, footY+footSize);
   ctx.textAlign='left'; ctx.globalAlpha=1;
@@ -2847,7 +2899,7 @@ function toggleSummaryStar(btn, idx) {
 }
 </script>
 <div class="creature-wrap"><div class="creature" id="creature" title=""></div></div>
-<button id="flappyBtn" onclick="openFlappy()" title="Play Flappy Bird" style="position:fixed;bottom:20px;right:48px;background:none;border:none;cursor:pointer;font-size:18px;opacity:0.22;transition:opacity .2s;z-index:200;line-height:1;padding:4px;display:none" onmouseover="this.style.opacity=.7" onmouseout="this.style.opacity=.22">&#128038;</button>
+<button id="flappyBtn" onclick="openFlappy()" title="Play Flappy Bird" style="position:fixed;bottom:20px;right:48px;background:none;border:none;cursor:pointer;font-size:18px;opacity:0.22;transition:opacity .2s;z-index:200;line-height:1;padding:4px;display:none !important" onmouseover="this.style.opacity=.7" onmouseout="this.style.opacity=.22">&#128038;</button>
 
 
 <!-- Auth modal -->
