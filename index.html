@@ -24,10 +24,7 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 <style>
 :root{
-  /* ── Shared layout & spacing tokens ── */
   --transition-fast:.15s;--transition-base:.2s;
-
-  /* ── Linen / default ── warm neutral */
   --bg:#f5f4f0;--surface:#fafaf7;--card-bg:#fafaf7;
   --text:#111111;--secondary:#555555;--tertiary:#909090;
   --border:#e4e3de;--border-lt:#eeedea;
@@ -37,13 +34,10 @@
   --c-culture:#8a6fa8;--c-philosophy:#4a7a9b;--c-language:#b08040;
   --c-food:#b86848;--c-art:#9060a0;--c-science:#3a7090;--c-folklore:#708050;
   --c-default:#888;--accent:#111111;--accent-text:#ffffff;--radius:12px;--radius-sm:8px;
-  /* Spacing scale (8px base) */
   --space-xs:8px;--space-sm:16px;--space-md:24px;--space-lg:32px;--space-xl:48px;
   --grad:linear-gradient(90deg,#5b8db5,#4a9e6a,#c07840,#8a6ab8,#c45a5a,#5b8db5,#4a9e6a,#c07840);
   --grad-footer:linear-gradient(90deg,#e05560,#8855d8,#2ec4a0,#3a9fd6,#f0a030,#e05560,#8855d8,#2ec4a0);
 }
-
-/* ── Amber ── burnt sienna bg, muted warm tones */
 [data-theme="amber"]{
   --bg:#e8740a;--surface:#d96c08;--card-bg:#f5e8d0;
   --text:#fff0e0;--secondary:#ffd890;--tertiary:#f0b050;
@@ -58,7 +52,6 @@
   --grad:linear-gradient(90deg,#ffb347,#ffd700,#ff8c00,#ffa500,#ff6b35,#ffb347,#ffd700,#ff8c00);
   --grad-footer:linear-gradient(90deg,#e05560,#8855d8,#2ec4a0,#3a9fd6,#f0f0e0,#e05560,#8855d8,#2ec4a0);
 }
-/* ── Olive ── deep olive-green bg */
 [data-theme="olive"]{
   --bg:#3a4a1e;--surface:#424f22;--card-bg:#d8e8c8;
   --text:#eef0d8;--secondary:#b8c890;--tertiary:#788858;
@@ -73,8 +66,6 @@
   --grad:linear-gradient(90deg,#52b788,#80c94a,#d4a017,#8db548,#d4703a,#52b788,#80c94a,#d4a017);
   --grad-footer:linear-gradient(90deg,#2ec4a0,#3a9fd6,#8855d8,#80c94a,#d4c017,#2ec4a0,#3a9fd6,#8855d8);
 }
-
-/* ── Ocean ── deep navy bg */
 [data-theme="ocean"]{
   --bg:#0d1c2a;--surface:#152232;--card-bg:#1e2f40;
   --text:#c8dce8;--secondary:#8aacc0;--tertiary:#6a8ea8;
@@ -89,24 +80,14 @@
   --grad:linear-gradient(90deg,#3a9fd6,#2ec4a0,#e0a030,#8855d8,#e05560,#3a9fd6,#2ec4a0,#e0a030);
   --grad-footer:linear-gradient(90deg,#3a9fd6,#2ec4a0,#e0a030,#8855d8,#e05560,#3a9fd6,#2ec4a0,#e0a030);
 }
-
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{font-size:16px;scroll-behavior:smooth}
 body{background:var(--bg);color:var(--text);transition:background .3s,color .3s;font-family:'DM Sans',-apple-system,BlinkMacSystemFont,'Segoe UI','Helvetica Neue',Arial,sans-serif;font-weight:300;min-height:100vh;-webkit-font-smoothing:antialiased}
 .page{max-width:1200px;margin:0 auto;padding:0 40px;position:relative}
 .page::before,.page::after{content:'';position:fixed;top:0;bottom:0;width:1px;background:linear-gradient(180deg,transparent 0%,var(--border) 8%,var(--border) 92%,transparent 100%);z-index:0;pointer-events:none}
 .page::before{left:calc(50% - 600px)}.page::after{right:calc(50% - 600px)}
-
-/* NAV */
-/* ── Navigation ─────────────────────────────────────── */
 nav{display:flex;align-items:center;justify-content:space-between;padding:28px 0;border-bottom:1px solid var(--border);background:var(--bg)}
-nav::before{content:'';position:fixed;top:0;left:0;right:0;height:2px;background:var(--grad);z-index:100}
-
-/* ── Amber overrides ─────────────────────────────────────────────────── */
-/* Orange background: all direct-on-bg elements use light/warm text     */
-/* White cards: all elements inside cards forced to dark text            */
-
-/* On orange bg */
+nav::before{content:'';position:fixed;top:0;left:0;right:0;height:2px;background:var(--grad);background-size:100% 100%;z-index:100}
 [data-theme="amber"] .mood-chip{border-color:rgba(255,210,120,.5);color:var(--text)}
 [data-theme="amber"] .mood-chip:hover{background:rgba(255,255,255,.15)}
 [data-theme="amber"] .mood-chip.active[data-mood="any"]{background:#1c0a00;color:#fff8f0;border-color:#1c0a00}
@@ -119,18 +100,15 @@ nav::before{content:'';position:fixed;top:0;left:0;right:0;height:2px;background
 [data-theme="amber"] .hero-kicker,[data-theme="amber"] .hero-sub{color:var(--secondary)}
 [data-theme="amber"] .toolbar-title,[data-theme="amber"] .group-date{color:var(--secondary)}
 [data-theme="amber"] .group-delete{color:var(--secondary)}
-
 [data-theme="amber"] .star-filter-btn{color:var(--secondary);opacity:.9}
 [data-theme="amber"] .filter-select,[data-theme="amber"] .filter-input{background:var(--card-bg);color:var(--card-text);border-color:var(--border)}
 [data-theme="amber"] .password-input{background:var(--card-bg);color:var(--card-text);border-color:var(--border)}
 [data-theme="amber"] .empty-state{color:var(--secondary)}
 [data-theme="amber"] .footer-disclaimer{color:var(--secondary)}
-[data-theme="amber"] .footer-l,[data-theme="amber"] .footer-r{background:var(--grad-footer,var(--grad));background-size:200% 100%;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-weight:400;letter-spacing:.3px;animation:rainbowFlow 8s linear infinite}
+[data-theme="amber"] .footer-l,[data-theme="amber"] .footer-r{background:var(--grad-footer,var(--grad));background-size:200% 100%;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-weight:400;letter-spacing:.3px;animation:rainbowFlow 12s linear infinite}
 [data-theme="amber"] .load-more-btn{background:var(--card-bg);color:var(--card-text);border-color:var(--border)}
 [data-theme="amber"] nav{border-bottom-color:rgba(255,200,100,.3)}
 [data-theme="amber"] .page::before,[data-theme="amber"] .page::after{background:linear-gradient(180deg,transparent 0%,rgba(255,200,100,.25) 8%,rgba(255,200,100,.25) 92%,transparent 100%)}
-
-/* Sidebar: wrap each section in card bg so it's readable on orange */
 [data-theme="amber"] .sb-section{background:none;padding:0;border-radius:0;margin-bottom:24px}
 [data-theme="amber"] .sb-section .sb-heading{color:var(--text) !important;border-bottom-color:var(--border-lt) !important}
 [data-theme="amber"] .sb-section .sb-link{color:var(--secondary);border-bottom-color:var(--border-lt)}
@@ -141,8 +119,6 @@ nav::before{content:'';position:fixed;top:0;left:0;right:0;height:2px;background
 [data-theme="amber"] .sb-pick{background:none;border-color:var(--border-lt);border-left-color:var(--secondary)}
 [data-theme="amber"] .sb-pick-name{color:var(--text)}
 [data-theme="amber"] .sb-pick-tip{color:var(--secondary)}
-
-/* Inside white cards: force dark text */
 [data-theme="amber"] .card{color:var(--card-text)}
 [data-theme="amber"] .card .card-cat{color:var(--c-default)}
 [data-theme="amber"] .card .card-title-en{color:var(--card-text)}
@@ -154,35 +130,17 @@ nav::before{content:'';position:fixed;top:0;left:0;right:0;height:2px;background
 [data-theme="amber"] .card .star-btn{color:var(--card-text-4)}
 [data-theme="amber"] .card .share-label{display:none}
 [data-theme="amber"] .card .share-btn{color:var(--card-text-2);background:var(--card-bg);border:1px solid rgba(0,0,0,.1)}
-[data-theme="amber"] .card .share-btn:hover{background:rgba(0,0,0,0.18);color:var(--card-text);transform:translateY(-1px)}
 [data-theme="amber"] .card .share-btn:hover{background:rgba(0,0,0,.12);color:var(--card-text);transform:translateY(-1px)}
 [data-theme="amber"] .card .tag{color:var(--c-default);border-color:var(--c-default)}
 [data-theme="amber"] .card .lang-tab{color:var(--card-text-3)}
-
-/* Sidebar blocks (white bg) */
 [data-theme="amber"] .sidebar-block{color:var(--card-text)}
 [data-theme="amber"] .sidebar-block .sb-heading{color:var(--card-text-3)}
 [data-theme="amber"] .sidebar-block .sb-name{color:var(--card-text)}
 [data-theme="amber"] .sidebar-block a{color:var(--card-text)}
-
-
-/* Fun bits (white bg) */
-[data-theme="amber"] .fun-bit{color:var(--card-text);background:rgba(255,255,255,.88);border-color:rgba(255,255,255,.5)}
-[data-theme="amber"] .fun-bit:nth-child(1){background:rgba(255,255,255,.15);border-color:rgba(255,220,150,.3)}
-[data-theme="amber"] .fun-bit:nth-child(2){background:rgba(255,255,255,.15);border-color:rgba(255,220,150,.3)}
-[data-theme="amber"] .fun-bit:nth-child(3){background:rgba(255,255,255,.15);border-color:rgba(255,220,150,.3)}
+[data-theme="amber"] .fun-bit{color:var(--card-text);background:rgba(255,255,255,.15);border-color:rgba(255,220,150,.3)}
 [data-theme="amber"] .fun-bit-label{color:var(--card-text-3)}
 [data-theme="amber"] .active-tag,[data-theme="amber"] .tag:hover{background:#3a2010 !important;border-color:#3a2010;color:#f5e8d0 !important;text-shadow:none}
 [data-theme="amber"] .fun-bit-text{color:var(--card-text)}
-
-
-
-/* ── Typography ─────────────────────────────────────── */
-/* label-xs : category badges, section kickers          */
-/* label-sm : toolbar titles, date stamps               */
-/* body-sm  : card meta, source, tags, buttons          */
-/* caption  : tertiary hints, footnotes                 */
-
 .t-label-xs{font-family:'DM Sans',sans-serif;font-size:9px;font-weight:500;letter-spacing:2px;text-transform:uppercase}
 .t-label-sm{font-family:'DM Sans',sans-serif;font-size:11px;font-weight:500;letter-spacing:2.5px;text-transform:uppercase}
 .t-body-sm {font-family:'DM Sans',sans-serif;font-size:12px;font-weight:300;letter-spacing:0px}
@@ -190,18 +148,12 @@ nav::before{content:'';position:fixed;top:0;left:0;right:0;height:2px;background
 .nav-logo{font-family:'DM Serif Display',serif;font-size:1rem;color:var(--text)}
 .nav-link{font-size:12px;color:var(--tertiary);background:none;border:none;cursor:pointer;letter-spacing:.5px;transition:color .15s;display:none;font-family:'DM Sans',sans-serif}
 .nav-link:hover{color:var(--text)}.nav-link.danger:hover{color:#c0392b}.nav-link.show{display:inline}
-
-/* ── Hero ───────────────────────────────────────────── */
-/* ── Hero ───────────────────────────────────────────── */
 .hero{display:grid;grid-template-columns:1fr 1fr;padding:64px 0 56px;border-bottom:1px solid var(--border);align-items:end}
 .hero-kicker{font-size:11px;font-weight:500;letter-spacing:2.5px;text-transform:uppercase;color:var(--secondary);margin-bottom:24px}
 .hero-title{font-family:'DM Serif Display',serif;font-size:clamp(2.8rem,4.5vw,4.2rem);font-weight:400;line-height:1.06;letter-spacing:-.5px;margin-bottom:16px}
-.hero-title em{font-style:italic;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+/* .hero-title em — replaced by .knowing-word */
 .hero-sub{font-size:14px;color:var(--secondary);line-height:1.75;max-width:320px}
 .hero-right{display:flex;flex-direction:column;align-items:flex-end;gap:16px;padding-bottom:0}
-
-/* ── Mood Chips ─────────────────────────────────────── */
-/* ── Mood Chips ─────────────────────────────────────── */
 .mood-label{font-size:9px;font-weight:500;letter-spacing:2px;text-transform:uppercase;color:var(--secondary);text-align:right;width:100%}
 .mood-row{display:flex;gap:4px;flex-wrap:nowrap;justify-content:flex-end;overflow:visible}
 .mood-chip{font-family:'DM Sans',sans-serif;font-size:11px;font-weight:300;color:var(--tertiary);background:none;border:1px solid var(--border);border-radius:20px;padding:4px 10px;cursor:pointer;transition:all .18s;letter-spacing:0;white-space:nowrap}
@@ -213,36 +165,23 @@ nav::before{content:'';position:fixed;top:0;left:0;right:0;height:2px;background
 .mood-chip.active[data-mood="contemplative"]{background:#5a7fa0;color:#fff;border-color:#5a7fa0}
 .mood-chip.active[data-mood="beautiful"]{background:#5f8c6e;color:#fff;border-color:#5f8c6e}
 .mood-chip.active[data-mood="unsettling"]{background:#7a5a8a;color:#fff;border-color:#7a5a8a}
-
-/* ── Generate Row ───────────────────────────────────── */
 .gen-row{display:flex;gap:8px;align-items:center}
+/* FIX 1: autocomplete="new-password" prevents iOS saved-password sheet */
 .password-input{font-family:'DM Sans',sans-serif;font-size:13px;font-weight:300;background:var(--input-bg);border:1px solid var(--border);border-radius:var(--radius-sm);padding:11px 16px;width:148px;outline:none;transition:border-color .2s,background .2s}
 .password-input::placeholder{color:var(--tertiary)}.password-input:focus{border-color:var(--secondary);background:var(--surface)}
 .gen-btn{font-family:'DM Sans',sans-serif;font-size:14px;font-weight:500;letter-spacing:.3px;background:var(--btn-bg);color:var(--btn-text);border:none;border-radius:var(--radius-sm);padding:12px 24px;cursor:pointer;transition:background .3s,color .3s,transform .1s,opacity .18s;white-space:nowrap;position:relative}
 .gen-btn::before{content:'';position:absolute;inset:-2px;border-radius:calc(var(--radius-sm) + 2px);background:var(--grad);background-size:200% 100%;z-index:-1;opacity:0.7;animation:borderPulse 3s ease-in-out infinite,rainbowFlow 4s linear infinite}
-@keyframes rainbowFlow{
-  0%{background-position:0% 50%}
-  100%{background-position:200% 50%}
-}
+@keyframes rainbowFlow{0%{background-position:0% 50%}100%{background-position:200% 50%}}
 @keyframes borderPulse{0%,100%{opacity:0.5;filter:blur(2px)}50%{opacity:0.9;filter:blur(4px)}}
 .gen-btn:disabled{opacity:.5;cursor:not-allowed;transform:none}
 .gen-btn:disabled::before{animation:none;opacity:0.2}
 .gen-btn:hover{background:var(--grad);color:#fff;filter:none;transform:translateY(-1px);text-shadow:0 1px 3px rgba(0,0,0,0.3)}.gen-btn:active{transform:none}.gen-btn:disabled{opacity:.45;cursor:not-allowed;transform:none;filter:grayscale(.4)}
-.gen-btn:disabled::before{animation-play-state:paused}
 .error-msg{display:none}
-
-/* ── Loading State ──────────────────────────────────── */
-/* ── Loading State ──────────────────────────────────── */
 .loading{display:none;padding:48px 0 16px;text-align:center}.loading.show{display:block}
 .loading-track{width:36px;height:1px;background:var(--border);margin:0 auto 16px;overflow:hidden;position:relative}
 .loading-track::after{content:'';position:absolute;left:-100%;width:100%;height:100%;background:var(--text);animation:sweep 1s ease-in-out infinite}
 .loading-label{font-size:9px;font-weight:500;letter-spacing:2px;text-transform:uppercase;color:var(--tertiary)}
-
-/* ── Layout ─────────────────────────────────────────── */
 .main-layout{display:grid;grid-template-columns:1fr 200px;gap:48px;align-items:start;border-left:none}
-
-/* ── Archive Toolbar ────────────────────────────────── */
-/* ── Archive Toolbar ────────────────────────────────── */
 .toolbar{display:flex;align-items:center;justify-content:space-between;padding:32px 0 24px;gap:16px;flex-wrap:wrap}
 .toolbar-left{display:flex;align-items:center;gap:10px}
 .toolbar-accent{width:12px;height:12px;border-radius:2px;background:var(--grad);flex-shrink:0}
@@ -252,8 +191,6 @@ nav::before{content:'';position:fixed;top:0;left:0;right:0;height:2px;background
 .toolbar-right{display:flex;gap:8px;align-items:center}
 .filter-select,.filter-input{font-family:'DM Sans',sans-serif;font-size:12px;font-weight:300;background:var(--input-bg);border:1px solid var(--border);border-radius:var(--radius-sm);padding:8px 12px;outline:none;transition:border-color .15s,background .15s}
 .filter-input{width:150px}.filter-select:focus,.filter-input:focus{border-color:var(--secondary);background:var(--surface)}
-
-/* ── Date Groups ────────────────────────────────────── */
 .date-group{margin-bottom:48px;animation:riseIn .4s ease both}
 .group-header{display:flex;align-items:center;justify-content:space-between;padding-bottom:16px;margin-bottom:16px;border-bottom:1px solid var(--border)}
 .group-date{font-size:12px;font-weight:500;letter-spacing:2px;text-transform:uppercase;color:var(--secondary)}
@@ -261,22 +198,11 @@ nav::before{content:'';position:fixed;top:0;left:0;right:0;height:2px;background
 .group-meta{display:flex;align-items:center;gap:10px;font-size:13px;font-weight:300;letter-spacing:.2px;color:var(--tertiary)}
 .group-delete{font-size:13px;font-weight:300;letter-spacing:.2px;color:var(--tertiary);background:none;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;transition:color .15s;padding:0}
 .group-delete:hover{color:#c0392b}
-
-/* ── Cards ──────────────────────────────────────────── */
 .cards-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .cards-grid .card:first-child{grid-column:1/-1}
-/* ── Cards ──────────────────────────────────────────── */
-.card{
-  border:1px solid var(--border);border-radius:var(--radius);padding:24px;
-  position:relative;overflow:hidden;transition:box-shadow .2s,transform .18s;
-  background-color:var(--card-bg);
-}
+.card{border:1px solid var(--border);border-radius:var(--radius);padding:24px;position:relative;overflow:hidden;transition:box-shadow .2s,transform .18s;background-color:var(--card-bg);}
 .card:hover{box-shadow:0 12px 40px rgba(0,0,0,.11);transform:translateY(-2px)}
-/* Gradient fade top bar */
-.card::before{
-  content:'';position:absolute;top:0;left:0;right:0;height:2px;
-  background:linear-gradient(90deg, var(--cat-color,var(--c-default)) 0%, transparent 100%);
-}
+.card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg, var(--cat-color,var(--c-default)) 0%, transparent 100%);}
 .card-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
 .card-meta{display:flex;align-items:center;gap:8px}
 .cat-icon{font-size:11px;color:var(--cat-color,var(--c-default));line-height:1;font-style:normal;flex-shrink:0}
@@ -295,28 +221,17 @@ nav::before{content:'';position:fixed;top:0;left:0;right:0;height:2px;background
 .card-content{font-size:16px;color:var(--text);line-height:1.75;margin-bottom:16px;font-weight:300}
 .card-insight{font-family:'DM Serif Display',serif;font-size:14px;color:var(--secondary);font-style:italic;line-height:1.6;padding-top:16px;border-top:1px solid var(--border);margin-bottom:8px}
 .card-source{font-size:13px;font-weight:300;color:var(--secondary);margin-bottom:8px;letter-spacing:.2px}.card-source span{font-style:italic}
-
-/* ── Tags ───────────────────────────────────────────── */
 .card-tags{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:8px}
-/* ── Tags ───────────────────────────────────────────── */
 .tag{font-size:11px;font-weight:500;color:var(--cat-color,var(--c-default));background:transparent;border:1px solid var(--cat-color,var(--c-default));border-radius:20px;padding:3px 10px;opacity:.8;cursor:pointer;font-family:'DM Sans',sans-serif;transition:opacity .15s,background .15s,color .15s;letter-spacing:.5px}
 .tag:hover{opacity:1;background:var(--cat-color,var(--c-default));color:#fff;text-shadow:0 1px 3px rgba(0,0,0,.5)}
 .tag.active-tag{opacity:1;background:var(--cat-color,var(--c-default));color:#fff !important;text-shadow:0 1px 3px rgba(0,0,0,.5);border-color:transparent}
-
-/* ── Share Bar ──────────────────────────────────────── */
-/* ── Share Bar ──────────────────────────────────────── */
 .share-bar{display:flex;align-items:center;gap:8px;padding-top:16px;border-top:1px solid var(--border-lt);flex-wrap:wrap}
 .share-label{font-size:11px;font-weight:500;letter-spacing:1.5px;text-transform:uppercase;color:var(--secondary);margin-right:2px}
 .share-btn{display:inline-flex;align-items:center;gap:4px;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:300;color:var(--secondary);background:var(--input-bg);border:none;border-radius:20px;padding:6px 12px;cursor:pointer;transition:background .15s,color .15s,transform .15s;white-space:nowrap}
 .share-btn:hover{background:var(--cat-color,#888);color:#fff}
 .share-btn svg{width:11px;height:11px;fill:currentColor;flex-shrink:0}
-
-/* ── Load More ──────────────────────────────────────── */
 .load-more-btn{display:block;width:100%;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:300;color:var(--secondary);background:var(--input-bg);border:1px solid var(--border);border-radius:var(--radius-sm);padding:16px;cursor:pointer;transition:background .15s,color .15s,border-color .15s;margin-bottom:48px;letter-spacing:.3px}
 .load-more-btn:hover{background:var(--accent);color:var(--accent-text);border-color:var(--accent)}
-
-/* ── Sidebar ────────────────────────────────────────── */
-/* ── Sidebar ────────────────────────────────────────── */
 .sidebar{position:sticky;top:40px;padding-top:48px;border-left:1px solid var(--border);padding-left:32px;margin-left:-16px}
 .sb-section{margin-bottom:24px}
 .sb-heading{font-size:9px;font-weight:500;letter-spacing:2px;text-transform:uppercase;margin-bottom:8px;padding-bottom:8px;border-bottom:1px solid var(--border)}
@@ -334,9 +249,6 @@ nav::before{content:'';position:fixed;top:0;left:0;right:0;height:2px;background
 .sb-link:last-child{border-bottom:none}.sb-link:hover{color:var(--text)}
 .sb-icon{width:14px;height:14px;border-radius:3px;flex-shrink:0;opacity:.7;object-fit:contain}
 .sb-name{font-size:13px;font-weight:300;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-
-
-/* ── DAILY SUMMARY MODAL ─────────────────────── */
 .summary-overlay{display:none;position:fixed;inset:0;background:var(--overlay-bg);z-index:850;align-items:flex-start;justify-content:center;backdrop-filter:blur(5px);padding:32px 20px;overflow-y:auto}
 .summary-overlay.show{display:flex}
 .summary-modal{background:var(--modal-bg);border-radius:20px;padding:40px;max-width:680px;width:100%;box-shadow:0 40px 80px rgba(0,0,0,.2);animation:popIn .25s ease both;margin:auto}
@@ -354,8 +266,6 @@ nav::before{content:'';position:fixed;top:0;left:0;right:0;height:2px;background
 .summary-lang-tab.active{background:#f5f4f0;color:#111111;box-shadow:0 1px 3px rgba(0,0,0,.06)}
 .summary-save-btn{display:block;width:100%;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;background:#111111;color:#ffffff;border:none;border-radius:10px;padding:14px;cursor:pointer;transition:background .15s;letter-spacing:.3px}
 .summary-save-btn:hover{background:#2a2a2a}
-
-/* ── CARD DETAIL MODAL ───────────────────────── */
 .detail-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:800;align-items:center;justify-content:center;backdrop-filter:blur(4px);padding:24px}
 .detail-overlay.show{display:flex}
 .detail-modal{background:var(--modal-bg);border-radius:16px;padding:40px;max-width:580px;width:100%;max-height:88vh;overflow-y:auto;box-shadow:0 32px 64px rgba(0,0,0,.18);animation:popIn .2s ease both;position:relative}
@@ -373,20 +283,14 @@ nav::before{content:'';position:fixed;top:0;left:0;right:0;height:2px;background
 .detail-tags{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:20px}
 .detail-tag{font-size:9px;font-weight:500;letter-spacing:1.5px;text-transform:uppercase;border-radius:20px;padding:3px 11px;border:1px solid currentColor;cursor:pointer;font-family:'DM Sans',sans-serif;transition:background .15s,color .15s;opacity:.7}
 .detail-tag:hover{opacity:1}
-
-/* ── KNOWLEDGE PLANET ────────────────────────── */
 .sb-planet{margin-bottom:20px}
 .sb-planet-label{font-size:9px;font-weight:500;letter-spacing:2px;text-transform:uppercase;color:var(--secondary);margin-bottom:10px}
 .planet-svg{width:100%;cursor:default}
 .planet-bubble{cursor:pointer;transition:opacity .2s}
 .planet-bubble:hover{opacity:.8}
 .planet-bubble.active-cat{stroke-width:2px}
-
-/* ── CARD CLICKABLE ──────────────────────────── */
 .card{cursor:pointer}
 .card .share-btn,.card .star-btn,.card .lang-tab,.card .tag{position:relative;z-index:2}
-
-/* SHARE MODAL */
 .modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:1000;align-items:center;justify-content:center;backdrop-filter:blur(4px)}
 .modal-overlay.show{display:flex}
 .modal{background:var(--surface);border-radius:16px;padding:32px;max-width:420px;width:90%;box-shadow:0 24px 64px rgba(0,0,0,.15);animation:popIn .2s ease both}
@@ -400,8 +304,6 @@ nav::before{content:'';position:fixed;top:0;left:0;right:0;height:2px;background
 .modal-note{font-size:11px;font-weight:300;color:var(--tertiary);line-height:1.6;padding:10px 12px;background:var(--surface);border-radius:8px;margin-bottom:16px;letter-spacing:.2px}
 .modal-close{width:100%;font-family:'DM Sans',sans-serif;font-size:11px;font-weight:300;color:var(--tertiary);background:none;border:none;cursor:pointer;padding:8px;transition:color .15s;letter-spacing:.2px}
 .modal-close:hover{color:var(--text)}
-
-/* IMAGE PICKER */
 .img-modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.65);z-index:2000;align-items:center;justify-content:center;backdrop-filter:blur(6px);padding:20px}
 .img-modal-overlay.show{display:flex}
 .img-modal{background:var(--surface);border-radius:16px;padding:28px;width:100%;max-width:520px;max-height:92vh;overflow-y:auto;box-shadow:0 32px 80px rgba(0,0,0,.25);animation:popIn .2s ease both}
@@ -418,15 +320,11 @@ nav::before{content:'';position:fixed;top:0;left:0;right:0;height:2px;background
 .img-dl-btn:hover{background:#333}
 .img-close-btn{font-family:'DM Sans',sans-serif;font-size:12px;color:var(--tertiary);background:var(--input-bg);border:none;border-radius:8px;padding:10px 20px;cursor:pointer;transition:background .15s}
 .img-close-btn:hover{background:var(--border)}
-
-/* CURIOSITY TOAST */
 .curiosity-toast{position:fixed;bottom:32px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--text);color:#fff;font-family:'DM Serif Display',serif;font-size:13px;font-style:italic;padding:12px 24px;border-radius:40px;opacity:0;transition:opacity .4s,transform .4s;pointer-events:none;z-index:500;white-space:nowrap;max-width:90vw;text-align:center}
 .error-toast{position:fixed;top:32px;left:50%;transform:translateX(-50%) translateY(-12px);background:#1a1a1a;color:#fff;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:400;line-height:1.5;padding:14px 24px 14px 20px;border-radius:12px;border-left:4px solid #e05540;opacity:0;transition:opacity .35s,transform .35s;pointer-events:none;z-index:9999;max-width:min(420px,90vw);text-align:left;box-shadow:0 8px 32px rgba(0,0,0,.25);display:flex;align-items:flex-start;gap:10px}
 .error-toast::before{content:"⚠";font-size:16px;color:#e05540;flex-shrink:0;margin-top:1px}
 .error-toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 .curiosity-toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
-
-/* RANDOM WONDER */
 .wonder-overlay{display:none;position:fixed;inset:0;background:var(--bg);z-index:900;align-items:center;justify-content:center;padding:24px}
 .wonder-overlay.show{display:flex}
 .wonder-card{max-width:560px;width:90%;padding:48px;position:relative;border:1.5px solid rgba(128,128,128,.25);border-radius:20px;box-shadow:0 8px 40px rgba(0,0,0,.12)}
@@ -438,9 +336,6 @@ nav::before{content:'';position:fixed;top:0;left:0;right:0;height:2px;background
 .wonder-insight{font-family:'DM Serif Display',serif;font-size:13px;color:var(--secondary);font-style:italic;line-height:1.65;padding-top:14px;border-top:1px solid var(--border-lt)}
 .wonder-again{margin-top:28px;font-family:'DM Sans',sans-serif;font-size:9px;font-weight:500;letter-spacing:2px;text-transform:uppercase;color:var(--tertiary);background:none;border:none;cursor:pointer;padding:0;transition:color .15s}
 .wonder-again:hover{color:var(--text);letter-spacing:3px}
-
-/* FUN BITS */
-/* ── Fun Bits ───────────────────────────────────────── */
 .fun-bits{border-top:1px solid var(--border-lt);padding:28px 0 0;margin-top:8px}
 .fun-bit{border-radius:var(--radius);padding:18px 20px}
 .fun-bit:nth-child(1){background:var(--surface);border:1px solid var(--border)}
@@ -452,13 +347,9 @@ nav::before{content:'';position:fixed;top:0;left:0;right:0;height:2px;background
 .fun-bit:nth-child(3) .fun-bit-label{color:#4a7a9b}
 .fun-bit-text{font-size:13px;line-height:1.75;font-weight:300;color:var(--text)}
 .fun-bit-text em{font-style:italic;color:var(--text)}
-
-/* CREATURE */
 .creature-wrap{position:fixed;bottom:20px;right:24px;z-index:200;pointer-events:none}
 .creature{width:12px;height:12px;border-radius:50%;background:var(--text);opacity:0.18;transition:width .6s cubic-bezier(.34,1.56,.64,1),height .6s cubic-bezier(.34,1.56,.64,1),opacity .6s}
 .creature.fed{opacity:0.35}
-
-/* TODAY'S PICK */
 .sb-pick{background:var(--surface);border:1px solid var(--border);border-left:3px solid var(--c-psychology);border-radius:var(--radius-sm);padding:16px;margin-bottom:24px}
 .sb-pick-label{font-size:9px;font-weight:500;letter-spacing:2px;text-transform:uppercase;color:#7c9eb5;margin-bottom:8px}
 .sb-pick-link{display:flex;align-items:center;gap:8px;text-decoration:none;color:var(--text)}
@@ -468,35 +359,19 @@ nav::before{content:'';position:fixed;top:0;left:0;right:0;height:2px;background
 .refresh-btn{background:none;border:none;cursor:pointer;font-size:13px;color:var(--tertiary);padding:0 2px;line-height:1;transition:color .15s,transform .35s ease;display:inline-block;vertical-align:middle;opacity:.5}
 .refresh-btn:hover{color:var(--text);opacity:1}
 .refresh-btn.spinning{transform:rotate(360deg)}
-
-/* FOOTER */
 .footer-disclaimer{font-size:13px;font-weight:300;color:var(--secondary);text-align:center;margin-top:24px;margin-bottom:16px;line-height:1.8;font-style:italic;letter-spacing:.2px;max-width:600px;margin-left:auto;margin-right:auto;opacity:.8}
-
-/* EMPTY + FOOTER */
 .empty-state{text-align:center;padding:72px 0 96px;color:var(--tertiary);font-size:13px;line-height:2}
 .empty-state-icon{font-size:32px;display:block;margin-bottom:16px;opacity:.4;filter:grayscale(1)}
 .empty-state-title{font-family:'DM Serif Display',serif;font-size:1.1rem;color:var(--secondary);display:block;margin-bottom:8px}
 .empty-state-sub{font-size:13px;color:var(--tertiary);display:block}
-/* ── Footer ─────────────────────────────────────────── */
 footer{border-top:none;padding:28px 0;display:flex;align-items:center;justify-content:space-between;margin-top:40px;position:relative}
 footer::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--grad)}
 .footer-l{font-size:13px;font-weight:500;letter-spacing:1.5px;text-transform:uppercase;color:var(--secondary)}
-.footer-r{font-size:13px;font-weight:300;letter-spacing:.3px;background:var(--grad-footer,var(--grad));background-size:200% 100%;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:rainbowFlow 8s linear infinite}
-
+.footer-r{font-size:13px;font-weight:300;letter-spacing:.3px;background:var(--grad-footer,var(--grad));background-size:200% 100%;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:rainbowFlow 12s linear infinite}
 @keyframes riseIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
 @keyframes fadeIn{from{opacity:0}to{opacity:1}}
 @keyframes sweep{0%{left:-100%}100%{left:100%}}
-@keyframes rainbowFlow{
-  0%{background-position:0% 50%}
-  100%{background-position:200% 50%}
-}
-@keyframes gradGlow{
-  0%{box-shadow:0 0 8px 2px rgba(255,255,255,0)}
-  50%{box-shadow:0 0 18px 4px rgba(255,255,255,0.15)}
-  100%{box-shadow:0 0 8px 2px rgba(255,255,255,0)}
-}
 @keyframes popIn{from{opacity:0;transform:scale(.95)}to{opacity:1;transform:scale(1)}}
-
 @media(max-width:960px){
   .main-layout{grid-template-columns:1fr}
   .sidebar{position:static;padding-top:0;border-top:1px solid var(--border);padding-top:32px;margin-bottom:40px;display:grid;grid-template-columns:1fr 1fr;gap:0 40px}
@@ -567,25 +442,16 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;back
   .card-content{font-size:15px}
   [data-theme="amber"] .card-content{font-size:16px;line-height:1.9}
 }
-/* ── Ocean mobile: dark mode comfort ── */
 @media(max-width:720px){
   [data-theme="ocean"] .card-content{font-size:16px;line-height:1.9}
   [data-theme="ocean"] .card-insight{font-size:14px;line-height:1.75}
   [data-theme="ocean"] .mood-chip{min-height:44px}
   [data-theme="ocean"] .card{padding:20px}
 }
-
-
-
-
-
-/* ── Amber modals: orange bg, light text — matches page ── */
 [data-theme="amber"] .summary-modal{color:var(--text);box-shadow:0 40px 80px rgba(80,20,0,.35)}
 [data-theme="amber"] .summary-lean{color:rgba(255,240,220,.7);border-bottom-color:rgba(255,220,150,.2)}
 [data-theme="amber"] .summary-lean strong{color:var(--text)}
 [data-theme="amber"] .summary-card{background:rgba(255,255,255,.1);border-color:rgba(255,220,150,.2);color:#fff0e0}
-[data-theme="amber"] .summary-card::before{opacity:.7}
-[data-theme="amber"] .summary-card-cat{opacity:.8}
 [data-theme="amber"] .summary-card-title{color:var(--text)}
 [data-theme="amber"] .summary-card-body{color:var(--text)}
 [data-theme="amber"] .summary-card-insight{color:rgba(255,240,220,.75);border-top-color:rgba(255,220,150,.2)}
@@ -594,27 +460,22 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;back
 [data-theme="amber"] .summary-lang-tab.active{background:rgba(255,255,255,.15);color:#fff0e0;box-shadow:none}
 [data-theme="amber"] .summary-save-btn{background:var(--accent);color:var(--accent-text);border:none}
 [data-theme="amber"] .summary-save-btn:hover{background:var(--accent);filter:brightness(1.3)}
-[data-theme="amber"] .summary-overlay .summary-save-btn:last-child{background:transparent;border:1.5px solid rgba(255,220,150,.4);color:rgba(255,240,220,.8)}
 [data-theme="amber"] .detail-modal{color:var(--text);box-shadow:0 32px 64px rgba(80,20,0,.35)}
 [data-theme="amber"] .wonder-card{border-color:rgba(255,220,150,.35);box-shadow:0 8px 40px rgba(80,20,0,.2)}
 [data-theme="amber"] .detail-close{color:rgba(255,240,220,.5)}
 [data-theme="amber"] .detail-close:hover{color:var(--text)}
-[data-theme="amber"] .detail-cat{color:var(--text)}
-[data-theme="amber"] .detail-title{color:var(--text)}
-[data-theme="amber"] .detail-content{color:var(--text)}
+[data-theme="amber"] .detail-cat,[data-theme="amber"] .detail-title,[data-theme="amber"] .detail-content{color:var(--text)}
 [data-theme="amber"] .detail-insight{color:rgba(255,240,220,.75);border-color:rgba(255,220,150,.2)}
 [data-theme="amber"] .detail-source{color:var(--secondary)}
 [data-theme="amber"] .detail-lang-tabs{background:rgba(0,0,0,.15)}
 [data-theme="amber"] .detail-lang-tab{color:rgba(255,240,220,.6)}
 [data-theme="amber"] .detail-lang-tab.active{background:rgba(255,255,255,.15);color:#fff0e0;box-shadow:none}
 [data-theme="amber"] .detail-tags .detail-tag{border-color:rgba(255,220,150,.4);color:var(--secondary)}
-[data-theme="amber"] .detail-tags .detail-tag:hover{background:rgba(255,255,255,.15);color:var(--text)}
-[data-theme="amber"] .summary-modal .share-btn{color:var(--secondary);background:rgba(0,0,0,.18);border:none}
-[data-theme="amber"] .summary-modal .share-btn:hover{background:rgba(0,0,0,.35);color:var(--text)}
-[data-theme="amber"] .summary-modal .star-btn{color:rgba(255,240,220,.5)}
-[data-theme="amber"] .summary-modal .star-btn.starred{color:var(--secondary)}
-
-/* ── Olive: text contrast fixes ── */
+[data-theme="amber"] .hero-kicker,[data-theme="amber"] .hero-sub,[data-theme="amber"] .mood-label,[data-theme="amber"] .toolbar-title,[data-theme="amber"] .group-date{color:var(--secondary)}
+[data-theme="amber"] .nav-logo{color:var(--text)}
+[data-theme="amber"] #todayDate{color:var(--secondary)}
+[data-theme="amber"] .loading-label{color:var(--secondary)}
+[data-theme="amber"] .error-msg{color:#ff9060}
 [data-theme="olive"] .card{color:var(--text)}
 [data-theme="olive"] .card-title-en{color:var(--text)}
 [data-theme="olive"] .card-content{color:var(--secondary)}
@@ -622,26 +483,18 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;back
 [data-theme="olive"] .card-source{color:var(--secondary)}
 [data-theme="olive"] .card-cat{opacity:1}
 [data-theme="olive"] .card-num{color:var(--tertiary)}
-[data-theme="olive"] .group-date{color:var(--secondary)}
-[data-theme="olive"] .toolbar-title{color:var(--secondary)}
-[data-theme="olive"] .hero-kicker{color:var(--secondary)}
+[data-theme="olive"] .group-date,[data-theme="olive"] .toolbar-title{color:var(--secondary)}
+[data-theme="olive"] .hero-kicker,[data-theme="olive"] .mood-label,[data-theme="olive"] .toolbar-title{color:var(--accent)}
 [data-theme="olive"] .hero-sub{color:var(--secondary)}
-[data-theme="olive"] .mood-label{color:var(--secondary)}
-[data-theme="olive"] .footer-l,[data-theme="olive"] .footer-r{background:var(--grad-footer,var(--grad));background-size:200% 100%;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-weight:400;letter-spacing:.3px;animation:rainbowFlow 8s linear infinite}
-[data-theme="olive"] .footer-disclaimer{color:var(--tertiary)}
-
-/* Olive sidebar: bright headings, readable names */
+[data-theme="olive"] .footer-l,[data-theme="olive"] .footer-r,[data-theme="ocean"] .footer-l,[data-theme="ocean"] .footer-r{background:var(--grad-footer,var(--grad));background-size:200% 100%;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-weight:400;letter-spacing:.3px;animation:rainbowFlow 12s linear infinite}
+[data-theme="olive"] .footer-disclaimer,[data-theme="ocean"] .footer-disclaimer{color:var(--secondary)}
 [data-theme="olive"] .sb-section .sb-heading{color:var(--accent) !important;border-bottom-color:rgba(200,224,128,.25) !important}
-[data-theme="olive"] .sb-section .sb-name{color:var(--secondary)}
-[data-theme="olive"] .sb-link{color:var(--secondary)}
+[data-theme="olive"] .sb-section .sb-name,[data-theme="olive"] .sb-link{color:var(--secondary)}
 [data-theme="olive"] .sb-link:hover{color:var(--text)}
-[data-theme="olive"] .sb-planet-label{color:var(--accent)}
-[data-theme="olive"] .sb-pick-label{color:var(--accent)}
+[data-theme="olive"] .sb-planet-label,[data-theme="olive"] .sb-pick-label{color:var(--accent)}
 [data-theme="olive"] .sb-pick{border-color:rgba(200,224,128,.25);border-left-color:#c8e080;background:rgba(255,255,255,.06)}
 [data-theme="olive"] .sb-pick-name{color:var(--text)}
 [data-theme="olive"] .sb-pick-tip{color:var(--secondary)}
-
-/* Olive fun bits: readable text */
 [data-theme="olive"] .fun-bit:nth-child(1){background:rgba(255,255,255,.07);border-color:rgba(200,224,128,.15)}
 [data-theme="olive"] .fun-bit:nth-child(2){background:rgba(255,255,255,.07);border-color:rgba(144,224,112,.15)}
 [data-theme="olive"] .fun-bit:nth-child(3){background:rgba(255,255,255,.07);border-color:rgba(128,208,176,.15)}
@@ -649,120 +502,42 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;back
 [data-theme="olive"] .fun-bit:nth-child(2) .fun-bit-label{color:#90e070}
 [data-theme="olive"] .fun-bit:nth-child(3) .fun-bit-label{color:#80d0b0}
 [data-theme="olive"] .fun-bit-text{color:var(--secondary)}
-
-/* Olive modals: dark bg with light text */
-[data-theme="olive"] .summary-modal{color:var(--text)}
+[data-theme="olive"] .summary-modal,[data-theme="olive"] .detail-modal{color:var(--text)}
 [data-theme="olive"] .summary-lean{color:var(--secondary)}
-[data-theme="olive"] .summary-lean strong{color:var(--text)}
+[data-theme="olive"] .summary-lean strong,[data-theme="olive"] .summary-card-title,[data-theme="olive"] .detail-title{color:var(--text)}
 [data-theme="olive"] .summary-card{background:rgba(255,255,255,.07);border-color:rgba(200,224,128,.15);color:#eef0d8}
-[data-theme="olive"] .summary-card-title{color:var(--text)}
-[data-theme="olive"] .summary-card-body{color:var(--secondary)}
+[data-theme="olive"] .summary-card-body,[data-theme="olive"] .detail-content{color:var(--secondary)}
 [data-theme="olive"] .summary-card-insight{color:var(--secondary);border-top-color:rgba(200,224,128,.15)}
-[data-theme="olive"] .summary-lang-tabs{background:rgba(0,0,0,.2)}
-[data-theme="olive"] .summary-lang-tab{color:var(--tertiary)}
-[data-theme="olive"] .summary-lang-tab.active{background:rgba(255,255,255,.12);color:#eef0d8;box-shadow:none}
+[data-theme="olive"] .summary-lang-tabs,[data-theme="olive"] .detail-lang-tabs{background:rgba(0,0,0,.2)}
+[data-theme="olive"] .summary-lang-tab,[data-theme="olive"] .detail-lang-tab{color:var(--tertiary)}
+[data-theme="olive"] .summary-lang-tab.active,[data-theme="olive"] .detail-lang-tab.active{background:rgba(255,255,255,.12);color:#eef0d8;box-shadow:none}
 [data-theme="olive"] .summary-save-btn{background:var(--accent);color:var(--btn-text)}
-[data-theme="olive"] .summary-save-btn:hover{background:var(--accent);filter:brightness(1.1)}
-[data-theme="olive"] .detail-modal{color:var(--text)}
 [data-theme="olive"] .detail-close{color:var(--tertiary)}
 [data-theme="olive"] .detail-close:hover{color:var(--text)}
-[data-theme="olive"] .detail-title{color:var(--text)}
-[data-theme="olive"] .detail-content{color:var(--secondary)}
 [data-theme="olive"] .detail-insight{color:#b8c890;border-color:rgba(200,224,128,.15)}
 [data-theme="olive"] .detail-source{color:var(--secondary)}
-[data-theme="olive"] .detail-lang-tabs{background:rgba(0,0,0,.2)}
-[data-theme="olive"] .detail-lang-tab{color:var(--tertiary)}
-[data-theme="olive"] .detail-lang-tab.active{background:rgba(255,255,255,.12);color:#eef0d8;box-shadow:none}
 [data-theme="olive"] .detail-tags .detail-tag{border-color:rgba(200,224,128,.3);color:var(--secondary)}
-[data-theme="olive"] .detail-tags .detail-tag:hover{background:rgba(255,255,255,.1);color:var(--text)}
-[data-theme="olive"] .summary-modal .share-btn{color:var(--secondary);background:rgba(255,255,255,.08);border:none}
-[data-theme="olive"] .summary-modal .share-btn:hover{background:rgba(255,255,255,.15);color:var(--text)}
-[data-theme="olive"] .summary-modal .star-btn{color:var(--tertiary)}
-[data-theme="olive"] .summary-modal .star-btn.starred{color:var(--accent)}
-
-/* ── Ocean: text contrast fixes ── */
-[data-theme="ocean"] .card{color:var(--text)}
-[data-theme="ocean"] .card-title-en{color:var(--text)}
-[data-theme="ocean"] .card-content{color:var(--text);line-height:1.85}
-[data-theme="ocean"] .active-tag,[data-theme="ocean"] .tag:hover{color:#fff !important;text-shadow:0 1px 4px rgba(0,0,0,.6);font-weight:500}
-[data-theme="ocean"] .card-insight{color:var(--secondary)}
-[data-theme="ocean"] .card-source{color:var(--secondary)}
-[data-theme="ocean"] .card-num{color:var(--tertiary)}
-[data-theme="ocean"] .group-date{color:var(--secondary)}
-[data-theme="ocean"] .toolbar-title{color:var(--secondary)}
-[data-theme="ocean"] .hero-kicker{color:var(--secondary)}
-[data-theme="ocean"] .hero-sub{color:var(--secondary)}
-[data-theme="ocean"] .mood-label{color:var(--secondary)}
-[data-theme="ocean"] .footer-l,[data-theme="ocean"] .footer-r{background:var(--grad-footer,var(--grad));background-size:200% 100%;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-weight:400;letter-spacing:.3px;animation:rainbowFlow 8s linear infinite}
-[data-theme="ocean"] .footer-disclaimer{color:var(--secondary)}
-
-/* Ocean sidebar: bright ice-blue headings, readable names */
-[data-theme="ocean"] .sb-section .sb-heading{color:#90d0f0 !important;border-bottom-color:rgba(144,208,240,.25) !important}
-[data-theme="ocean"] .sb-section .sb-name{color:var(--secondary)}
-[data-theme="ocean"] .sb-link{color:var(--secondary)}
-[data-theme="ocean"] .sb-link:hover{color:var(--text)}
-[data-theme="ocean"] .sb-planet-label{color:var(--accent-ocean)}
-[data-theme="ocean"] .sb-pick-label{color:var(--accent-ocean)}
-[data-theme="ocean"] .sb-pick{border-color:rgba(144,208,240,.25);border-left-color:#90d0f0;background:rgba(255,255,255,.05)}
-[data-theme="ocean"] .sb-pick-name{color:var(--text)}
-[data-theme="ocean"] .sb-pick-tip{color:var(--secondary)}
-
-/* Ocean fun bits */
-[data-theme="ocean"] .fun-bit:nth-child(1){background:rgba(255,255,255,.05);border-color:rgba(144,208,240,.12)}
-[data-theme="ocean"] .fun-bit:nth-child(2){background:rgba(255,255,255,.05);border-color:rgba(96,216,144,.12)}
-[data-theme="ocean"] .fun-bit:nth-child(3){background:rgba(255,255,255,.05);border-color:rgba(168,128,224,.12)}
-[data-theme="ocean"] .fun-bit:nth-child(1) .fun-bit-label{color:#70b8e0}
-[data-theme="ocean"] .fun-bit:nth-child(2) .fun-bit-label{color:#60d890}
-[data-theme="ocean"] .fun-bit:nth-child(3) .fun-bit-label{color:#a880e0}
-[data-theme="ocean"] .fun-bit-text{color:var(--secondary)}
-
-/* Ocean modals */
-[data-theme="ocean"] .summary-modal{color:var(--text)}
-[data-theme="ocean"] .summary-lean{color:var(--secondary)}
-[data-theme="ocean"] .summary-lean strong{color:var(--text)}
-[data-theme="ocean"] .summary-card{background:rgba(255,255,255,.06);border-color:rgba(144,208,240,.12);color:#d8e8f0}
-[data-theme="ocean"] .summary-card-title{color:var(--text)}
-[data-theme="ocean"] .summary-card-body{color:var(--secondary)}
-[data-theme="ocean"] .summary-card-insight{color:var(--secondary);border-top-color:rgba(144,208,240,.15)}
-[data-theme="ocean"] .summary-lang-tabs{background:rgba(0,0,0,.25)}
-[data-theme="ocean"] .summary-lang-tab{color:var(--tertiary)}
-[data-theme="ocean"] .summary-lang-tab.active{background:rgba(255,255,255,.1);color:#d8e8f0;box-shadow:none}
-[data-theme="ocean"] .summary-save-btn{background:var(--accent-ocean-2);color:var(--btn-text)}
-[data-theme="ocean"] .summary-save-btn:hover{background:var(--accent-ocean);filter:brightness(1.05)}
-[data-theme="ocean"] .detail-modal{color:var(--text)}
-[data-theme="ocean"] .detail-close{color:var(--tertiary)}
-[data-theme="ocean"] .detail-close:hover{color:var(--text)}
-[data-theme="ocean"] .detail-title{color:var(--text)}
-[data-theme="ocean"] .detail-content{color:var(--secondary)}
-[data-theme="ocean"] .detail-insight{color:#8aacc0;border-color:rgba(144,208,240,.15)}
-[data-theme="ocean"] .detail-source{color:var(--secondary)}
-[data-theme="ocean"] .detail-lang-tabs{background:rgba(0,0,0,.25)}
-[data-theme="ocean"] .detail-lang-tab{color:var(--tertiary)}
-[data-theme="ocean"] .detail-lang-tab.active{background:rgba(255,255,255,.1);color:#d8e8f0;box-shadow:none}
-[data-theme="ocean"] .detail-tags .detail-tag{border-color:rgba(144,208,240,.3);color:var(--secondary)}
-[data-theme="ocean"] .detail-tags .detail-tag:hover{background:rgba(255,255,255,.08);color:var(--text)}
-[data-theme="ocean"] .summary-modal .share-btn{color:var(--secondary);background:rgba(255,255,255,.07);border:none}
-[data-theme="ocean"] .summary-modal .share-btn:hover{background:rgba(255,255,255,.14);color:var(--text)}
-[data-theme="ocean"] .card .share-btn{color:var(--card-text-2);background:rgba(255,255,255,.06)}
-[data-theme="ocean"] .card .share-btn:hover{background:rgba(255,255,255,.15);color:var(--text);transform:translateY(-1px)}
-[data-theme="ocean"] .summary-modal .star-btn{color:var(--tertiary)}
-[data-theme="ocean"] .summary-modal .star-btn.starred{color:var(--accent-ocean-2)}
-
-/* Amber hero/nav small text contrast */
-[data-theme="amber"] .hero-kicker{color:var(--secondary)}
-[data-theme="amber"] .hero-sub{color:var(--secondary)}
-[data-theme="amber"] .mood-label{color:var(--secondary)}
-[data-theme="amber"] .toolbar-title{color:var(--secondary)}
-[data-theme="amber"] .group-date{color:var(--secondary)}
-[data-theme="amber"] .nav-logo{color:var(--text)}
-[data-theme="amber"] #todayDate{color:var(--secondary)}
-[data-theme="amber"] .loading-label{color:var(--secondary)}
-[data-theme="amber"] .error-msg{color:#ff9060}
-/* Olive hero/nav small text contrast */
-[data-theme="olive"] .hero-kicker{color:var(--accent)}
-[data-theme="olive"] .hero-sub{color:var(--secondary)}
-[data-theme="olive"] .mood-label{color:var(--accent)}
-[data-theme="olive"] .toolbar-title{color:var(--accent)}
+[data-theme="olive"] .active-tag,[data-theme="olive"] .tag:hover,[data-theme="ocean"] .active-tag,[data-theme="ocean"] .tag:hover{color:#fff !important;text-shadow:0 1px 4px rgba(0,0,0,.55);font-weight:500}
+[data-theme="olive"] .card{color:var(--card-text);background:var(--card-bg);border-color:#b8ccaa}
+[data-theme="olive"] .card-title-en{color:var(--card-text)}
+[data-theme="olive"] .card-content{color:var(--card-text-2)}
+[data-theme="olive"] .card-insight{color:var(--card-text-3);font-style:italic}
+[data-theme="olive"] .card-source{color:var(--card-text-4)}
+[data-theme="olive"] .card-num{color:var(--card-text-5)}
+[data-theme="olive"] .star-btn{color:var(--card-text-5)}
+[data-theme="olive"] .star-btn.starred{color:var(--card-text-3)}
+[data-theme="olive"] .card .lang-tabs{background:rgba(0,0,0,.08)}
+[data-theme="olive"] .card .lang-tab{color:var(--card-text-4);background:none}
+[data-theme="olive"] .card .lang-tab.active{background:var(--bg);color:var(--text);box-shadow:none}
+[data-theme="olive"] .card .share-btn{color:var(--card-text-2);background:rgba(0,0,0,.08);border:none}
+[data-theme="olive"] .card .share-btn:hover{background:rgba(0,0,0,.15);color:var(--card-text)}
+[data-theme="olive"] .card .tag{color:var(--cat-color);border-color:var(--cat-color);opacity:1}
+[data-theme="olive"] .card .tag:hover{background:var(--cat-color);color:#fff}
+[data-theme="olive"] .card .card-title-zh{color:var(--card-text-4)}
+[data-theme="olive"] .card .share-bar{border-top-color:rgba(0,0,0,.08)}
+[data-theme="olive"] .card:hover{box-shadow:0 12px 40px rgba(0,0,0,.15)}
+[data-theme="olive"] .group-mood{background:var(--card-bg);border-color:#c0d0a8;color:var(--card-text-3)}
+[data-theme="olive"] .filter-select,[data-theme="olive"] .filter-input{background:var(--bg);color:var(--text);border-color:var(--border)}
 [data-theme="olive"] .nav-logo{color:var(--text)}
 [data-theme="olive"] #todayDate{color:var(--tertiary)}
 [data-theme="olive"] .loading-label{color:var(--secondary)}
@@ -773,17 +548,55 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;back
 [data-theme="olive"] .star-filter-btn:hover{color:var(--accent)}
 [data-theme="olive"] .group-meta{color:var(--tertiary)}
 [data-theme="olive"] .group-delete:hover{color:#e08870}
-/* Ocean hero/nav small text contrast */
-[data-theme="ocean"] .hero-kicker{color:var(--accent-ocean)}
+[data-theme="ocean"] .card{color:#d8e8f0;background:rgba(255,255,255,.05);border-color:rgba(144,208,240,.1)}
+[data-theme="ocean"] .card-title-en,[data-theme="ocean"] .hero-title{color:var(--text)}
+[data-theme="ocean"] .card-content{color:var(--text);line-height:1.85}
+[data-theme="ocean"] .card-insight{color:var(--secondary);font-style:italic}
+[data-theme="ocean"] .card-source,[data-theme="ocean"] .detail-source{color:var(--secondary)}
+[data-theme="ocean"] .card-num{color:var(--tertiary)}
+[data-theme="ocean"] .star-btn{color:var(--tertiary)}
+[data-theme="ocean"] .card .lang-tab{color:var(--tertiary);background:none}
+[data-theme="ocean"] .card .lang-tab.active{background:var(--bg);color:var(--text)}
+[data-theme="ocean"] .card .share-btn{color:#8aacc0;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1)}
+[data-theme="ocean"] .card .share-btn:hover{background:rgba(255,255,255,.15);color:var(--text);transform:translateY(-1px)}
+[data-theme="ocean"] .card .tag{color:var(--cat-color);border-color:var(--cat-color)}
+[data-theme="ocean"] .card:hover{box-shadow:0 12px 40px rgba(0,0,0,.4)}
+[data-theme="ocean"] .group-date,[data-theme="ocean"] .toolbar-title{color:var(--secondary)}
+[data-theme="ocean"] .hero-kicker,[data-theme="ocean"] .mood-label,[data-theme="ocean"] .toolbar-title{color:var(--accent-ocean)}
 [data-theme="ocean"] .hero-sub{color:var(--secondary)}
-[data-theme="ocean"] .mood-label{color:var(--accent-ocean)}
-[data-theme="ocean"] .toolbar-title{color:var(--accent-ocean)}
+[data-theme="ocean"] .sb-section .sb-heading{color:#90d0f0 !important;border-bottom-color:rgba(144,208,240,.25) !important}
+[data-theme="ocean"] .sb-section .sb-name,[data-theme="ocean"] .sb-link{color:var(--secondary)}
+[data-theme="ocean"] .sb-link:hover{color:var(--text)}
+[data-theme="ocean"] .sb-planet-label,[data-theme="ocean"] .sb-pick-label{color:var(--accent-ocean)}
+[data-theme="ocean"] .sb-pick{border-color:rgba(144,208,240,.25);border-left-color:#90d0f0;background:rgba(255,255,255,.05)}
+[data-theme="ocean"] .sb-pick-name{color:var(--text)}
+[data-theme="ocean"] .sb-pick-tip{color:var(--secondary)}
+[data-theme="ocean"] .fun-bit:nth-child(1){background:rgba(255,255,255,.05);border-color:rgba(144,208,240,.12)}
+[data-theme="ocean"] .fun-bit:nth-child(2){background:rgba(255,255,255,.05);border-color:rgba(96,216,144,.12)}
+[data-theme="ocean"] .fun-bit:nth-child(3){background:rgba(255,255,255,.05);border-color:rgba(168,128,224,.12)}
+[data-theme="ocean"] .fun-bit:nth-child(1) .fun-bit-label{color:#70b8e0}
+[data-theme="ocean"] .fun-bit:nth-child(2) .fun-bit-label{color:#60d890}
+[data-theme="ocean"] .fun-bit:nth-child(3) .fun-bit-label{color:#a880e0}
+[data-theme="ocean"] .fun-bit-text{color:var(--secondary)}
+[data-theme="ocean"] .summary-modal,[data-theme="ocean"] .detail-modal{color:var(--text)}
+[data-theme="ocean"] .summary-lean{color:var(--secondary)}
+[data-theme="ocean"] .summary-lean strong,[data-theme="ocean"] .summary-card-title,[data-theme="ocean"] .detail-title{color:var(--text)}
+[data-theme="ocean"] .summary-card{background:rgba(255,255,255,.06);border-color:rgba(144,208,240,.12);color:#d8e8f0}
+[data-theme="ocean"] .summary-card-body,[data-theme="ocean"] .detail-content{color:var(--secondary)}
+[data-theme="ocean"] .summary-card-insight{color:var(--secondary);border-top-color:rgba(144,208,240,.15)}
+[data-theme="ocean"] .summary-lang-tabs,[data-theme="ocean"] .detail-lang-tabs{background:rgba(0,0,0,.25)}
+[data-theme="ocean"] .summary-lang-tab,[data-theme="ocean"] .detail-lang-tab{color:var(--tertiary)}
+[data-theme="ocean"] .summary-lang-tab.active,[data-theme="ocean"] .detail-lang-tab.active{background:rgba(255,255,255,.1);color:#d8e8f0;box-shadow:none}
+[data-theme="ocean"] .summary-save-btn{background:var(--accent-ocean-2);color:var(--btn-text)}
+[data-theme="ocean"] .detail-close{color:var(--tertiary)}
+[data-theme="ocean"] .detail-close:hover{color:var(--text)}
+[data-theme="ocean"] .detail-insight{color:#8aacc0;border-color:rgba(144,208,240,.15)}
+[data-theme="ocean"] .detail-tags .detail-tag{border-color:rgba(144,208,240,.3);color:var(--secondary)}
 [data-theme="ocean"] .nav-logo{color:var(--text)}
 [data-theme="ocean"] #todayDate{color:var(--secondary)}
 [data-theme="ocean"] .loading-label{color:var(--secondary)}
 [data-theme="ocean"] .mood-chip{color:var(--secondary);border-color:rgba(144,208,240,.3)}
 [data-theme="ocean"] .mood-chip:hover{color:var(--text);border-color:var(--accent-ocean)}
-[data-theme="ocean"] .hero-title{color:var(--text)}
 [data-theme="ocean"] .star-filter-btn{color:var(--tertiary)}
 [data-theme="ocean"] .star-filter-btn:hover{color:var(--accent-ocean)}
 [data-theme="ocean"] .group-meta{color:var(--tertiary)}
@@ -792,133 +605,78 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;back
 [data-theme="ocean"] .password-input::placeholder{color:var(--tertiary)}
 [data-theme="ocean"] .gen-btn{background:var(--btn-bg);color:var(--btn-text)}
 [data-theme="ocean"] .gen-btn:hover{background:var(--accent-ocean)}
-[data-theme="ocean"] .card .share-btn{color:var(--card-text-2);background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1)}
-[data-theme="ocean"] .card .share-btn:hover{background:rgba(255,255,255,.15);color:var(--text);transform:translateY(-1px)}
 [data-theme="ocean"] .error-msg{color:#ff9878}
 [data-theme="ocean"] .filter-select,[data-theme="ocean"] .filter-input{background:#162434;color:#d8e8f0;border-color:rgba(144,208,240,.2)}
-
-/* Olive archive cards: dark text on light green-white card bg */
-[data-theme="olive"] .card{color:var(--card-text);background:var(--card-bg);border-color:#b8ccaa}
-[data-theme="olive"] .card-title-en{color:var(--card-text)}
-[data-theme="olive"] .card-content{color:var(--card-text-2)}
-[data-theme="olive"] .active-tag,[data-theme="olive"] .tag:hover{color:#fff !important;text-shadow:0 1px 4px rgba(0,0,0,.55);font-weight:500}
-[data-theme="olive"] .card-insight{color:var(--card-text-3);font-style:italic}
-[data-theme="olive"] .card-source{color:var(--card-text-4)}
-[data-theme="olive"] .card-cat{color:var(--cat-color)}
-[data-theme="olive"] .card-num{color:var(--card-text-5)}
-[data-theme="olive"] .star-btn{color:var(--card-text-5)}
-[data-theme="olive"] .star-btn.starred{color:var(--card-text-3)}
-[data-theme="olive"] .card .lang-tabs{background:rgba(0,0,0,.08)}
-[data-theme="olive"] .card .lang-tab{color:var(--card-text-4);background:none}
-[data-theme="olive"] .card .lang-tab.active{background:var(--bg);color:var(--text);box-shadow:none}
-[data-theme="olive"] .card .share-label{color:var(--card-text-4)}
-[data-theme="olive"] .card .share-btn{color:var(--card-text-2);background:rgba(0,0,0,.08);border:none}
-[data-theme="olive"] .card .share-btn:hover{background:rgba(0,0,0,.15);color:var(--card-text)}
-[data-theme="olive"] .card .tag{color:var(--cat-color);border-color:var(--cat-color);opacity:1}
-[data-theme="olive"] .card .tag:hover{background:var(--cat-color);color:#fff}
-[data-theme="olive"] .card .card-title-zh{color:var(--card-text-4)}
-[data-theme="olive"] .card .share-bar{border-top-color:rgba(0,0,0,.08)}
-[data-theme="olive"] .card:hover{box-shadow:0 12px 40px rgba(0,0,0,.15)}
-[data-theme="olive"] .group-mood{background:var(--card-bg);border-color:#c0d0a8;color:var(--card-text-3)}
-[data-theme="olive"] .filter-select,[data-theme="olive"] .filter-input{background:var(--bg);color:var(--text);border-color:var(--border)}
-/* Ocean archive cards: light text on dark card bg */
-[data-theme="ocean"] .card{color:#d8e8f0;background:rgba(255,255,255,.05);border-color:rgba(144,208,240,.1)}
-[data-theme="ocean"] .card-title-en{color:var(--text)}
-[data-theme="ocean"] .card-content{color:var(--text);line-height:1.85}
-[data-theme="ocean"] .active-tag,[data-theme="ocean"] .tag:hover{color:#fff !important;text-shadow:0 1px 4px rgba(0,0,0,.6);font-weight:500}
-[data-theme="ocean"] .card-insight{color:var(--secondary);font-style:italic}
-[data-theme="ocean"] .card-source{color:var(--secondary)}
-[data-theme="ocean"] .card-num{color:var(--tertiary)}
-[data-theme="ocean"] .star-btn{color:var(--tertiary)}
-[data-theme="ocean"] .card .lang-tab{color:var(--tertiary);background:none}
-[data-theme="ocean"] .card .lang-tab.active{background:var(--bg);color:var(--text)}
-[data-theme="ocean"] .card .share-label{color:var(--secondary)}
-[data-theme="ocean"] .card .share-btn{color:#8aacc0;background:rgba(255,255,255,.07)}
-[data-theme="ocean"] .card .tag{color:var(--cat-color);border-color:var(--cat-color)}
-[data-theme="ocean"] .card:hover{box-shadow:0 12px 40px rgba(0,0,0,.4)}
-
-/* ── Image picker modal: theme-specific overrides ── */
-
-/* Amber */
 [data-theme="amber"] .img-modal{background:var(--surface);color:var(--text)}
 [data-theme="amber"] .img-section-label{color:var(--secondary)}
 [data-theme="amber"] .img-picker-btn{color:var(--secondary);background:rgba(0,0,0,.15);border-color:transparent}
-[data-theme="amber"] .img-picker-btn:hover{background:rgba(0,0,0,0.2);border-color:var(--card-text)}
 [data-theme="amber"] .img-picker-btn:hover{background:rgba(0,0,0,.25);color:var(--text)}
-[data-theme="amber"] .img-picker-btn.active{background:transparent;border-color:var(--secondary);color:var(--text);box-shadow:inset 0 0 0 1px var(--secondary)}
+[data-theme="amber"] .img-picker-btn.active{background:transparent;border-color:var(--secondary);color:var(--text)}
 [data-theme="amber"] .img-dl-btn{background:var(--accent);color:var(--accent-text)}
-[data-theme="amber"] .img-dl-btn:hover{background:var(--accent);filter:brightness(1.3)}
 [data-theme="amber"] .img-close-btn{background:rgba(0,0,0,.2);color:var(--secondary);border:none}
-[data-theme="amber"] .img-close-btn:hover{background:rgba(0,0,0,.35)}
-[data-theme="amber"] .img-modal>div[style*="font-family:'DM Serif"]{color:#fff0e0}
-[data-theme="amber"] .img-modal>div[style*="font-size:12px"]{color:var(--secondary)}
 [data-theme="amber"] #imgSaveHint{color:var(--secondary)}
-
-/* Olive */
 [data-theme="olive"] .img-modal{background:var(--surface);color:var(--text)}
 [data-theme="olive"] .img-section-label{color:var(--accent)}
 [data-theme="olive"] .img-picker-btn{color:var(--secondary);background:rgba(255,255,255,.07);border-color:transparent}
 [data-theme="olive"] .img-picker-btn:hover{background:rgba(255,255,255,.14);color:var(--text)}
 [data-theme="olive"] .img-picker-btn.active{background:var(--surface);border-color:var(--accent);color:var(--text)}
 [data-theme="olive"] .img-dl-btn{background:var(--surface);color:var(--text)}
-[data-theme="olive"] .img-dl-btn:hover{background:var(--bg)}
 [data-theme="olive"] .img-close-btn{background:rgba(255,255,255,.08);color:var(--secondary);border:none}
-[data-theme="olive"] .img-close-btn:hover{background:rgba(255,255,255,.15)}
 [data-theme="olive"] #imgSaveHint{color:var(--tertiary)}
-
-/* Ocean */
 [data-theme="ocean"] .img-modal{background:var(--bg);color:var(--text)}
 [data-theme="ocean"] .img-section-label{color:var(--accent-ocean)}
 [data-theme="ocean"] .img-picker-btn{color:#8aacc0;background:rgba(255,255,255,.06);border-color:transparent}
 [data-theme="ocean"] .img-picker-btn:hover{background:rgba(255,255,255,.10);color:#d8e8f0;border-color:rgba(144,208,240,.3)}
-[data-theme="ocean"] .img-picker-btn.active{background:transparent;border-color:var(--accent-ocean-2);color:var(--text);box-shadow:inset 0 0 0 1px var(--accent-ocean-2)}
+[data-theme="ocean"] .img-picker-btn.active{background:transparent;border-color:var(--accent-ocean-2);color:var(--text)}
 [data-theme="ocean"] .img-dl-btn{background:var(--surface);color:var(--accent-ocean);border:1.5px solid var(--accent-ocean-2)}
-[data-theme="ocean"] .img-dl-btn:hover{background:var(--modal-bg);color:var(--text)}
 [data-theme="ocean"] .img-close-btn{background:rgba(255,255,255,.07);color:#8aacc0;border:none}
-[data-theme="ocean"] .img-close-btn:hover{background:rgba(255,255,255,.14)}
 [data-theme="ocean"] #imgSaveHint{color:var(--secondary)}
 [data-theme="ocean"] .card img{filter:brightness(.88)}
-
-/* ── Search highlight ── */
 mark.search-hl{background:rgba(255,200,50,.35);color:inherit;border-radius:2px;padding:0 1px}
 [data-theme="ocean"] mark.search-hl{background:rgba(100,180,255,.3)}
 [data-theme="olive"] mark.search-hl{background:rgba(150,220,80,.3)}
 [data-theme="amber"] mark.search-hl{background:rgba(255,180,50,.4)}
 .tag mark.search-hl,.active-tag mark.search-hl{background:transparent;padding:0}
-
-/* ── Accessibility: focus styles ── */
 :focus-visible{outline:2px solid var(--secondary);outline-offset:3px;border-radius:4px}
 button:focus-visible,a:focus-visible{outline:2px solid var(--secondary);outline-offset:3px}
 .mood-chip:focus-visible{outline:2px solid var(--text);outline-offset:2px}
 .card:focus-within{box-shadow:0 0 0 2px var(--secondary)}
-
-
-/* ── Accessibility: reduced motion ──────────────────── */
 @media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
-    animation-duration: .01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: .01ms !important;
-  }
+  *, *::before, *::after { animation-duration:.01ms !important;animation-iteration-count:1 !important;transition-duration:.01ms !important; }
 }
-/* ── Print styles ────────────────────────────────────── */
 @media print {
-  nav, .gen-row, .error-msg, .toolbar, .load-more-btn,
-  .share-bar, .sidebar, footer, .curiosity-toast, .error-toast,
-  #authArea, .mood-chips-wrap { display: none !important; }
-  body { background: #fff !important; color: #111 !important; }
-  .card { break-inside: avoid; border: 1px solid #ddd !important;
-    background: #fff !important; color: #111 !important; box-shadow: none !important; }
-  .card-title-en, .card-content { color: #111 !important; }
-  .card-insight { color: #444 !important; }
-  .card-source { color: #666 !important; }
-  .hero { padding: 16px 0 !important; }
-  .page { grid-template-columns: 1fr !important; }
-  .main-col { grid-column: 1 !important; }
+  nav,.gen-row,.error-msg,.toolbar,.load-more-btn,.share-bar,.sidebar,footer,.curiosity-toast,.error-toast,#authArea,.mood-chips-wrap{display:none !important;}
+  body{background:#fff !important;color:#111 !important;}
+  .card{break-inside:avoid;border:1px solid #ddd !important;background:#fff !important;color:#111 !important;box-shadow:none !important;}
+  .card-title-en,.card-content{color:#111 !important;}
+  .card-insight{color:#444 !important;}
+  .card-source{color:#666 !important;}
+  .hero{padding:16px 0 !important;}
+  .page{grid-template-columns:1fr !important;}
+  .main-col{grid-column:1 !important;}
+}
+
+/* ── knowing。 brand ─────────────────────────────────── */
+.knowing-word{
+  font-style:italic;
+  background:var(--grad);
+  background-size:200% 100%;
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  background-clip:text;
+  animation:rainbowFlow 12s linear infinite;
+}
+.knowing-dot{
+  font-family:'DM Serif Display',serif;
+  font-style:normal;
+  font-size:.82em;
+  vertical-align:.04em;
+  margin-left:.02em;
+  color:var(--text);
+  -webkit-text-fill-color:var(--text);
 }
 </style>
 <script defer src="https://cdn.vercel-insights.com/v1/script.js"></script>
-<!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-TZJP3T1CN9"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
@@ -926,18 +684,14 @@ button:focus-visible,a:focus-visible{outline:2px solid var(--secondary);outline-
   gtag('js', new Date());
   gtag('config', 'G-TZJP3T1CN9');
 </script>
-
 <script>
-// Auto dark mode: switch to Ocean if system prefers dark and no saved preference
 (function() {
   const saved = localStorage.getItem('ncb_theme');
   if (!saved && window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
     localStorage.setItem('ncb_theme', 'ocean');
   }
-  // Listen for system theme changes
   if (window.matchMedia) {
     window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
-      // Only auto-switch if user hasn't manually picked a theme this session
       if (!window._userPickedTheme) {
         if (typeof setTheme === 'function') setTheme(e.matches ? 'ocean' : 'light');
       }
@@ -948,7 +702,6 @@ button:focus-visible,a:focus-visible{outline:2px solid var(--secondary);outline-
 </head>
 <body>
 <div class="page">
-
 <nav>
   <span class="nav-logo">Curiosity Box</span>
   <div style="display:flex;align-items:center;gap:14px">
@@ -971,7 +724,7 @@ button:focus-visible,a:focus-visible{outline:2px solid var(--secondary);outline-
 <div class="hero">
   <div class="hero-left">
     <div class="hero-kicker">A Daily</div>
-    <h1 class="hero-title">Five things<br>worth <em>knowing.</em></h1>
+    <h1 class="hero-title">Five things<br>worth <em class="knowing-word">knowing</em><span class="knowing-dot">。</span></h1>
     <p class="hero-sub">Surprising, sharp, and a little wicked —<br>one curiosity box per day.</p>
   </div>
   <div class="hero-right">
@@ -986,8 +739,9 @@ button:focus-visible,a:focus-visible{outline:2px solid var(--secondary);outline-
       <button class="mood-chip" data-mood="unsettling" onclick="selectMood(this)">Unsettling</button>
     </div>
     <div class="gen-row">
+      <!-- FIX 1: new-password prevents iOS saved-password autocomplete sheet -->
       <input type="password" class="password-input" id="passwordInput"
-        placeholder="Password" maxlength="64" autocomplete="current-password"
+        placeholder="Password" maxlength="64" autocomplete="new-password"
         onkeydown="if(event.key==='Enter') generate()"/>
       <button class="gen-btn" id="genBtn" onclick="generate()" aria-label="Generate curiosity box">Generate</button>
     </div>
@@ -1016,8 +770,8 @@ button:focus-visible,a:focus-visible{outline:2px solid var(--secondary);outline-
       <div class="toolbar-left">
         <span class="toolbar-title">Archive</span>
         <button class="star-filter-btn" aria-label="Filter starred items" id="starFilterBtn" onclick="toggleStarFilter()" title="Show starred only">&#9733;</button>
-        <button class="star-filter-btn" aria-label="Filter starred items" onclick="openRandomWonder()" title="Random wonder" style="margin-left:4px;font-size:13px;opacity:.4">&#9675;</button>
-        <button class="star-filter-btn" aria-label="Filter starred items" id="tagClearBtn" onclick="clearTagFilter()" title="Clear tag filter" style="display:none;margin-left:4px;font-size:10px;opacity:.6;letter-spacing:.5px;font-family:'DM Sans',sans-serif">&#x2715; tag</button>
+        <button class="star-filter-btn" aria-label="Random wonder" onclick="openRandomWonder()" title="Random wonder" style="margin-left:4px;font-size:13px;opacity:.4">&#9675;</button>
+        <button class="star-filter-btn" aria-label="Clear tag filter" id="tagClearBtn" onclick="clearTagFilter()" title="Clear tag filter" style="display:none;margin-left:4px;font-size:10px;opacity:.6;letter-spacing:.5px;font-family:'DM Sans',sans-serif">&#x2715; tag</button>
       </div>
       <div class="toolbar-right">
         <select id="filterCategory" class="filter-select" onchange="_showCount=10;renderArchive()">
@@ -1033,8 +787,9 @@ button:focus-visible,a:focus-visible{outline:2px solid var(--secondary);outline-
           <option value="Science">Science</option>
           <option value="Folklore">Folklore</option>
         </select>
+        <!-- FIX 2: debounced search — prevents CJK IME firing on every keystroke -->
         <input id="filterQuery" class="filter-input" type="text"
-          placeholder="Search..." oninput="_showCount=10;renderArchive()"/>
+          placeholder="Search..." oninput="debouncedSearch()"/>
       </div>
     </div>
     <div id="archive"></div>
@@ -1059,236 +814,86 @@ button:focus-visible,a:focus-visible{outline:2px solid var(--secondary);outline-
     </div>
       <div class="sb-section">
         <div class="sb-heading">Deep Reading</div>
-        <a class="sb-link" href="https://aeon.co" target="_blank" rel="noopener">
-          <img class="sb-icon" src="https://www.google.com/s2/favicons?domain=aeon.co&sz=32" alt="" loading="lazy" onerror="this.style.opacity=0">
-          <span class="sb-name">Aeon</span>
-        </a>
-        <a class="sb-link" href="https://longreads.com" target="_blank" rel="noopener">
-          <img class="sb-icon" src="https://www.google.com/s2/favicons?domain=longreads.com&sz=32" alt="" loading="lazy" onerror="this.style.opacity=0">
-          <span class="sb-name">Longreads</span>
-        </a>
-        <a class="sb-link" href="https://psyche.co" target="_blank" rel="noopener">
-          <img class="sb-icon" src="https://www.google.com/s2/favicons?domain=psyche.co&sz=32" alt="" loading="lazy" onerror="this.style.opacity=0">
-          <span class="sb-name">Psyche</span>
-        </a>
-        <a class="sb-link" href="https://www.theatlantic.com/science/" target="_blank" rel="noopener">
-          <img class="sb-icon" src="https://www.google.com/s2/favicons?domain=theatlantic.com&sz=32" alt="" loading="lazy" onerror="this.style.opacity=0">
-          <span class="sb-name">The Atlantic</span>
-        </a>
+        <a class="sb-link" href="https://aeon.co" target="_blank" rel="noopener"><img class="sb-icon" src="https://www.google.com/s2/favicons?domain=aeon.co&sz=32" alt="" loading="lazy" onerror="this.style.opacity=0"><span class="sb-name">Aeon</span></a>
+        <a class="sb-link" href="https://longreads.com" target="_blank" rel="noopener"><img class="sb-icon" src="https://www.google.com/s2/favicons?domain=longreads.com&sz=32" alt="" loading="lazy" onerror="this.style.opacity=0"><span class="sb-name">Longreads</span></a>
+        <a class="sb-link" href="https://psyche.co" target="_blank" rel="noopener"><img class="sb-icon" src="https://www.google.com/s2/favicons?domain=psyche.co&sz=32" alt="" loading="lazy" onerror="this.style.opacity=0"><span class="sb-name">Psyche</span></a>
+        <a class="sb-link" href="https://www.theatlantic.com/science/" target="_blank" rel="noopener"><img class="sb-icon" src="https://www.google.com/s2/favicons?domain=theatlantic.com&sz=32" alt="" loading="lazy" onerror="this.style.opacity=0"><span class="sb-name">The Atlantic</span></a>
       </div>
       <div class="sb-section">
         <div class="sb-heading">Food &amp; Drink</div>
-        <a class="sb-link" href="https://www.bonappetit.com" target="_blank" rel="noopener">
-          <img class="sb-icon" src="https://www.google.com/s2/favicons?domain=bonappetit.com&sz=32" alt="" loading="lazy" onerror="this.style.opacity=0">
-          <span class="sb-name">Bon Appétit</span>
-        </a>
-        <a class="sb-link" href="https://www.eater.com" target="_blank" rel="noopener">
-          <img class="sb-icon" src="https://www.google.com/s2/favicons?domain=eater.com&sz=32" alt="" loading="lazy" onerror="this.style.opacity=0">
-          <span class="sb-name">Eater</span>
-        </a>
-        <a class="sb-link" href="https://food52.com" target="_blank" rel="noopener">
-          <img class="sb-icon" src="https://www.google.com/s2/favicons?domain=food52.com&sz=32" alt="" loading="lazy" onerror="this.style.opacity=0">
-          <span class="sb-name">Food52</span>
-        </a>
-        <a class="sb-link" href="https://www.seriouseats.com" target="_blank" rel="noopener">
-          <img class="sb-icon" src="https://www.google.com/s2/favicons?domain=seriouseats.com&sz=32" alt="" loading="lazy" onerror="this.style.opacity=0">
-          <span class="sb-name">Serious Eats</span>
-        </a>
+        <a class="sb-link" href="https://www.bonappetit.com" target="_blank" rel="noopener"><img class="sb-icon" src="https://www.google.com/s2/favicons?domain=bonappetit.com&sz=32" alt="" loading="lazy" onerror="this.style.opacity=0"><span class="sb-name">Bon Appétit</span></a>
+        <a class="sb-link" href="https://www.eater.com" target="_blank" rel="noopener"><img class="sb-icon" src="https://www.google.com/s2/favicons?domain=eater.com&sz=32" alt="" loading="lazy" onerror="this.style.opacity=0"><span class="sb-name">Eater</span></a>
+        <a class="sb-link" href="https://food52.com" target="_blank" rel="noopener"><img class="sb-icon" src="https://www.google.com/s2/favicons?domain=food52.com&sz=32" alt="" loading="lazy" onerror="this.style.opacity=0"><span class="sb-name">Food52</span></a>
+        <a class="sb-link" href="https://www.seriouseats.com" target="_blank" rel="noopener"><img class="sb-icon" src="https://www.google.com/s2/favicons?domain=seriouseats.com&sz=32" alt="" loading="lazy" onerror="this.style.opacity=0"><span class="sb-name">Serious Eats</span></a>
       </div>
       <div class="sb-section">
         <div class="sb-heading">Medical Science</div>
-        <a class="sb-link" href="https://www.mayoclinic.org" target="_blank" rel="noopener">
-          <img class="sb-icon" src="https://www.google.com/s2/favicons?domain=mayoclinic.org&sz=32" alt="" loading="lazy" onerror="this.style.opacity=0">
-          <span class="sb-name">Mayo Clinic</span>
-        </a>
-        <a class="sb-link" href="https://medlineplus.gov" target="_blank" rel="noopener">
-          <img class="sb-icon" src="https://www.google.com/s2/favicons?domain=medlineplus.gov&sz=32" alt="" loading="lazy" onerror="this.style.opacity=0">
-          <span class="sb-name">MedlinePlus (NIH)</span>
-        </a>
-        <a class="sb-link" href="https://www.nejm.org" target="_blank" rel="noopener">
-          <img class="sb-icon" src="https://www.google.com/s2/favicons?domain=nejm.org&sz=32" alt="" loading="lazy" onerror="this.style.opacity=0">
-          <span class="sb-name">New England Journal of Medicine</span>
-        </a>
-        <a class="sb-link" href="https://www.statnews.com" target="_blank" rel="noopener">
-          <img class="sb-icon" src="https://www.google.com/s2/favicons?domain=statnews.com&sz=32" alt="" loading="lazy" onerror="this.style.opacity=0">
-          <span class="sb-name">STAT News</span>
-        </a>
+        <a class="sb-link" href="https://www.mayoclinic.org" target="_blank" rel="noopener"><img class="sb-icon" src="https://www.google.com/s2/favicons?domain=mayoclinic.org&sz=32" alt="" loading="lazy" onerror="this.style.opacity=0"><span class="sb-name">Mayo Clinic</span></a>
+        <a class="sb-link" href="https://medlineplus.gov" target="_blank" rel="noopener"><img class="sb-icon" src="https://www.google.com/s2/favicons?domain=medlineplus.gov&sz=32" alt="" loading="lazy" onerror="this.style.opacity=0"><span class="sb-name">MedlinePlus (NIH)</span></a>
+        <a class="sb-link" href="https://www.nejm.org" target="_blank" rel="noopener"><img class="sb-icon" src="https://www.google.com/s2/favicons?domain=nejm.org&sz=32" alt="" loading="lazy" onerror="this.style.opacity=0"><span class="sb-name">New England Journal of Medicine</span></a>
+        <a class="sb-link" href="https://www.statnews.com" target="_blank" rel="noopener"><img class="sb-icon" src="https://www.google.com/s2/favicons?domain=statnews.com&sz=32" alt="" loading="lazy" onerror="this.style.opacity=0"><span class="sb-name">STAT News</span></a>
       </div>
       <div class="sb-section">
         <div class="sb-heading">Museums &amp; Collections</div>
-        <a class="sb-link" href="https://www.britishmuseum.org" target="_blank" rel="noopener">
-          <img class="sb-icon" src="https://www.google.com/s2/favicons?domain=britishmuseum.org&sz=32" alt="" loading="lazy" onerror="this.style.opacity=0">
-          <span class="sb-name">British Museum</span>
-        </a>
-        <a class="sb-link" href="https://www.louvre.fr/en" target="_blank" rel="noopener">
-          <img class="sb-icon" src="https://www.google.com/s2/favicons?domain=louvre.fr&sz=32" alt="" loading="lazy" onerror="this.style.opacity=0">
-          <span class="sb-name">Louvre</span>
-        </a>
-        <a class="sb-link" href="https://www.metmuseum.org" target="_blank" rel="noopener">
-          <img class="sb-icon" src="https://www.google.com/s2/favicons?domain=metmuseum.org&sz=32" alt="" loading="lazy" onerror="this.style.opacity=0">
-          <span class="sb-name">Metropolitan Museum</span>
-        </a>
-        <a class="sb-link" href="https://www.moma.org" target="_blank" rel="noopener">
-          <img class="sb-icon" src="https://www.google.com/s2/favicons?domain=moma.org&sz=32" alt="" loading="lazy" onerror="this.style.opacity=0">
-          <span class="sb-name">MoMA</span>
-        </a>
-        <a class="sb-link" href="https://www.nasa.gov" target="_blank" rel="noopener">
-          <img class="sb-icon" src="https://www.google.com/s2/favicons?domain=nasa.gov&sz=32" alt="" loading="lazy" onerror="this.style.opacity=0">
-          <span class="sb-name">NASA</span>
-        </a>
-        <a class="sb-link" href="https://www.nhm.ac.uk" target="_blank" rel="noopener">
-          <img class="sb-icon" src="https://www.google.com/s2/favicons?domain=nhm.ac.uk&sz=32" alt="" loading="lazy" onerror="this.style.opacity=0">
-          <span class="sb-name">Natural History Museum</span>
-        </a>
-        <a class="sb-link" href="https://www.smithsonianmag.com" target="_blank" rel="noopener">
-          <img class="sb-icon" src="https://www.google.com/s2/favicons?domain=smithsonianmag.com&sz=32" alt="" loading="lazy" onerror="this.style.opacity=0">
-          <span class="sb-name">Smithsonian Magazine</span>
-        </a>
-        <a class="sb-link" href="https://www.uffizi.it/en" target="_blank" rel="noopener">
-          <img class="sb-icon" src="https://www.google.com/s2/favicons?domain=uffizi.it&sz=32" alt="" loading="lazy" onerror="this.style.opacity=0">
-          <span class="sb-name">The Uffizi</span>
-        </a>
-        <a class="sb-link" href="https://www.vam.ac.uk" target="_blank" rel="noopener">
-          <img class="sb-icon" src="https://www.google.com/s2/favicons?domain=vam.ac.uk&sz=32" alt="" loading="lazy" onerror="this.style.opacity=0">
-          <span class="sb-name">V&amp;A Museum</span>
-        </a>
+        <a class="sb-link" href="https://www.britishmuseum.org" target="_blank" rel="noopener"><img class="sb-icon" src="https://www.google.com/s2/favicons?domain=britishmuseum.org&sz=32" alt="" loading="lazy" onerror="this.style.opacity=0"><span class="sb-name">British Museum</span></a>
+        <a class="sb-link" href="https://www.louvre.fr/en" target="_blank" rel="noopener"><img class="sb-icon" src="https://www.google.com/s2/favicons?domain=louvre.fr&sz=32" alt="" loading="lazy" onerror="this.style.opacity=0"><span class="sb-name">Louvre</span></a>
+        <a class="sb-link" href="https://www.metmuseum.org" target="_blank" rel="noopener"><img class="sb-icon" src="https://www.google.com/s2/favicons?domain=metmuseum.org&sz=32" alt="" loading="lazy" onerror="this.style.opacity=0"><span class="sb-name">Metropolitan Museum</span></a>
+        <a class="sb-link" href="https://www.moma.org" target="_blank" rel="noopener"><img class="sb-icon" src="https://www.google.com/s2/favicons?domain=moma.org&sz=32" alt="" loading="lazy" onerror="this.style.opacity=0"><span class="sb-name">MoMA</span></a>
+        <a class="sb-link" href="https://www.nasa.gov" target="_blank" rel="noopener"><img class="sb-icon" src="https://www.google.com/s2/favicons?domain=nasa.gov&sz=32" alt="" loading="lazy" onerror="this.style.opacity=0"><span class="sb-name">NASA</span></a>
+        <a class="sb-link" href="https://www.nhm.ac.uk" target="_blank" rel="noopener"><img class="sb-icon" src="https://www.google.com/s2/favicons?domain=nhm.ac.uk&sz=32" alt="" loading="lazy" onerror="this.style.opacity=0"><span class="sb-name">Natural History Museum</span></a>
+        <a class="sb-link" href="https://www.smithsonianmag.com" target="_blank" rel="noopener"><img class="sb-icon" src="https://www.google.com/s2/favicons?domain=smithsonianmag.com&sz=32" alt="" loading="lazy" onerror="this.style.opacity=0"><span class="sb-name">Smithsonian Magazine</span></a>
+        <a class="sb-link" href="https://www.uffizi.it/en" target="_blank" rel="noopener"><img class="sb-icon" src="https://www.google.com/s2/favicons?domain=uffizi.it&sz=32" alt="" loading="lazy" onerror="this.style.opacity=0"><span class="sb-name">The Uffizi</span></a>
+        <a class="sb-link" href="https://www.vam.ac.uk" target="_blank" rel="noopener"><img class="sb-icon" src="https://www.google.com/s2/favicons?domain=vam.ac.uk&sz=32" alt="" loading="lazy" onerror="this.style.opacity=0"><span class="sb-name">V&amp;A Museum</span></a>
       </div>
       <div class="sb-section">
         <div class="sb-heading">Nature &amp; Conservation</div>
-        <a class="sb-link" href="https://www.carbonbrief.org" target="_blank" rel="noopener">
-          <img class="sb-icon" src="https://www.google.com/s2/favicons?domain=carbonbrief.org&sz=32" alt="" loading="lazy" onerror="this.style.opacity=0">
-          <span class="sb-name">Carbon Brief</span>
-        </a>
-        <a class="sb-link" href="https://www.iucnredlist.org" target="_blank" rel="noopener">
-          <img class="sb-icon" src="https://www.google.com/s2/favicons?domain=iucnredlist.org&sz=32" alt="" loading="lazy" onerror="this.style.opacity=0">
-          <span class="sb-name">IUCN Red List</span>
-        </a>
-        <a class="sb-link" href="https://www.nationalgeographic.com/environment" target="_blank" rel="noopener">
-          <img class="sb-icon" src="https://www.google.com/s2/favicons?domain=nationalgeographic.com&sz=32" alt="" loading="lazy" onerror="this.style.opacity=0">
-          <span class="sb-name">National Geographic</span>
-        </a>
-        <a class="sb-link" href="https://www.nature.org/en-us/newsroom/" target="_blank" rel="noopener">
-          <img class="sb-icon" src="https://www.google.com/s2/favicons?domain=nature.org&sz=32" alt="" loading="lazy" onerror="this.style.opacity=0">
-          <span class="sb-name">The Nature Conservancy</span>
-        </a>
-        <a class="sb-link" href="https://www.worldwildlife.org/stories" target="_blank" rel="noopener">
-          <img class="sb-icon" src="https://www.google.com/s2/favicons?domain=worldwildlife.org&sz=32" alt="" loading="lazy" onerror="this.style.opacity=0">
-          <span class="sb-name">WWF Stories</span>
-        </a>
+        <a class="sb-link" href="https://www.carbonbrief.org" target="_blank" rel="noopener"><img class="sb-icon" src="https://www.google.com/s2/favicons?domain=carbonbrief.org&sz=32" alt="" loading="lazy" onerror="this.style.opacity=0"><span class="sb-name">Carbon Brief</span></a>
+        <a class="sb-link" href="https://www.iucnredlist.org" target="_blank" rel="noopener"><img class="sb-icon" src="https://www.google.com/s2/favicons?domain=iucnredlist.org&sz=32" alt="" loading="lazy" onerror="this.style.opacity=0"><span class="sb-name">IUCN Red List</span></a>
+        <a class="sb-link" href="https://www.nationalgeographic.com/environment" target="_blank" rel="noopener"><img class="sb-icon" src="https://www.google.com/s2/favicons?domain=nationalgeographic.com&sz=32" alt="" loading="lazy" onerror="this.style.opacity=0"><span class="sb-name">National Geographic</span></a>
+        <a class="sb-link" href="https://www.nature.org/en-us/newsroom/" target="_blank" rel="noopener"><img class="sb-icon" src="https://www.google.com/s2/favicons?domain=nature.org&sz=32" alt="" loading="lazy" onerror="this.style.opacity=0"><span class="sb-name">The Nature Conservancy</span></a>
+        <a class="sb-link" href="https://www.worldwildlife.org/stories" target="_blank" rel="noopener"><img class="sb-icon" src="https://www.google.com/s2/favicons?domain=worldwildlife.org&sz=32" alt="" loading="lazy" onerror="this.style.opacity=0"><span class="sb-name">WWF Stories</span></a>
       </div>
       <div class="sb-section">
         <div class="sb-heading">Open Courses</div>
-        <a class="sb-link" href="https://www.coursera.org/browse" target="_blank" rel="noopener">
-          <img class="sb-icon" src="https://www.google.com/s2/favicons?domain=coursera.org&sz=32" alt="" loading="lazy" onerror="this.style.opacity=0">
-          <span class="sb-name">Coursera</span>
-        </a>
-        <a class="sb-link" href="https://ocw.mit.edu" target="_blank" rel="noopener">
-          <img class="sb-icon" src="https://www.google.com/s2/favicons?domain=ocw.mit.edu&sz=32" alt="" loading="lazy" onerror="this.style.opacity=0">
-          <span class="sb-name">MIT OpenCourseWare</span>
-        </a>
-        <a class="sb-link" href="https://www.ted.com/talks" target="_blank" rel="noopener">
-          <img class="sb-icon" src="https://www.google.com/s2/favicons?domain=ted.com&sz=32" alt="" loading="lazy" onerror="this.style.opacity=0">
-          <span class="sb-name">TED Talks</span>
-        </a>
-        <a class="sb-link" href="https://oyc.yale.edu" target="_blank" rel="noopener">
-          <img class="sb-icon" src="https://www.google.com/s2/favicons?domain=yale.edu&sz=32" alt="" loading="lazy" onerror="this.style.opacity=0">
-          <span class="sb-name">Yale Open Courses</span>
-        </a>
+        <a class="sb-link" href="https://www.coursera.org/browse" target="_blank" rel="noopener"><img class="sb-icon" src="https://www.google.com/s2/favicons?domain=coursera.org&sz=32" alt="" loading="lazy" onerror="this.style.opacity=0"><span class="sb-name">Coursera</span></a>
+        <a class="sb-link" href="https://ocw.mit.edu" target="_blank" rel="noopener"><img class="sb-icon" src="https://www.google.com/s2/favicons?domain=ocw.mit.edu&sz=32" alt="" loading="lazy" onerror="this.style.opacity=0"><span class="sb-name">MIT OpenCourseWare</span></a>
+        <a class="sb-link" href="https://www.ted.com/talks" target="_blank" rel="noopener"><img class="sb-icon" src="https://www.google.com/s2/favicons?domain=ted.com&sz=32" alt="" loading="lazy" onerror="this.style.opacity=0"><span class="sb-name">TED Talks</span></a>
+        <a class="sb-link" href="https://oyc.yale.edu" target="_blank" rel="noopener"><img class="sb-icon" src="https://www.google.com/s2/favicons?domain=yale.edu&sz=32" alt="" loading="lazy" onerror="this.style.opacity=0"><span class="sb-name">Yale Open Courses</span></a>
       </div>
       <div class="sb-section">
         <div class="sb-heading">Outdoors &amp; Adventure</div>
-        <a class="sb-link" href="https://www.alltrails.com" target="_blank" rel="noopener">
-          <img class="sb-icon" src="https://www.google.com/s2/favicons?domain=alltrails.com&sz=32" alt="" loading="lazy" onerror="this.style.opacity=0">
-          <span class="sb-name">AllTrails</span>
-        </a>
-        <a class="sb-link" href="https://www.outsideonline.com" target="_blank" rel="noopener">
-          <img class="sb-icon" src="https://www.google.com/s2/favicons?domain=outsideonline.com&sz=32" alt="" loading="lazy" onerror="this.style.opacity=0">
-          <span class="sb-name">Outside Online</span>
-        </a>
-        <a class="sb-link" href="https://www.rei.com/learn/expert-advice" target="_blank" rel="noopener">
-          <img class="sb-icon" src="https://www.google.com/s2/favicons?domain=rei.com&sz=32" alt="" loading="lazy" onerror="this.style.opacity=0">
-          <span class="sb-name">REI Expert Advice</span>
-        </a>
+        <a class="sb-link" href="https://www.alltrails.com" target="_blank" rel="noopener"><img class="sb-icon" src="https://www.google.com/s2/favicons?domain=alltrails.com&sz=32" alt="" loading="lazy" onerror="this.style.opacity=0"><span class="sb-name">AllTrails</span></a>
+        <a class="sb-link" href="https://www.outsideonline.com" target="_blank" rel="noopener"><img class="sb-icon" src="https://www.google.com/s2/favicons?domain=outsideonline.com&sz=32" alt="" loading="lazy" onerror="this.style.opacity=0"><span class="sb-name">Outside Online</span></a>
+        <a class="sb-link" href="https://www.rei.com/learn/expert-advice" target="_blank" rel="noopener"><img class="sb-icon" src="https://www.google.com/s2/favicons?domain=rei.com&sz=32" alt="" loading="lazy" onerror="this.style.opacity=0"><span class="sb-name">REI Expert Advice</span></a>
       </div>
       <div class="sb-section">
         <div class="sb-heading">Philosophy</div>
-        <a class="sb-link" href="https://www.existentialcomics.com" target="_blank" rel="noopener">
-          <img class="sb-icon" src="https://www.google.com/s2/favicons?domain=existentialcomics.com&sz=32" alt="" loading="lazy" onerror="this.style.opacity=0">
-          <span class="sb-name">Existential Comics</span>
-        </a>
-        <a class="sb-link" href="https://iep.utm.edu" target="_blank" rel="noopener">
-          <img class="sb-icon" src="https://www.google.com/s2/favicons?domain=iep.utm.edu&sz=32" alt="" loading="lazy" onerror="this.style.opacity=0">
-          <span class="sb-name">Internet Encyclopedia of Philosophy</span>
-        </a>
-        <a class="sb-link" href="https://philosophybites.com" target="_blank" rel="noopener">
-          <img class="sb-icon" src="https://www.google.com/s2/favicons?domain=philosophybites.com&sz=32" alt="" loading="lazy" onerror="this.style.opacity=0">
-          <span class="sb-name">Philosophy Bites</span>
-        </a>
-        <a class="sb-link" href="https://plato.stanford.edu" target="_blank" rel="noopener">
-          <img class="sb-icon" src="https://www.google.com/s2/favicons?domain=plato.stanford.edu&sz=32" alt="" loading="lazy" onerror="this.style.opacity=0">
-          <span class="sb-name">Stanford Encyclopedia of Philosophy</span>
-        </a>
-        <a class="sb-link" href="https://www.philosophersmag.com" target="_blank" rel="noopener">
-          <img class="sb-icon" src="https://www.google.com/s2/favicons?domain=philosophersmag.com&sz=32" alt="" loading="lazy" onerror="this.style.opacity=0">
-          <span class="sb-name">The Philosopher's Magazine</span>
-        </a>
+        <a class="sb-link" href="https://www.existentialcomics.com" target="_blank" rel="noopener"><img class="sb-icon" src="https://www.google.com/s2/favicons?domain=existentialcomics.com&sz=32" alt="" loading="lazy" onerror="this.style.opacity=0"><span class="sb-name">Existential Comics</span></a>
+        <a class="sb-link" href="https://iep.utm.edu" target="_blank" rel="noopener"><img class="sb-icon" src="https://www.google.com/s2/favicons?domain=iep.utm.edu&sz=32" alt="" loading="lazy" onerror="this.style.opacity=0"><span class="sb-name">Internet Encyclopedia of Philosophy</span></a>
+        <a class="sb-link" href="https://philosophybites.com" target="_blank" rel="noopener"><img class="sb-icon" src="https://www.google.com/s2/favicons?domain=philosophybites.com&sz=32" alt="" loading="lazy" onerror="this.style.opacity=0"><span class="sb-name">Philosophy Bites</span></a>
+        <a class="sb-link" href="https://plato.stanford.edu" target="_blank" rel="noopener"><img class="sb-icon" src="https://www.google.com/s2/favicons?domain=plato.stanford.edu&sz=32" alt="" loading="lazy" onerror="this.style.opacity=0"><span class="sb-name">Stanford Encyclopedia of Philosophy</span></a>
+        <a class="sb-link" href="https://www.philosophersmag.com" target="_blank" rel="noopener"><img class="sb-icon" src="https://www.google.com/s2/favicons?domain=philosophersmag.com&sz=32" alt="" loading="lazy" onerror="this.style.opacity=0"><span class="sb-name">The Philosopher's Magazine</span></a>
       </div>
       <div class="sb-section">
         <div class="sb-heading">Psychology Tests</div>
-        <a class="sb-link" href="https://www.16personalities.com" target="_blank" rel="noopener">
-          <img class="sb-icon" src="https://www.google.com/s2/favicons?domain=16personalities.com&sz=32" alt="" loading="lazy" onerror="this.style.opacity=0">
-          <span class="sb-name">16 Personalities</span>
-        </a>
-        <a class="sb-link" href="https://implicit.harvard.edu/implicit/takeatest.html" target="_blank" rel="noopener">
-          <img class="sb-icon" src="https://www.google.com/s2/favicons?domain=harvard.edu&sz=32" alt="" loading="lazy" onerror="this.style.opacity=0">
-          <span class="sb-name">Harvard Implicit (IAT)</span>
-        </a>
-        <a class="sb-link" href="https://www.authentichappiness.sas.upenn.edu/testcenter" target="_blank" rel="noopener">
-          <img class="sb-icon" src="https://www.google.com/s2/favicons?domain=upenn.edu&sz=32" alt="" loading="lazy" onerror="this.style.opacity=0">
-          <span class="sb-name">UPenn Authentic Happiness</span>
-        </a>
-        <a class="sb-link" href="https://www.primals.org/take-the-pi-50" target="_blank" rel="noopener">
-          <img class="sb-icon" src="https://www.google.com/s2/favicons?domain=primals.org&sz=32" alt="" loading="lazy" onerror="this.style.opacity=0">
-          <span class="sb-name">UPenn Primal World Beliefs</span>
-        </a>
+        <a class="sb-link" href="https://www.16personalities.com" target="_blank" rel="noopener"><img class="sb-icon" src="https://www.google.com/s2/favicons?domain=16personalities.com&sz=32" alt="" loading="lazy" onerror="this.style.opacity=0"><span class="sb-name">16 Personalities</span></a>
+        <a class="sb-link" href="https://implicit.harvard.edu/implicit/takeatest.html" target="_blank" rel="noopener"><img class="sb-icon" src="https://www.google.com/s2/favicons?domain=harvard.edu&sz=32" alt="" loading="lazy" onerror="this.style.opacity=0"><span class="sb-name">Harvard Implicit (IAT)</span></a>
+        <a class="sb-link" href="https://www.authentichappiness.sas.upenn.edu/testcenter" target="_blank" rel="noopener"><img class="sb-icon" src="https://www.google.com/s2/favicons?domain=upenn.edu&sz=32" alt="" loading="lazy" onerror="this.style.opacity=0"><span class="sb-name">UPenn Authentic Happiness</span></a>
+        <a class="sb-link" href="https://www.primals.org/take-the-pi-50" target="_blank" rel="noopener"><img class="sb-icon" src="https://www.google.com/s2/favicons?domain=primals.org&sz=32" alt="" loading="lazy" onerror="this.style.opacity=0"><span class="sb-name">UPenn Primal World Beliefs</span></a>
       </div>
       <div class="sb-section">
         <div class="sb-heading">Science &amp; Research</div>
-        <a class="sb-link" href="https://www.nature.com/news" target="_blank" rel="noopener">
-          <img class="sb-icon" src="https://www.google.com/s2/favicons?domain=nature.com&sz=32" alt="" loading="lazy" onerror="this.style.opacity=0">
-          <span class="sb-name">Nature News</span>
-        </a>
-        <a class="sb-link" href="https://nautil.us" target="_blank" rel="noopener">
-          <img class="sb-icon" src="https://www.google.com/s2/favicons?domain=nautil.us&sz=32" alt="" loading="lazy" onerror="this.style.opacity=0">
-          <span class="sb-name">Nautilus</span>
-        </a>
-        <a class="sb-link" href="https://www.scientificamerican.com" target="_blank" rel="noopener">
-          <img class="sb-icon" src="https://www.google.com/s2/favicons?domain=scientificamerican.com&sz=32" alt="" loading="lazy" onerror="this.style.opacity=0">
-          <span class="sb-name">Scientific American</span>
-        </a>
+        <a class="sb-link" href="https://www.nature.com/news" target="_blank" rel="noopener"><img class="sb-icon" src="https://www.google.com/s2/favicons?domain=nature.com&sz=32" alt="" loading="lazy" onerror="this.style.opacity=0"><span class="sb-name">Nature News</span></a>
+        <a class="sb-link" href="https://nautil.us" target="_blank" rel="noopener"><img class="sb-icon" src="https://www.google.com/s2/favicons?domain=nautil.us&sz=32" alt="" loading="lazy" onerror="this.style.opacity=0"><span class="sb-name">Nautilus</span></a>
+        <a class="sb-link" href="https://www.scientificamerican.com" target="_blank" rel="noopener"><img class="sb-icon" src="https://www.google.com/s2/favicons?domain=scientificamerican.com&sz=32" alt="" loading="lazy" onerror="this.style.opacity=0"><span class="sb-name">Scientific American</span></a>
       </div>
       <div class="sb-section">
         <div class="sb-heading">Travel &amp; Culture</div>
-        <a class="sb-link" href="https://www.atlasobscura.com" target="_blank" rel="noopener">
-          <img class="sb-icon" src="https://www.google.com/s2/favicons?domain=atlasobscura.com&sz=32" alt="" loading="lazy" onerror="this.style.opacity=0">
-          <span class="sb-name">Atlas Obscura</span>
-        </a>
-        <a class="sb-link" href="https://www.cntraveler.com" target="_blank" rel="noopener">
-          <img class="sb-icon" src="https://www.google.com/s2/favicons?domain=cntraveler.com&sz=32" alt="" loading="lazy" onerror="this.style.opacity=0">
-          <span class="sb-name">Condé Nast Traveler</span>
-        </a>
-        <a class="sb-link" href="https://www.lonelyplanet.com" target="_blank" rel="noopener">
-          <img class="sb-icon" src="https://www.google.com/s2/favicons?domain=lonelyplanet.com&sz=32" alt="" loading="lazy" onerror="this.style.opacity=0">
-          <span class="sb-name">Lonely Planet</span>
-        </a>
-        <a class="sb-link" href="https://www.nationalgeographic.com/travel" target="_blank" rel="noopener">
-          <img class="sb-icon" src="https://www.google.com/s2/favicons?domain=nationalgeographic.com&sz=32" alt="" loading="lazy" onerror="this.style.opacity=0">
-          <span class="sb-name">National Geographic Travel</span>
-        </a>
-        <a class="sb-link" href="https://roadsandkingdoms.com" target="_blank" rel="noopener">
-          <img class="sb-icon" src="https://www.google.com/s2/favicons?domain=roadsandkingdoms.com&sz=32" alt="" loading="lazy" onerror="this.style.opacity=0">
-          <span class="sb-name">Roads &amp; Kingdoms</span>
-        </a>
+        <a class="sb-link" href="https://www.atlasobscura.com" target="_blank" rel="noopener"><img class="sb-icon" src="https://www.google.com/s2/favicons?domain=atlasobscura.com&sz=32" alt="" loading="lazy" onerror="this.style.opacity=0"><span class="sb-name">Atlas Obscura</span></a>
+        <a class="sb-link" href="https://www.cntraveler.com" target="_blank" rel="noopener"><img class="sb-icon" src="https://www.google.com/s2/favicons?domain=cntraveler.com&sz=32" alt="" loading="lazy" onerror="this.style.opacity=0"><span class="sb-name">Condé Nast Traveler</span></a>
+        <a class="sb-link" href="https://www.lonelyplanet.com" target="_blank" rel="noopener"><img class="sb-icon" src="https://www.google.com/s2/favicons?domain=lonelyplanet.com&sz=32" alt="" loading="lazy" onerror="this.style.opacity=0"><span class="sb-name">Lonely Planet</span></a>
+        <a class="sb-link" href="https://www.nationalgeographic.com/travel" target="_blank" rel="noopener"><img class="sb-icon" src="https://www.google.com/s2/favicons?domain=nationalgeographic.com&sz=32" alt="" loading="lazy" onerror="this.style.opacity=0"><span class="sb-name">National Geographic Travel</span></a>
+        <a class="sb-link" href="https://roadsandkingdoms.com" target="_blank" rel="noopener"><img class="sb-icon" src="https://www.google.com/s2/favicons?domain=roadsandkingdoms.com&sz=32" alt="" loading="lazy" onerror="this.style.opacity=0"><span class="sb-name">Roads &amp; Kingdoms</span></a>
       </div>
   </aside>
 </div>
@@ -1372,7 +977,6 @@ button:focus-visible,a:focus-visible{outline:2px solid var(--secondary);outline-
   <div class="img-modal">
     <div style="font-family:'DM Serif Display',serif;font-size:1.1rem;margin-bottom:4px">Save as image</div>
     <div style="font-size:12px;color:#999;margin-bottom:20px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis" id="imgPickerTitle"></div>
-
     <div class="img-section-label">Style</div>
     <div class="img-picker-grid" id="styleGrid" style="grid-template-columns:1fr 1fr 1fr 1fr;gap:6px;margin-bottom:4px">
       <button class="img-picker-btn active" onclick="selectOpt(this,'style','category')"><span class="picker-swatch" id="swatchCategory"></span> Category</button>
@@ -1383,9 +987,7 @@ button:focus-visible,a:focus-visible{outline:2px solid var(--secondary);outline-
       <button class="img-picker-btn" onclick="selectOpt(this,'style','ink')"><span class="picker-swatch" style="background:#1a1a2e"></span> Ink</button>
       <button class="img-picker-btn" onclick="selectOpt(this,'style','editorial')"><span class="picker-swatch" style="background:#fff;border:2px solid #111"></span> Editorial</button>
       <button class="img-picker-btn" onclick="selectOpt(this,'style','gradient')"><span class="picker-swatch" id="swatchGradient" style="background:linear-gradient(135deg,#667eea,#764ba2)"></span> Gradient</button>
-      
     </div>
-
     <div class="img-section-label">Language</div>
     <div class="img-picker-grid" style="grid-template-columns:1fr 1fr;gap:6px;margin-bottom:16px">
       <button class="img-picker-btn active" onclick="selectOpt(this,'lang','en')" id="langEnBtn">EN</button>
@@ -1397,7 +999,6 @@ button:focus-visible,a:focus-visible{outline:2px solid var(--secondary);outline-
       <button class="img-picker-btn" onclick="selectOpt(this,'ratio','4:5')"><span class="ratio-icon ratio-port"></span> 4:5</button>
       <button class="img-picker-btn" onclick="selectOpt(this,'ratio','16:9')"><span class="ratio-icon ratio-land"></span> 16:9</button>
     </div>
-
     <canvas id="imgCanvas" style="display:none"></canvas>
     <img id="imgPreview" style="width:100%;border-radius:10px;box-shadow:0 4px 20px rgba(0,0,0,.12);display:block;margin-bottom:8px" alt="Curiosity Card">
     <div style="font-size:10px;color:#bbb;text-align:center;margin-bottom:12px" id="imgSaveHint">
@@ -1425,7 +1026,6 @@ let _showCount    = PAGE_SIZE;
 let _currentMood  = 'any';
 let _starFilterOn = false;
 
-// ── Offline Detection ─────────────────────────────────
 window.addEventListener('offline', () => showToast('You appear to be offline — check your connection.'));
 window.addEventListener('online',  () => showToast('Back online.'));
 
@@ -1434,34 +1034,29 @@ const CAT_COLORS = {
   Culture:'#8a6fa8',Philosophy:'#4a7a9b',Language:'#b08040',
   Food:'#b86848',Art:'#9060a0',Science:'#3a7090',Folklore:'#708050',
 };
-
-// Amber theme uses contrasting colors on orange background
 const CAT_COLORS_AMBER = {
   Psychology:'#7ac0e0',History:'#f0c878',Nature:'#78d898',
   Culture:'#c890e8',Philosophy:'#78b8e8',Language:'#e8d068',
   Food:'#f0a878',Art:'#c878e8',Science:'#68c8e0',Folklore:'#a8e070',
 };
-
 function getCatColor(cat) {
   const theme = document.documentElement.getAttribute('data-theme');
   if (theme === 'amber') return CAT_COLORS_AMBER[cat] || '#3a2210';
   if (theme === 'olive') {
-    const oliveMap = {Psychology:'#70e8d0',History:'#f0d060',Nature:'#a0f070',Culture:'#d0f090',Philosophy:'#80f0c0',Language:'#f8e860',Food:'#f8a870',Art:'#c0f880',Science:'#70d8c0',Folklore:'#c0f860'};
-    return oliveMap[cat] || '#b0c888';
+    const m={Psychology:'#70e8d0',History:'#f0d060',Nature:'#a0f070',Culture:'#d0f090',Philosophy:'#80f0c0',Language:'#f8e860',Food:'#f8a870',Art:'#c0f880',Science:'#70d8c0',Folklore:'#c0f860'};
+    return m[cat]||'#b0c888';
   }
   if (theme === 'ocean') {
-    const oceanMap = {Psychology:'#70b8e0',History:'#d8b870',Nature:'#60d890',Culture:'#a880e0',Philosophy:'#60b8e0',Language:'#e0d060',Food:'#e08870',Art:'#b070e0',Science:'#50b0d8',Folklore:'#80d870'};
-    return oceanMap[cat] || '#90aac8';
+    const m={Psychology:'#70b8e0',History:'#d8b870',Nature:'#60d890',Culture:'#a880e0',Philosophy:'#60b8e0',Language:'#e0d060',Food:'#e08870',Art:'#b070e0',Science:'#50b0d8',Folklore:'#80d870'};
+    return m[cat]||'#90aac8';
   }
   return CAT_COLORS[cat] || '#888';
 }
-
 const CAT_ICONS = {
   Psychology:'\u25D0',History:'\u25A0',Nature:'\u25CF',Culture:'\u25C7',
   Philosophy:'\u25CB',Language:'\u25AE',Food:'\u25B2',Art:'\u25B3',
   Science:'\u2299',Folklore:'\u25D2',
 };
-
 const MOOD_LABELS = {any:'any',surprise:'surprise me',dark:'dark',funny:'funny',contemplative:'contemplative',beautiful:'beautiful',unsettling:'unsettling'};
 
 const _cardRegistry = {};
@@ -1473,9 +1068,9 @@ function selectMood(btn) {
   _currentMood = btn.dataset.mood;
 }
 
-// TAG FILTER
 let _activeTag = '';
 let _pendingBatch = null;
+
 
 function filterByTag(tag) {
   _activeTag = tag;
@@ -1483,13 +1078,10 @@ function filterByTag(tag) {
   document.getElementById('filterQuery').value = tag;
   const btn = document.getElementById('tagClearBtn');
   if (btn) btn.style.display = tag ? '' : 'none';
-  document.querySelectorAll('.tag').forEach(t => {
-    t.classList.toggle('active-tag', t.dataset.tag === tag);
-  });
+  document.querySelectorAll('.tag').forEach(t => t.classList.toggle('active-tag', t.dataset.tag === tag));
   renderArchive();
-  setTimeout(()=>{ const el=document.getElementById('archive'); if(el) el.scrollIntoView({behavior:'smooth', block:'start'}); },300);
+  setTimeout(()=>{ const el=document.getElementById('archive'); if(el) el.scrollIntoView({behavior:'smooth',block:'start'}); },300);
 }
-
 function clearTagFilter() {
   _activeTag = '';
   document.getElementById('filterQuery').value = '';
@@ -1499,7 +1091,6 @@ function clearTagFilter() {
   _showCount = PAGE_SIZE;
   renderArchive();
 }
-
 function toggleStarFilter() {
   _starFilterOn = !_starFilterOn;
   _showCount = PAGE_SIZE;
@@ -1527,48 +1118,41 @@ async function generate() {
         timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
         ts: Date.now(),
         mood: _currentMood,
-        recentTitles: loadBatches().slice(0,6).flatMap(b => (b.items||[]).map(i => i.title_en)).filter(Boolean).slice(0,30)
+        recentTitles: loadBatches().slice(0,6).flatMap(b=>(b.items||[]).map(i=>i.title_en)).filter(Boolean).slice(0,30)
       })
     });
     clearTimeout(timeoutId);
     const data = await res.json();
     if (!res.ok) {
       const err = data.error || 'Generation failed.';
-      const isJsonFail = err.toLowerCase().includes('json') || err.toLowerCase().includes('parse');
-      showError(isJsonFail
-        ? 'The AI had a small existential crisis. Completely normal — try again.'
-        : err);
+      const isJsonFail = err.toLowerCase().includes('json')||err.toLowerCase().includes('parse');
+      showError(isJsonFail ? 'The AI had a small existential crisis. Completely normal — try again.' : err);
       return;
     }
     _pendingBatch = data;
     openSummaryModal(data);
     feedCreature();
   } catch(err) {
-    if (err.name === 'AbortError') {
-      showError('Request timed out — the AI is thinking too hard. Try again.', true);
-    } else {
-      showError('Network hiccup — check your connection and try again.', true);
-    }
+    if (err.name === 'AbortError') showError('Request timed out — the AI is thinking too hard. Try again.', true);
+    else showError('Network hiccup — check your connection and try again.', true);
     console.error('[generate] fetch error:', err);
+  } finally {
+    btn.disabled=false; btn.textContent='Generate'; loader.classList.remove('show');
   }
-  finally { btn.disabled=false; btn.textContent='Generate'; loader.classList.remove('show'); }
 }
 
 function showToast(msg, duration=4000) {
   const t = document.getElementById('curiosityToast');
   if (!t) return;
-  t.textContent = msg;
-  t.classList.add('show');
+  t.textContent = msg; t.classList.add('show');
   setTimeout(() => t.classList.remove('show'), duration);
 }
-function showError(msg, useToast=false) {
+function showError(msg) {
   const t = document.getElementById('errorToast');
   if (!t) return;
-  t.textContent = msg;
-  t.classList.add('show');
+  t.textContent = msg; t.classList.add('show');
   clearTimeout(window._errorToastTimer);
   window._errorToastTimer = setTimeout(() => t.classList.remove('show'), 5000);
-  // also clear inline just in case
   const inline = document.getElementById('errorMsg');
   if (inline) inline.textContent = '';
   document.getElementById('loading').classList.remove('show');
@@ -1578,14 +1162,14 @@ function showError(msg, useToast=false) {
 
 function loadBatches() { try { return JSON.parse(localStorage.getItem(STORAGE_KEY)||'[]'); } catch { return []; } }
 function loadStars()   { try { return JSON.parse(localStorage.getItem(STARS_KEY)||'[]'); }   catch { return []; } }
-function saveStars(s)  { try { localStorage.setItem(STARS_KEY, JSON.stringify(s)); } catch(e) { console.error('[storage] Failed to save stars:', e); } }
+function saveStars(s)  { try { localStorage.setItem(STARS_KEY, JSON.stringify(s)); } catch(e) { console.error('[storage]',e); } }
 
-// ── Supabase ──────────────────────────────────────────────────────────────
+// ── Supabase ──────────────────────────────────────────
 const SUPA_URL = 'https://uvokhnntfeodxaozsqce.supabase.co';
 const SUPA_KEY = 'sb_publishable_d_2JWl4Fjoba4dpbnWfvEw_KyI_1sy8';
 const _supa = supabase.createClient(SUPA_URL, SUPA_KEY);
 let _currentUser = null;
-let _cloudStars = null; // null = not loaded yet
+let _cloudStars = null;
 
 async function initAuth() {
   const { data: { session } } = await _supa.auth.getSession();
@@ -1593,9 +1177,9 @@ async function initAuth() {
   updateAuthUI();
   if (_currentUser) {
     await syncStarsFromCloud();
-    renderArchive(); // re-render so cloud stars show on page load
+    renderArchive();
+    updatePlanet();
   }
-
   _supa.auth.onAuthStateChange(async (_event, session) => {
     const wasLoggedIn = !!_currentUser;
     _currentUser = session?.user || null;
@@ -1604,6 +1188,7 @@ async function initAuth() {
       await migrateLocalStarsToCloud();
       await syncStarsFromCloud();
       renderArchive();
+      updatePlanet();
     } else if (!_currentUser) {
       _cloudStars = null;
       renderArchive();
@@ -1616,7 +1201,6 @@ function updateAuthUI() {
   const avatarBtn = document.getElementById('avatarBtn');
   const avatarEmail = document.getElementById('avatarEmail');
   if (_currentUser) {
-    // Show avatar, hide sign-in button
     if (btn) btn.style.display = 'none';
     if (avatarBtn) {
       const email = _currentUser.email || '';
@@ -1624,21 +1208,18 @@ function updateAuthUI() {
       avatarBtn.textContent = initial;
       avatarBtn.style.display = 'flex';
       const _t1 = document.documentElement.getAttribute('data-theme');
-      const bgMap = {amber:'#3a2010',olive:'#2a3810',ocean:'#162840',default:'#111'};
-      const fgMap = {amber:'#f5e8d0',olive:'#eef2e0',ocean:'#e8f0f8',default:'#fff'};
+      const bgMap={amber:'#3a2010',olive:'#2a3810',ocean:'#162840',default:'#111'};
+      const fgMap={amber:'#f5e8d0',olive:'#eef2e0',ocean:'#e8f0f8',default:'#fff'};
       avatarBtn.style.background = bgMap[_t1]||bgMap.default;
       avatarBtn.style.color = fgMap[_t1]||fgMap.default;
       avatarBtn.style.border = '1.5px solid rgba(128,128,128,0.3)';
       if (avatarEmail) avatarEmail.textContent = email.split('@')[0];
     }
   } else {
-    // Show sign-in button, hide avatar
     if (avatarBtn) avatarBtn.style.display = 'none';
     if (btn) {
       btn.style.display = '';
       btn.textContent = 'Sign in to sync stars ✦';
-      btn.title = 'Sign in with Google or email';
-      btn.style.background = 'transparent';
       const _t2 = document.documentElement.getAttribute('data-theme');
       btn.style.color = _t2==='amber'?'#fff0e0':_t2==='olive'?'#b8c890':_t2==='ocean'?'#8aacc0':'#7a7570';
       btn.style.border = _t2==='amber'?'1.5px solid rgba(255,240,200,.7)':_t2==='olive'?'1.5px solid #788858':_t2==='ocean'?'1.5px solid #4a6880':'1.5px solid #b8b4aa';
@@ -1648,17 +1229,13 @@ function updateAuthUI() {
   }
 }
 
-async function handleSignOut() {
-  toggleAvatarMenu(true);
-  await _supa.auth.signOut();
-}
+async function handleSignOut() { toggleAvatarMenu(true); await _supa.auth.signOut(); }
 function toggleAvatarMenu(forceClose=false) {
   const menu = document.getElementById('avatarMenu');
   if (!menu) return;
   const isOpen = menu.style.display === 'block';
-  if (forceClose || isOpen) {
-    menu.style.display = 'none';
-  } else {
+  if (forceClose || isOpen) { menu.style.display = 'none'; }
+  else {
     menu.style.display = 'block';
     setTimeout(() => document.addEventListener('click', function handler(e) {
       if (!document.getElementById('authArea')?.contains(e.target)) {
@@ -1669,13 +1246,9 @@ function toggleAvatarMenu(forceClose=false) {
   }
 }
 async function handleAuthClick() {
-  if (_currentUser) {
-    await _supa.auth.signOut();
-  } else {
-    openAuthModal();
-  }
+  if (_currentUser) await _supa.auth.signOut();
+  else openAuthModal();
 }
-
 function openAuthModal() {
   const m = document.getElementById('authModal');
   m.style.display = 'flex';
@@ -1684,18 +1257,10 @@ function openAuthModal() {
   document.getElementById('authPassword').value = '';
   setTimeout(() => document.getElementById('authEmail').focus(), 100);
 }
-
-function closeAuthModal() {
-  document.getElementById('authModal').style.display = 'none';
-}
-
+function closeAuthModal() { document.getElementById('authModal').style.display = 'none'; }
 async function signInGoogle() {
-  await _supa.auth.signInWithOAuth({
-    provider: 'google',
-    options: { redirectTo: window.location.origin }
-  });
+  await _supa.auth.signInWithOAuth({ provider: 'google', options: { redirectTo: window.location.origin } });
 }
-
 async function submitAuth(mode) {
   const email = document.getElementById('authEmail').value.trim();
   const password = document.getElementById('authPassword').value;
@@ -1713,22 +1278,14 @@ async function submitAuth(mode) {
   } else {
     result = await _supa.auth.signInWithPassword({ email, password });
   }
-  if (result.error) {
-    errEl.style.color = '#c0392b';
-    errEl.textContent = result.error.message;
-  } else {
-    closeAuthModal();
-  }
+  if (result.error) { errEl.style.color = '#c0392b'; errEl.textContent = result.error.message; }
+  else closeAuthModal();
 }
-
 async function syncStarsFromCloud() {
   if (!_currentUser) return;
   const { data, error } = await _supa.from('stars').select('uid');
-  if (!error && data) {
-    _cloudStars = data.map(r => r.uid);
-  }
+  if (!error && data) _cloudStars = data.map(r => r.uid);
 }
-
 async function migrateLocalStarsToCloud() {
   if (!_currentUser) return;
   const local = loadStars();
@@ -1736,12 +1293,10 @@ async function migrateLocalStarsToCloud() {
   const rows = local.map(uid => ({ user_id: _currentUser.id, uid }));
   await _supa.from('stars').upsert(rows, { onConflict: 'user_id,uid' });
 }
-
 function getStars() {
   if (_currentUser && _cloudStars !== null) return _cloudStars;
   return loadStars();
 }
-
 async function toggleStar(uid) {
   if (_currentUser) {
     const stars = _cloudStars || [];
@@ -1755,7 +1310,7 @@ async function toggleStar(uid) {
     }
     const newStarred = _cloudStars.includes(uid);
     const btn = document.querySelector('[data-star="' + uid + '"]');
-    if (btn) { btn.classList.toggle('starred', newStarred); btn.innerHTML = newStarred ? '★' : '☆'; }
+    if (btn) { btn.classList.toggle('starred', newStarred); btn.dataset.starred = newStarred ? 'true' : 'false'; btn.innerHTML = newStarred ? '★' : '☆'; }
   } else {
     const stars = loadStars();
     const idx = stars.indexOf(uid);
@@ -1763,18 +1318,18 @@ async function toggleStar(uid) {
     saveStars(stars);
     const isStarred = stars.includes(uid);
     const btn = document.querySelector('[data-star="' + uid + '"]');
-    if (btn) { btn.classList.toggle('starred', isStarred); btn.innerHTML = isStarred ? '★' : '☆'; }
+    if (btn) { btn.classList.toggle('starred', isStarred); btn.dataset.starred = isStarred ? 'true' : 'false'; btn.innerHTML = isStarred ? '★' : '☆'; }
   }
 }
 
-function saveBatch(data) {
+// FIX 4b: saveBatch accepts optional pre-computed id to keep uid consistent with stars
+function saveBatch(data, id) {
   try {
     const batches = loadBatches();
-    const id = Date.now();
+    if (!id) id = Date.now();
     batches.unshift({id, date:data.date, items:data.items, savedAt:id, mood:data.mood||'any'});
-    try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(batches.slice(0, MAX_BATCHES)));
-    } catch(e) { console.error('[storage] Failed to save archive:', e); }
+    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(batches.slice(0, MAX_BATCHES))); }
+    catch(e) { console.error('[storage]', e); }
   } catch {}
 }
 function deleteBatch(id) {
@@ -1794,6 +1349,14 @@ function hlText(text, q) {
   const safe = q.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
   return esc(text).replace(new RegExp("(" + safe + ")", "gi"), '<mark class="search-hl">$1</mark>');
 }
+
+// FIX 2: debounced search — 220ms delay prevents CJK IME from firing on every keystroke
+let _searchDebounceTimer = null;
+function debouncedSearch() {
+  clearTimeout(_searchDebounceTimer);
+  _searchDebounceTimer = setTimeout(() => { _showCount = 10; renderArchive(); }, 220);
+}
+
 function renderArchive() {
   const batches = loadBatches();
   const container = document.getElementById('archive');
@@ -1823,8 +1386,8 @@ function renderArchive() {
 
   if (!flat.length) {
     container.innerHTML = _starFilterOn
-    ? '<div class="empty-state" role="status"><span class="empty-state-icon" aria-hidden="true">☆</span><span class="empty-state-title">No starred items yet</span><span class="empty-state-sub">Click the star on any card to save it here.</span></div>'
-    : '<div class="empty-state" role="status"><span class="empty-state-icon" aria-hidden="true">🔍</span><span class="empty-state-title">No results found</span><span class="empty-state-sub">Try a different keyword or category.</span></div>';
+      ? '<div class="empty-state" role="status"><span class="empty-state-icon" aria-hidden="true">☆</span><span class="empty-state-title">No starred items yet</span><span class="empty-state-sub">Click the star on any card to save it here.</span></div>'
+      : '<div class="empty-state" role="status"><span class="empty-state-icon" aria-hidden="true">🔍</span><span class="empty-state-title">No results found</span><span class="empty-state-sub">Try a different keyword or category.</span></div>';
     return;
   }
 
@@ -1885,35 +1448,29 @@ function buildCard(item, uid, starred) {
   const catIcon = CAT_ICONS[item.category] || '○';
   const srcText = item.source || item.source_name || '';
   const src = srcText ? '<div class="card-source">Source: <span>'+esc(srcText)+'</span></div>' : '';
-  
+  const q = (document.getElementById('filterQuery')?.value||'').trim();
   return (
     '<div class="card-header">' +
-      '<div class="card-meta">' +
-        '<span class="cat-icon">'+catIcon+'</span>' +
-        '<span class="card-cat">'+esc(item.category)+'</span>' +
-      '</div>' +
+      '<div class="card-meta"><span class="cat-icon">'+catIcon+'</span><span class="card-cat">'+esc(item.category)+'</span></div>' +
       '<div class="card-actions">' +
         '<span class="card-num">'+String(item.index??'').padStart(2,'0')+'</span>' +
-        '<button class="star-btn'+(starred?' starred':'') +'" data-star="'+uid+'" onclick="toggleStar(\''+uid+'\')">'+
-          (starred?'★':'☆')+
-        '</button>' +
+        '<button class="star-btn'+(starred?' starred':'')+'" data-star="'+uid+'" data-starred="'+(starred?'true':'false')+'"  onclick="toggleStar(\''+uid+'\')">'+( starred?'★':'☆')+'</button>' +
       '</div>' +
     '</div>' +
-    '<div class="card-title-en">'+hlText(item.title_en||'', (document.getElementById("filterQuery")?.value||'').trim())+'</div>' +
-
+    '<div class="card-title-en">'+hlText(item.title_en||'', q)+'</div>' +
     '<div class="lang-tabs">' +
       '<button class="lang-tab active" onclick="switchLang(this,\'en\',\''+uid+'\')">EN</button>' +
       '<button class="lang-tab" onclick="switchLang(this,\'zh\',\''+uid+'\')">中文</button>' +
     '</div>' +
     '<div class="content-block active" id="en-'+uid+'">' +
-      '<p class="card-content">'+hlText(item.content_en||'', (document.getElementById("filterQuery")?.value||'').trim())+'</p>' +
+      '<p class="card-content">'+hlText(item.content_en||'', q)+'</p>' +
       '<div class="card-insight">'+esc(item.insight_en)+'</div>' +
     '</div>' +
     '<div class="content-block" id="zh-'+uid+'">' +
       '<p class="card-content">'+esc(item.content_zh)+'</p>' +
       '<div class="card-insight">'+esc(item.insight_zh)+'</div>' +
     '</div>' +
-    (item.tags && item.tags.length ? '<div class="card-tags">' + item.tags.map(t => { var cls = 'tag' + (_activeTag===t ? ' active-tag' : ''); return '<span class="'+cls+'" data-tag="'+esc(t)+'" onclick="filterByTag(this.dataset.tag)">'+esc(t)+'</span>'; }).join('') + '</div>' : '') +
+    (item.tags&&item.tags.length ? '<div class="card-tags">'+item.tags.map(t=>{var cls='tag'+(_activeTag===t?' active-tag':'');return '<span class="'+cls+'" data-tag="'+esc(t)+'" onclick="filterByTag(this.dataset.tag)">'+esc(t)+'</span>';}).join('')+'</div>' : '') +
     src +
     '<div class="share-bar">' +
       '<button class="share-btn" data-uid="'+uid+'" onclick="openShareModal(_cardRegistry[this.dataset.uid])">'+iconShare()+' Share</button>' +
@@ -1930,7 +1487,6 @@ function switchLang(btn, lang, uid) {
   document.getElementById(lang+'-'+uid).classList.add('active');
 }
 
-// SHARE
 let _shareText = '';
 function openShareModal(item) {
   const title = item.title_en;
@@ -1940,7 +1496,6 @@ function openShareModal(item) {
   document.getElementById('shareModalSub').textContent = '"' + title + '"';
   const grid = document.getElementById('shareModalGrid');
   grid.innerHTML = '';
-
   function makeBtn(icon, label, url, full) {
     const btn = document.createElement('button');
     btn.className = 'modal-btn' + (full ? ' full' : '');
@@ -1955,13 +1510,11 @@ function openShareModal(item) {
     btn.addEventListener('click', doCopyShare);
     grid.appendChild(btn);
   }
-
   makeBtn(iconX(),        'Twitter / X', 'https://twitter.com/intent/tweet?text=' + encoded);
   makeBtn(iconFacebook(), 'Facebook',    'https://www.facebook.com/sharer/sharer.php?u=' + encodedUrl);
   makeBtn(iconWhatsApp(), 'WhatsApp',    'https://api.whatsapp.com/send?text=' + encoded);
   makeBtn(iconSMS(),      'SMS',         'sms:?body=' + encoded);
   makeCopyBtn();
-
   document.getElementById('shareModalNote').style.display = 'block';
   document.getElementById('shareModalNote').textContent = 'WeChat / Instagram / Xiaohongshu: use Save as image, then share manually.';
   document.getElementById('shareModal').classList.add('show');
@@ -1970,28 +1523,18 @@ function doCopyShare() { copyText(_shareText); }
 function openUrl(url) { window.open(url,'_blank','noopener'); }
 async function copyText(text) {
   try { await navigator.clipboard.writeText(text); alert('Copied!'); }
-  catch {
-    const ta=document.createElement('textarea');
-    ta.value=text; document.body.appendChild(ta); ta.select();
-    document.execCommand('copy'); document.body.removeChild(ta); alert('Copied!');
-  }
+  catch { const ta=document.createElement('textarea'); ta.value=text; document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta); alert('Copied!'); }
 }
 function closeModal(id) { document.getElementById(id).classList.remove('show'); }
 function closeShareModal(e) { if(e.target.classList.contains('modal-overlay')) e.target.classList.remove('show'); }
 
 // IMAGE CARD
 let _imgItem=null, _imgLang='en', _imgStyle='category', _imgRatio='1:1';
-
-// Style definitions: each returns {bg, text, sub, border, accent?, serif?, lineColor?}
 const STYLES = {
-  category:  item => ({bg:CAT_COLORS[item.category]||'#888', text:'#fff', sub:'rgba(255,255,255,0.6)', border:'rgba(255,255,255,0.18)', lineColor:'rgba(255,255,255,0.25)', serif:false,
-    titleFont:'DM Serif Display, Georgia, serif', bodyFont:'DM Sans, sans-serif', insightFont:'DM Serif Display, Georgia, serif', zhTitleFont:'STSong, serif', zhBodyFont:'PingFang SC, sans-serif'}),
-  neon:      ()   => ({bg:'#050510', text:'#e8f4ff', sub:'rgba(0,255,255,0.75)', border:'rgba(0,255,255,0.2)', lineColor:'rgba(0,255,255,0.4)', serif:false, neon:true,
-    titleFont:'Orbitron, sans-serif', bodyFont:'DM Sans, sans-serif', insightFont:'DM Sans, sans-serif', zhTitleFont:'PingFang SC, sans-serif', zhBodyFont:'PingFang SC, sans-serif'}),
-  minimal:   ()   => ({bg:'#ffffff', text:'#111111', sub:'#777777', border:'rgba(0,0,0,0.1)', lineColor:'rgba(0,0,0,0.15)', serif:true, minimal:true,
-    titleFont:'DM Serif Display, Georgia, serif', bodyFont:'DM Sans, sans-serif', insightFont:'DM Serif Display, Georgia, serif', zhTitleFont:'STSong, serif', zhBodyFont:'PingFang SC, sans-serif'}),
-  light:     item => ({bg:'#f5f4f0', text:'#111', sub:'#777', border:'rgba(0,0,0,0.08)', accent:CAT_COLORS[item.category]||'#888', lineColor:'rgba(0,0,0,0.1)', serif:false,
-    titleFont:'Lora, Georgia, serif', bodyFont:'Lora, Georgia, serif', insightFont:'Lora, Georgia, serif', zhTitleFont:'STSong, serif', zhBodyFont:'STSong, serif'}),
+  category:  item => ({bg:CAT_COLORS[item.category]||'#888', text:'#fff', sub:'rgba(255,255,255,0.6)', border:'rgba(255,255,255,0.18)', lineColor:'rgba(255,255,255,0.25)', serif:false, titleFont:'DM Serif Display, Georgia, serif', bodyFont:'DM Sans, sans-serif', insightFont:'DM Serif Display, Georgia, serif', zhTitleFont:'STSong, serif', zhBodyFont:'PingFang SC, sans-serif'}),
+  neon:      ()   => ({bg:'#050510', text:'#e8f4ff', sub:'rgba(0,255,255,0.75)', border:'rgba(0,255,255,0.2)', lineColor:'rgba(0,255,255,0.4)', serif:false, neon:true, titleFont:'Orbitron, sans-serif', bodyFont:'DM Sans, sans-serif', insightFont:'DM Sans, sans-serif', zhTitleFont:'PingFang SC, sans-serif', zhBodyFont:'PingFang SC, sans-serif'}),
+  minimal:   ()   => ({bg:'#ffffff', text:'#111111', sub:'#777777', border:'rgba(0,0,0,0.1)', lineColor:'rgba(0,0,0,0.15)', serif:true, minimal:true, titleFont:'DM Serif Display, Georgia, serif', bodyFont:'DM Sans, sans-serif', insightFont:'DM Serif Display, Georgia, serif', zhTitleFont:'STSong, serif', zhBodyFont:'PingFang SC, sans-serif'}),
+  light:     item => ({bg:'#f5f4f0', text:'#111', sub:'#777', border:'rgba(0,0,0,0.08)', accent:CAT_COLORS[item.category]||'#888', lineColor:'rgba(0,0,0,0.1)', serif:false, titleFont:'Lora, Georgia, serif', bodyFont:'Lora, Georgia, serif', insightFont:'Lora, Georgia, serif', zhTitleFont:'STSong, serif', zhBodyFont:'STSong, serif'}),
   parchment: ()   => ({bg:'#f2ead8', text:'#2c1f0e', sub:'#7a6040', border:'rgba(100,70,20,0.15)', lineColor:'rgba(100,70,20,0.2)', serif:true,
     titleFont:'Dancing Script, cursive', bodyFont:'EB Garamond, Georgia, serif', insightFont:'Dancing Script, cursive', zhTitleFont:'STKaiti, STSong, serif', zhBodyFont:'STSong, serif'}),
   ink:       item => ({bg:'#1a1a2e', text:'#e8e4dc', sub:'rgba(232,228,220,0.55)', border:'rgba(232,228,220,0.12)', accent:CAT_COLORS[item.category]||'#888', lineColor:'rgba(232,228,220,0.15)', serif:true,
@@ -2160,7 +1703,6 @@ function renderCanvas() {
       const minAccentGap = W*0.026;
       const maxW = W - pad*2.5;
 
-      // ── Helper: count wrapped lines ──
       function countLines(font, text, maxW) {
         ctx.font = font;
         const words = text.split(' '); let line=''; let n=1;
@@ -2168,26 +1710,23 @@ function renderCanvas() {
         return n;
       }
 
-      // ── Pass 1: measure total height ──
       const qFont = 'italic 400 '+minInsightSize+'px DM Serif Display, Georgia, serif';
-      const tFont = '400 '+minTitleSize+'px DM Serif Display, Georgia, serif';
-      const quoteText = '“'+minInsight+'”';
+      const tFont2 = '400 '+minTitleSize+'px DM Serif Display, Georgia, serif';
+      const quoteText = '"'+minInsight+'"';
       const qLines = countLines(qFont, quoteText, maxW);
-      const tLines = countLines(tFont, minTitle, maxW);
+      const tLines = countLines(tFont2, minTitle, maxW);
       const totalH = qLines*minInsightSize*1.55 + minLineGap + 1 + minAccentGap + tLines*minTitleSize*1.5;
 
-      // ── True vertical center ──
       let my = (H - totalH) / 2;
       if(my < H*0.07) my = H*0.07;
 
-      // ── Pass 2: draw ──
       ctx.font = qFont; ctx.fillStyle='#111'; ctx.textAlign='center';
       my = wrapText(ctx, quoteText, W/2, my, maxW, minInsightSize*1.55);
       my += minLineGap;
       ctx.fillStyle='#111'; ctx.globalAlpha=0.15;
       ctx.fillRect((W-W*0.06)/2, my, W*0.06, 1); ctx.globalAlpha=1;
       my += minAccentGap;
-      ctx.font = tFont; ctx.fillStyle='#888';
+      ctx.font = tFont2; ctx.fillStyle='#888';
       my = wrapText(ctx, minTitle, W/2, my, maxW, minTitleSize*1.5);
       ctx.textAlign='left';
       return my;
@@ -2196,7 +1735,6 @@ function renderCanvas() {
     // ── STANDARD LAYOUT ──
     let y = H*0.10 + offsetY;
 
-    // Category (only for category and editorial styles)
     const catSize = Math.round(W*0.019*scale);
     const isParchment = _imgStyle==='parchment';
     const showCat = (_imgStyle==='category' || _imgStyle==='editorial');
@@ -2211,7 +1749,6 @@ function renderCanvas() {
       y += catSize*1.5;
     }
 
-    // Title
     const titleText = isZh ? (item.title_zh||item.title_en) : item.title_en;
     const titleWeight = s.editorial ? '700' : (isParchment ? '600' : '400');
     const titleSize = Math.round(W*0.050*scale);
@@ -2220,9 +1757,7 @@ function renderCanvas() {
     y = wrapText(ctx, titleText, pad, y, W-pad*2, titleSize*1.2) + titleSize*0.15;
     y += Math.round(W*0.020*scale);
 
-    // Divider
     if (isParchment) {
-      // Parchment: short centered ornamental divider
       const divW = W*0.25; const divX = (W-divW)/2;
       ctx.strokeStyle='rgba(100,70,20,0.3)'; ctx.lineWidth=1;
       ctx.beginPath(); ctx.moveTo(divX,y); ctx.lineTo(divX+divW,y); ctx.stroke();
@@ -2232,22 +1767,18 @@ function renderCanvas() {
       ctx.fillRect(pad,y,W-pad*2,1); ctx.globalAlpha=1; y+=W*0.030;
     }
 
-    // Body
     const contentText = isZh ? (item.content_zh||item.content_en) : item.content_en;
     const bodySize = Math.round(W*0.030*scale);
     ctx.fillStyle = isParchment ? '#3a2510' : s.text;
     if (isZh) {
-      // Chinese: left-align, indent first line, line height 1.95
       ctx.font='300 '+bodySize+'px '+bFont;
       y = wrapTextCJK(ctx, contentText, pad, y, W-pad*2, bodySize*1.95, true);
     } else {
-      // English: left-align (no justify)
       ctx.font=(isParchment?'400':'300')+' '+bodySize+'px '+bFont;
       y = wrapTextJustify(ctx, contentText, pad, y, W-pad*2, bodySize*1.85);
     }
     y += bodySize*0.2;
 
-    // Insight divider
     y += W*0.018;
     if (isParchment) {
       const divW2=W*0.18; const divX2=(W-divW2)/2;
@@ -2259,7 +1790,6 @@ function renderCanvas() {
       ctx.fillRect(pad,y,W-pad*2,1); ctx.globalAlpha=1; y+=W*0.024;
     }
 
-    // Insight
     const insightText = isZh ? (item.insight_zh||item.insight_en) : item.insight_en;
     const insightSize = Math.round(W*0.026*scale);
     if (isParchment) {
@@ -2278,7 +1808,6 @@ function renderCanvas() {
     }
     y += insightSize*0.2;
 
-    // Source
     const canvasSrc = item.source||item.source_name||'';
     if (canvasSrc) {
       y += W*0.016;
@@ -2294,21 +1823,17 @@ function renderCanvas() {
     return y;
   }
 
-  // Try at scale 1.0, shrink until content fits above footer zone
   let scale = 1.0;
   let finalY = drawAll(scale, 0);
   while (finalY > contentH && scale > 0.55) {
     scale -= 0.04;
     finalY = drawAll(scale, 0);
   }
-  // Vertically center the content block
   const contentBlockH = finalY - H*0.10;
   const availableH = contentH - H*0.10;
   const offsetY = Math.max(0, (availableH - contentBlockH) / 2);
-  // Final draw with vertical centering
   drawAll(scale, offsetY);
 
-  // Footer — always pinned to bottom
   const footSize = Math.round(W*0.016*scale);
   const footY = H - H*0.052;
   ctx.fillStyle=s.lineColor||s.border; ctx.globalAlpha=0.25;
@@ -2322,13 +1847,11 @@ function renderCanvas() {
   ctx.textAlign='right'; ctx.fillText('The Little Bird', W-pad, footY+footSize);
   ctx.textAlign='left'; ctx.globalAlpha=1;
 
-  // Update img preview for mobile long-press save
   const preview = document.getElementById('imgPreview');
   if (preview) {
     preview.src = canvas.toDataURL('image/jpeg', 0.96);
     preview.style.aspectRatio = W+'/'+H;
   }
-  // Show appropriate hint
   const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
   const hint = document.getElementById('imgSaveHint');
   if (hint) {
@@ -2339,7 +1862,6 @@ function renderCanvas() {
 
 function wrapTextCJK(ctx, text, x, y, maxW, lineH, indent) {
   if (!text) return y;
-  // Chinese punctuation that cannot start a line
   const noStart = /^[。，、；：？！）】』」…—]/;
   const charW = ctx.measureText('字').width;
   const indentX = indent ? x + charW*2 : x;
@@ -2349,7 +1871,6 @@ function wrapTextCJK(ctx, text, x, y, maxW, lineH, indent) {
     const tw = ctx.measureText(test).width;
     const availW = isFirst && indent ? maxW - charW*2 : maxW;
     if (tw > availW && line) {
-      // Check if next char would violate punctuation rule
       if (noStart.test(char)) { line += char; continue; }
       ctx.fillText(line, cx, y); y += lineH;
       line = char; isFirst = false; cx = x;
@@ -2414,7 +1935,6 @@ function wrapTextJustify(ctx, text, x, y, maxW, lineH) {
 
 function downloadCanvas() {
   const canvas = document.getElementById('imgCanvas');
-  // Use JPEG for direct photo library saving on mobile
   const dataUrl = canvas.toDataURL('image/jpeg', 0.96);
   const a = document.createElement('a');
   a.href = dataUrl;
@@ -2604,11 +2124,13 @@ function updateCreature() {
 }
 
 // ── INIT ──────────────────────────────────────────────
+renderArchive();
 updatePlanet();
 initTodayPick();
 initFunBits();
 initCreature();
 initTodayDate();
+initAuth();
 
 function initTodayDate() {
   const el = document.getElementById('todayDate');
@@ -2635,12 +2157,9 @@ function toggleSettingsMenu() {
   }
 }
 
-
 // ── SUMMARY MODAL ─────────────────────────────
 function openSummaryModal(data) {
   const items = data.items || [];
-
-  // Lean phrase
   const cats = items.map(i => i.category).filter(Boolean);
   const counts = {};
   cats.forEach(c => counts[c] = (counts[c]||0)+1);
@@ -2653,7 +2172,6 @@ function openSummaryModal(data) {
   document.getElementById('summaryLean').innerHTML =
     'Your curiosity today leaned towards <strong>' + phrase + '.</strong>';
 
-  // Build summary cards
   const container = document.getElementById('summaryCards');
   container.innerHTML = '';
   items.forEach((item, i) => {
@@ -2676,7 +2194,7 @@ function openSummaryModal(data) {
       '<div class="summary-card-insight" id="sins-zh-' + i + '" style="display:none">' + esc(item.insight_zh) + '</div>' +
       (srcText ? '<div style="font-size:11px;font-weight:300;color:var(--tertiary);margin-top:10px;font-style:italic;letter-spacing:.2px">' + esc(srcText) + '</div>' : '') +
       '<div style="display:flex;align-items:center;gap:8px;margin-top:14px;padding-top:12px;border-top:1px solid var(--border-lt)">' +
-        '<button class="star-btn" data-star="summary-' + i + '" onclick="toggleSummaryStar(this,' + i + ')" style="font-size:16px;opacity:.4">☆</button>' +
+        '<button class="star-btn" data-starred="false" data-star="summary-' + i + '" onclick="toggleSummaryStar(this,' + i + ')" style="font-size:16px;opacity:.4">☆</button>' +
         '<button class="share-btn" data-sidx="' + i + '" onclick="openShareModal(_summaryRegistry[+this.dataset.sidx])">' + iconShare() + ' Share</button>' +
         '<button class="share-btn" data-sidx="' + i + '" onclick="generateImageCard(_summaryRegistry[+this.dataset.sidx])">' + iconImage() + ' Save image</button>' +
       '</div>';
@@ -2711,14 +2229,14 @@ function closeSummaryAndSave() {
   document.body.style.overflow = '';
   if (_pendingBatch) {
     _showCount = PAGE_SIZE;
-    saveBatch(_pendingBatch);
+    const batchId = Date.now();
+    saveBatch(_pendingBatch, batchId);
     if (window._pendingStars && window._pendingStars.size > 0) {
       const batch = _pendingBatch;
-      const batchId = Date.now();
       window._pendingStars.forEach(async idx => {
         const item = batch.items[idx];
         if (!item) return;
-        const uid = batchId + '-' + (item.index || (idx+1));
+        const uid = 'c' + batchId + '_' + idx;
         if (_currentUser) {
           await _supa.from('stars').insert({ user_id: _currentUser.id, uid }).catch(()=>{});
           if (_cloudStars) _cloudStars.push(uid);
@@ -2758,7 +2276,6 @@ function openDetail(uid) {
   srcEl.innerHTML = srcText ? 'Source: <span>' + esc(srcText) + '</span>' : '';
   srcEl.style.display = srcText ? '' : 'none';
 
-  // Tags
   const tagsEl = document.getElementById('detailTags');
   tagsEl.innerHTML = '';
   if (item.tags && item.tags.length) {
@@ -2775,7 +2292,6 @@ function openDetail(uid) {
     });
   }
 
-  // Reset lang tabs
   document.querySelectorAll('.detail-lang-tab').forEach((b,i) => b.classList.toggle('active', i===0));
   document.getElementById('detailModal').classList.add('show');
   setTimeout(()=>{ const btn=document.querySelector('#detailModal .detail-close'); if(btn) btn.focus(); },50);
@@ -2822,7 +2338,6 @@ function updatePlanet() {
   const maxCount = entries[0]?.count || 1;
   const minR = 10, maxR = 32;
 
-  // Simple non-overlapping placement using force-like nudge
   const placed = [];
   function tryPlace(r) {
     for (let attempt = 0; attempt < 200; attempt++) {
@@ -2871,17 +2386,13 @@ function updatePlanet() {
     circle.setAttribute('stroke-width', activeCat===cat ? '2' : '0');
     g.appendChild(circle);
 
-    // Full category name as SVG title (tooltip only)
     const title = document.createElementNS('http://www.w3.org/2000/svg','title');
     title.textContent = cat;
     g.appendChild(title);
 
-
-
     svg.appendChild(g);
   });
 
-  // Empty state
   if (entries.length === 0) {
     const t = document.createElementNS('http://www.w3.org/2000/svg','text');
     t.setAttribute('x','90'); t.setAttribute('y','65');
@@ -2892,7 +2403,6 @@ function updatePlanet() {
     svg.appendChild(t);
   }
 }
-
 
 // ── FLAPPY BIRD ───────────────────────────────
 let _flappyRunning = false, _flappyRAF = null;
@@ -2918,7 +2428,7 @@ function initFlappy() {
 
   let bird = {x:80, y:H/2, vy:0, r:14};
   let pipes = [], score = 0, best = parseInt(localStorage.getItem('ncb_flappy_best')||'0');
-  let state = 'idle'; // idle | playing | dead
+  let state = 'idle';
   let frame = 0;
 
   function addPipe() {
@@ -2952,17 +2462,14 @@ function initFlappy() {
     ctx.save();
     ctx.translate(bird.x, bird.y);
     ctx.rotate(Math.min(Math.max(bird.vy * 0.06, -0.4), 0.8));
-    // Body
     ctx.beginPath();
     ctx.ellipse(0, 0, bird.r, bird.r*0.82, 0, 0, Math.PI*2);
     ctx.fillStyle = BIRD_COLOR;
     ctx.fill();
-    // Wing
     ctx.beginPath();
     ctx.ellipse(-2, 3, bird.r*0.5, bird.r*0.32, -0.3, 0, Math.PI*2);
     ctx.fillStyle = '#8a6040';
     ctx.fill();
-    // Eye
     ctx.beginPath();
     ctx.arc(bird.r*0.45, -bird.r*0.2, 3.5, 0, Math.PI*2);
     ctx.fillStyle = '#fff';
@@ -2971,7 +2478,6 @@ function initFlappy() {
     ctx.arc(bird.r*0.55, -bird.r*0.2, 2, 0, Math.PI*2);
     ctx.fillStyle = '#222';
     ctx.fill();
-    // Beak
     ctx.beginPath();
     ctx.moveTo(bird.r*0.8, bird.r*0.1);
     ctx.lineTo(bird.r*1.3, bird.r*0.25);
@@ -2983,14 +2489,12 @@ function initFlappy() {
 
   function drawPipe(p) {
     const radius = 6;
-    // Top pipe
     ctx.fillStyle = PIPE_COLOR;
     ctx.beginPath();
     ctx.roundRect(p.x, 0, PIPE_W, p.top - 8, [0,0,radius,radius]);
     ctx.fill();
     ctx.fillStyle = '#4a7a5a';
     ctx.fillRect(p.x - 4, p.top - 24, PIPE_W + 8, 24);
-    // Bottom pipe
     const botY = p.top + GAP;
     ctx.fillStyle = PIPE_COLOR;
     ctx.beginPath();
@@ -3005,7 +2509,6 @@ function initFlappy() {
     ctx.fillStyle = BG;
     ctx.fillRect(0,0,W,H);
 
-    // Ground
     ctx.fillStyle = '#e0deda';
     ctx.fillRect(0, H-24, W, 24);
     ctx.fillStyle = '#5f8c6e';
@@ -3016,7 +2519,6 @@ function initFlappy() {
       bird.vy += GRAVITY;
       bird.y += bird.vy;
 
-      // Add pipes
       if (pipes.length === 0 || pipes[pipes.length-1].x < W - 200) addPipe();
 
       pipes.forEach(p => {
@@ -3026,7 +2528,6 @@ function initFlappy() {
           p.scored = true;
           if (score > best) { best = score; localStorage.setItem('ncb_flappy_best', best); }
         }
-        // Collision
         if (bird.x + bird.r*0.7 > p.x && bird.x - bird.r*0.7 < p.x + PIPE_W) {
           if (bird.y - bird.r*0.7 < p.top || bird.y + bird.r*0.7 > p.top + GAP) state = 'dead';
         }
@@ -3042,7 +2543,6 @@ function initFlappy() {
 
     drawBird();
 
-    // Score
     ctx.fillStyle = '#333';
     ctx.font = "500 22px 'DM Sans', sans-serif";
     ctx.textAlign = 'center';
@@ -3071,22 +2571,16 @@ function initFlappy() {
   }
 
   if (_flappyRAF) cancelAnimationFrame(_flappyRAF);
-  // Clean up old key listener on re-init
   canvas._keyHandler && document.removeEventListener('keydown', canvas._keyHandler);
   canvas._keyHandler = keyHandler;
   loop();
 }
-
-
-renderArchive();
-initAuth();
 
 function setTheme(theme, auto=false) {
   if (!auto) window._userPickedTheme = true;
   document.documentElement.setAttribute('data-theme', theme === 'light' ? '' : theme);
   localStorage.setItem('ncb_theme', theme);
 
-  // Active ring — warm to cool order
   const dots = {
     amber: { id:'themeAmber', active:'#fff0e0', inactive:'#d96c08' },
     light: { id:'themeLight', active:'#3a3a36', inactive:'#aaa'    },
@@ -3100,7 +2594,6 @@ function setTheme(theme, auto=false) {
     el.style.borderWidth  = t === theme ? '3px' : '2px';
   });
 
-  // Auth button border+text adapts to each theme's secondary/tertiary
   const authBtn = document.getElementById('authBtn');
   if (authBtn) {
     const colors = {
@@ -3121,7 +2614,8 @@ function initTheme() {
 initTheme();
 
 function toggleSummaryStar(btn, idx) {
-  const isStarred = btn.innerHTML === '★';
+  const isStarred = btn.dataset.starred === 'true';
+  btn.dataset.starred = isStarred ? 'false' : 'true';
   btn.innerHTML = isStarred ? '☆' : '★';
   btn.style.opacity = isStarred ? '.4' : '1';
   if (!window._pendingStars) window._pendingStars = new Set();
@@ -3132,28 +2626,22 @@ function toggleSummaryStar(btn, idx) {
 <div class="creature-wrap"><div class="creature" id="creature" title=""></div></div>
 <button id="flappyBtn" onclick="openFlappy()" title="Play Flappy Bird" style="position:fixed;bottom:20px;right:48px;background:none;border:none;cursor:pointer;font-size:18px;opacity:0.22;transition:opacity .2s;z-index:200;line-height:1;padding:4px;display:none !important" onmouseover="this.style.opacity=.7" onmouseout="this.style.opacity=.22">&#128038;</button>
 
-
 <!-- Auth modal -->
 <div id="authModal" onclick="if(event.target===this)closeAuthModal()" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:1200;align-items:center;justify-content:center;backdrop-filter:blur(4px);">
   <div style="background:var(--modal-bg);border-radius:16px;padding:32px 28px;width:90%;max-width:360px;font-family:'DM Sans',sans-serif;box-shadow:0 8px 40px rgba(0,0,0,.15);">
     <div style="font-family:'DM Serif Display',serif;font-size:1.3rem;margin-bottom:6px;">Sign in</div>
     <div style="font-size:13px;color:#999;margin-bottom:20px;">Sync your stars across devices</div>
-
-    <!-- Google -->
     <button onclick="signInGoogle()" style="width:100%;padding:11px;border:1.5px solid var(--border);border-radius:10px;background:var(--input-bg);color:var(--text);cursor:pointer;font-size:14px;font-family:'DM Sans',sans-serif;display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:12px;transition:border-color .15s;" onmouseover="this.style.borderColor='#aaa'" onmouseout="this.style.borderColor='#e0ddd6'">
       <svg width="18" height="18" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg>
       Continue with Google
     </button>
-
     <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
       <div style="flex:1;height:1px;background:#e8e5de;"></div>
       <span style="font-size:12px;color:#bbb;">or</span>
       <div style="flex:1;height:1px;background:#e8e5de;"></div>
     </div>
-
-    <!-- Email -->
     <input id="authEmail" type="email" placeholder="Email" style="width:100%;padding:11px 12px;border:1.5px solid var(--border);border-radius:10px;font-size:14px;font-family:'DM Sans',sans-serif;background:var(--input-bg);color:var(--text);box-sizing:border-box;margin-bottom:8px;outline:none;" onkeydown="if(event.key==='Enter')submitAuth()"/>
-    <input id="authPassword" type="password" placeholder="Password" style="width:100%;padding:11px 12px;border:1.5px solid var(--border);border-radius:10px;font-size:14px;font-family:'DM Sans',sans-serif;background:var(--input-bg);color:var(--text);box-sizing:border-box;margin-bottom:12px;outline:none;" onkeydown="if(event.key==='Enter')submitAuth()"/>
+    <input id="authPassword" type="password" placeholder="Password" autocomplete="new-password" style="width:100%;padding:11px 12px;border:1.5px solid var(--border);border-radius:10px;font-size:14px;font-family:'DM Sans',sans-serif;background:var(--input-bg);color:var(--text);box-sizing:border-box;margin-bottom:12px;outline:none;" onkeydown="if(event.key==='Enter')submitAuth()"/>
     <div id="authError" style="font-size:12px;color:#c0392b;margin-bottom:8px;min-height:16px;"></div>
     <div style="display:flex;gap:8px;">
       <button onclick="submitAuth('signin')" style="flex:1;padding:11px;border:none;border-radius:10px;background:var(--btn-bg);color:var(--btn-text);cursor:pointer;font-size:14px;font-family:'DM Sans',sans-serif;">Sign in</button>
@@ -3178,7 +2666,6 @@ function toggleSummaryStar(btn, idx) {
 <!-- Toast -->
 <div class="curiosity-toast" id="curiosityToast"></div>
 <div class="error-toast" id="errorToast"></div>
-
 
 <!-- Flappy Bird -->
 <div id="flappyOverlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:2000;align-items:center;justify-content:center;flex-direction:column">
