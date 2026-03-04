@@ -36,16 +36,16 @@
 
 /* ── Amber ── burnt sienna bg, muted warm tones */
 [data-theme="amber"]{
-  --bg:#e8740a;--surface:#d96c08;--card-bg:#fff8f0;
+  --bg:#e8740a;--surface:#d96c08;--card-bg:#f5e8d0;
   --text:#fff0e0;--secondary:#ffd890;--tertiary:#f0b050;
   --border:rgba(255,200,100,.4);--border-lt:rgba(255,220,150,.2);
-  --nav-bg:#d96c08;--input-bg:#fff8f0;--btn-bg:#1c0a00;--btn-text:#fff8f0;
+  --nav-bg:#d96c08;--input-bg:#f5e8d0;--btn-bg:#3a2010;--btn-text:#f5e8d0;
   --modal-bg:#e8740a;--overlay-bg:rgba(80,20,0,.55);
   --c-psychology:#1e5c8a;--c-history:#5a3000;--c-nature:#1a5c38;
   --c-culture:#4a1878;--c-philosophy:#1a4878;--c-language:#4a3200;
   --c-food:#5a1200;--c-art:#3a1060;--c-science:#0a3060;--c-folklore:#1a4810;
   --c-default:#3a2210;--accent:#1c0a00;--accent-text:#fff8f0;
-  --card-text:#1c0a00;--card-text-2:#5a3010;--card-text-3:#6a4820;--card-text-4:#8a6040;
+  --card-text:#3a2010;--card-text-2:#6a3818;--card-text-3:#7a5030;--card-text-4:#9a7050;
   --grad:linear-gradient(90deg,#fff0e0,#ffd890,#f0b050,#ffd890,#fff0e0);
 }
 /* ── Olive ── deep olive-green bg */
@@ -65,8 +65,8 @@
 
 /* ── Ocean ── deep navy bg */
 [data-theme="ocean"]{
-  --bg:#0f1f2e;--surface:#162434;--card-bg:#192836;
-  --text:#d8e8f0;--secondary:#8aacc0;--tertiary:#6a8ea8;
+  --bg:#0d1c2a;--surface:#152232;--card-bg:#1e2f40;
+  --text:#c8dce8;--secondary:#8aacc0;--tertiary:#6a8ea8;
   --border:#1e3048;--border-lt:#182840;
   --nav-bg:#0a1828;--input-bg:#e8f0f8;--btn-bg:#d8e8f0;--btn-text:#0f1f2e;
   --modal-bg:#162840;--overlay-bg:rgba(0,0,0,.65);
@@ -135,7 +135,7 @@ nav::before{content:'';position:fixed;top:0;left:0;right:0;height:2px;background
 [data-theme="amber"] .card .card-cat{color:var(--c-default)}
 [data-theme="amber"] .card .card-title-en{color:var(--card-text)}
 [data-theme="amber"] .card .card-title-zh{color:var(--card-text-3)}
-[data-theme="amber"] .card .card-content{color:var(--card-text)}
+[data-theme="amber"] .card .card-content{color:var(--card-text);line-height:1.85}
 [data-theme="amber"] .card .card-insight{color:var(--card-text-2)}
 [data-theme="amber"] .card .card-source{color:var(--card-text-3)}
 [data-theme="amber"] .card .card-num{color:var(--card-text-4)}
@@ -531,6 +531,14 @@ footer{border-top:1px solid var(--border);padding:28px 0;display:flex;align-item
   .gen-btn{padding:12px 16px;font-size:13px}
   .img-picker-grid.three{grid-template-columns:1fr 1fr}
   .card-content{font-size:15px}
+  [data-theme="amber"] .card-content{font-size:16px;line-height:1.9}
+}
+/* ── Ocean mobile: dark mode comfort ── */
+@media(max-width:720px){
+  [data-theme="ocean"] .card-content{font-size:16px;line-height:1.9}
+  [data-theme="ocean"] .card-insight{font-size:14px;line-height:1.75}
+  [data-theme="ocean"] .mood-chip{min-height:44px}
+  [data-theme="ocean"] .card{padding:20px}
 }
 
 
@@ -640,7 +648,7 @@ footer{border-top:1px solid var(--border);padding:28px 0;display:flex;align-item
 /* ── Ocean: text contrast fixes ── */
 [data-theme="ocean"] .card{color:var(--text)}
 [data-theme="ocean"] .card-title-en{color:var(--text)}
-[data-theme="ocean"] .card-content{color:var(--text)}
+[data-theme="ocean"] .card-content{color:var(--text);line-height:1.85}
 [data-theme="ocean"] .card-insight{color:var(--secondary)}
 [data-theme="ocean"] .card-source{color:var(--secondary)}
 [data-theme="ocean"] .card-num{color:var(--tertiary)}
@@ -775,7 +783,7 @@ footer{border-top:1px solid var(--border);padding:28px 0;display:flex;align-item
 /* Ocean archive cards: light text on dark card bg */
 [data-theme="ocean"] .card{color:#d8e8f0;background:rgba(255,255,255,.05);border-color:rgba(144,208,240,.1)}
 [data-theme="ocean"] .card-title-en{color:var(--text)}
-[data-theme="ocean"] .card-content{color:var(--text)}
+[data-theme="ocean"] .card-content{color:var(--text);line-height:1.85}
 [data-theme="ocean"] .card-insight{color:var(--secondary);font-style:italic}
 [data-theme="ocean"] .card-source{color:var(--secondary)}
 [data-theme="ocean"] .card-num{color:var(--tertiary)}
@@ -826,6 +834,7 @@ footer{border-top:1px solid var(--border);padding:28px 0;display:flex;align-item
 [data-theme="ocean"] .img-close-btn{background:rgba(255,255,255,.07);color:#8aacc0;border:none}
 [data-theme="ocean"] .img-close-btn:hover{background:rgba(255,255,255,.14)}
 [data-theme="ocean"] #imgSaveHint{color:var(--secondary)}
+[data-theme="ocean"] .card img{filter:brightness(.88)}
 
 /* ── Accessibility: focus styles ── */
 :focus-visible{outline:2px solid var(--secondary);outline-offset:3px;border-radius:4px}
@@ -866,6 +875,25 @@ button:focus-visible,a:focus-visible{outline:2px solid var(--secondary);outline-
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
   gtag('config', 'G-TZJP3T1CN9');
+</script>
+
+<script>
+// Auto dark mode: switch to Ocean if system prefers dark and no saved preference
+(function() {
+  const saved = localStorage.getItem('ncb_theme');
+  if (!saved && window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+    localStorage.setItem('ncb_theme', 'ocean');
+  }
+  // Listen for system theme changes
+  if (window.matchMedia) {
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
+      // Only auto-switch if user hasn't manually picked a theme this session
+      if (!window._userPickedTheme) {
+        if (typeof setTheme === 'function') setTheme(e.matches ? 'ocean' : 'light');
+      }
+    });
+  }
+})();
 </script>
 </head>
 <body>
@@ -2748,7 +2776,8 @@ function initFlappy() {
 renderArchive();
 initAuth();
 
-function setTheme(theme) {
+function setTheme(theme, auto=false) {
+  if (!auto) window._userPickedTheme = true;
   document.documentElement.setAttribute('data-theme', theme === 'light' ? '' : theme);
   localStorage.setItem('ncb_theme', theme);
 
