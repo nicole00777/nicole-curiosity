@@ -2,6 +2,19 @@
 
 ---
 
+## [1.6] 2026-03-03 - UX Polish & Bug Fixes
+
+### Visual
+- Ocean save-as-image modal: selected state border-only, muted Save button
+- Amber fun bits: improved contrast with semi-transparent overlay, text changed to cream white
+- Knowledge Diet bubbles: theme-aware colors (Amber warm pastels, Olive bright palette)
+- Loading animation: reverted to original "Collecting wonders" line animation
+
+### Bug Fixes
+- Olive and Ocean password input and Generate button restored to light colors on mobile
+
+---
+
 ## [1.5] 2026-03-03 - Security, Stability and Maintainability
 
 ### Security
