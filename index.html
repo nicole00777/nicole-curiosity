@@ -2110,11 +2110,7 @@ function renderCanvas() {
       ctx.strokeStyle='rgba(0,255,255,0.04)'; ctx.lineWidth=1;
       for(let gi=0;gi<H;gi+=30){ctx.beginPath();ctx.moveTo(0,gi);ctx.lineTo(W,gi);ctx.stroke();}
       for(let gi=0;gi<W;gi+=30){ctx.beginPath();ctx.moveTo(gi,0);ctx.lineTo(gi,H);ctx.stroke();}
-      // Category
-      ctx.font='500 '+Math.round(W*0.018*scale)+'px DM Sans, sans-serif';
-      ctx.letterSpacing='3px'; ctx.fillStyle='#0ff'; ctx.globalAlpha=0.7;
-      ctx.fillText(item.category.toUpperCase(), pad, ny); ctx.globalAlpha=1; ctx.letterSpacing='0px';
-      ny += Math.round(W*0.018*scale)*3;
+
       // Title with neon glow
       const neonTitle = isZh?(item.title_zh||item.title_en):item.title_en;
       const neonTitleSize = Math.round(W*0.048*scale);
@@ -2138,7 +2134,7 @@ function renderCanvas() {
       const neonInsight = isZh?(item.insight_zh||item.insight_en):item.insight_en;
       const neonInsightSize = Math.round(W*0.024*scale);
       ctx.font='400 '+neonInsightSize+'px DM Sans, sans-serif';
-      ctx.fillStyle='#ff80ff'; ctx.shadowColor='#f0f'; ctx.shadowBlur=14;
+      ctx.fillStyle='#ff66ff'; ctx.shadowColor='#f0f'; ctx.shadowBlur=18;
       ny = wrapText(ctx, '"'+neonInsight+'"', pad, ny, W-pad*2, neonInsightSize*1.6);
       ctx.shadowBlur=0;
       // Source
@@ -2147,7 +2143,7 @@ function renderCanvas() {
         ny+=W*0.014;
         const nSrcSize=Math.round(W*0.018*scale);
         ctx.font='300 '+nSrcSize+'px DM Sans, sans-serif';
-        ctx.fillStyle='#0ff'; ctx.globalAlpha=0.55;
+        ctx.fillStyle='#fff'; ctx.globalAlpha=1.0; ctx.shadowColor='#0ff'; ctx.shadowBlur=6;
         let ns='— '+neonSrc; while(ctx.measureText(ns).width>W-pad*2&&ns.length>10) ns=ns.slice(0,-4)+'…';
         ctx.fillText(ns,pad,ny); ctx.globalAlpha=1;
       }
@@ -2156,34 +2152,43 @@ function renderCanvas() {
 
     // ── MINIMAL layout ──
     if (s.minimal) {
-      // Center everything vertically
       const minInsight = isZh?(item.insight_zh||item.insight_en):item.insight_en;
       const minTitle = isZh?(item.title_zh||item.title_en):item.title_en;
       const minInsightSize = Math.round(W*0.038*scale);
       const minTitleSize = Math.round(W*0.022*scale);
-      const minCatSize = Math.round(W*0.016*scale);
-      // Estimate total height and center
-      const totalEst = minInsightSize*3 + W*0.04 + minTitleSize*2 + minCatSize*2;
-      let my = (H - totalEst)/2 + offsetY;
-      if(my < H*0.1) my = H*0.1;
-      // Big insight quote centered
-      ctx.font='italic 400 '+minInsightSize+'px DM Serif Display, Georgia, serif';
-      ctx.fillStyle='#111'; ctx.textAlign='center';
-      my = wrapText(ctx, '“'+minInsight+'”', W/2, my, W-pad*2.5, minInsightSize*1.55);
-      my += W*0.032;
-      // Accent line centered
-      ctx.fillStyle='#111'; ctx.globalAlpha=0.2;
-      ctx.fillRect((W-W*0.08)/2, my, W*0.08, 1); ctx.globalAlpha=1;
-      my += W*0.028;
-      // Category
-      ctx.font='500 '+minCatSize+'px DM Sans, sans-serif';
-      ctx.letterSpacing='2px'; ctx.fillStyle='#999';
-      ctx.fillText(item.category.toUpperCase(), W/2, my);
-      ctx.letterSpacing='0px'; my += minCatSize*2.2;
-      // Title
-      ctx.font='400 '+minTitleSize+'px DM Serif Display, Georgia, serif';
-      ctx.fillStyle='#555';
-      my = wrapText(ctx, minTitle, W/2, my, W-pad*2.5, minTitleSize*1.5);
+      const minLineGap = W*0.032;
+      const minAccentGap = W*0.026;
+      const maxW = W - pad*2.5;
+
+      // ── Helper: count wrapped lines ──
+      function countLines(font, text, maxW) {
+        ctx.font = font;
+        const words = text.split(' '); let line=''; let n=1;
+        for(const w of words){ const t=line?line+' '+w:w; if(ctx.measureText(t).width>maxW&&line){n++;line=w;}else line=t; }
+        return n;
+      }
+
+      // ── Pass 1: measure total height ──
+      const qFont = 'italic 400 '+minInsightSize+'px DM Serif Display, Georgia, serif';
+      const tFont = '400 '+minTitleSize+'px DM Serif Display, Georgia, serif';
+      const quoteText = '“'+minInsight+'”';
+      const qLines = countLines(qFont, quoteText, maxW);
+      const tLines = countLines(tFont, minTitle, maxW);
+      const totalH = qLines*minInsightSize*1.55 + minLineGap + 1 + minAccentGap + tLines*minTitleSize*1.5;
+
+      // ── True vertical center ──
+      let my = (H - totalH) / 2;
+      if(my < H*0.07) my = H*0.07;
+
+      // ── Pass 2: draw ──
+      ctx.font = qFont; ctx.fillStyle='#111'; ctx.textAlign='center';
+      my = wrapText(ctx, quoteText, W/2, my, maxW, minInsightSize*1.55);
+      my += minLineGap;
+      ctx.fillStyle='#111'; ctx.globalAlpha=0.15;
+      ctx.fillRect((W-W*0.06)/2, my, W*0.06, 1); ctx.globalAlpha=1;
+      my += minAccentGap;
+      ctx.font = tFont; ctx.fillStyle='#888';
+      my = wrapText(ctx, minTitle, W/2, my, maxW, minTitleSize*1.5);
       ctx.textAlign='left';
       return my;
     }
@@ -2200,12 +2205,6 @@ function renderCanvas() {
       ctx.letterSpacing='2px';
       ctx.fillStyle=(_imgStyle==='editorial')?(s.accent||s.sub):s.sub;
       ctx.globalAlpha=0.8; ctx.fillText(item.category.toUpperCase(), pad, y);
-      ctx.globalAlpha=1; ctx.letterSpacing='0px';
-      y += catSize*3.2;
-    } else if (isParchment) {
-      ctx.font='italic 400 '+catSize+'px EB Garamond, Georgia, serif';
-      ctx.fillStyle='#7a5c30'; ctx.letterSpacing='1px';
-      ctx.globalAlpha=0.7; ctx.fillText(item.category.toUpperCase(), pad, y);
       ctx.globalAlpha=1; ctx.letterSpacing='0px';
       y += catSize*3.2;
     } else {
@@ -2272,7 +2271,7 @@ function renderCanvas() {
     } else {
       const insightStyle = (_imgStyle==='ink'||_imgStyle==='light'||_imgStyle==='editorial'||_imgStyle==='parchment') ? 'italic ' : '';
       ctx.font=insightStyle+'400 '+insightSize+'px '+iFont;
-      ctx.fillStyle = _imgStyle==='ink' ? s.text : (_imgStyle==='neon' ? '#ff80ff' : s.sub);
+      ctx.fillStyle = _imgStyle==='ink' ? '#f5f0e8' : (_imgStyle==='neon' ? '#ff66ff' : s.sub);
       ctx.globalAlpha = 1.0;
       y = wrapText(ctx, insightText, pad, y, W-pad*2, insightSize*1.65);
       ctx.globalAlpha=1;
@@ -2285,8 +2284,8 @@ function renderCanvas() {
       y += W*0.016;
       const srcSize = Math.round(W*0.022*scale);
       ctx.font='300 '+srcSize+'px DM Sans, sans-serif';
-      ctx.fillStyle = isParchment ? '#7a5c30' : s.sub;
-      ctx.globalAlpha=0.65;
+      ctx.fillStyle = isParchment ? '#7a5c30' : (_imgStyle==='ink' ? '#d4cfc5' : s.sub);
+      ctx.globalAlpha = _imgStyle==='ink' ? 1.0 : 0.75;
       let srcText='— '+canvasSrc;
       while(ctx.measureText(srcText).width>W-pad*2&&srcText.length>10) srcText=srcText.slice(0,-4)+'…';
       ctx.fillText(srcText,pad,y); ctx.globalAlpha=1;
