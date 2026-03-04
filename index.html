@@ -2128,7 +2128,7 @@ function renderCanvas() {
       const neonBodySize = Math.round(W*0.028*scale);
       ctx.font='300 '+neonBodySize+'px DM Sans, sans-serif';
       ctx.fillStyle='#aad4ff';
-      ny = isZh ? wrapTextCJK(ctx,neonBody,pad,ny,W-pad*2,neonBodySize*1.85,false) : wrapText(ctx,neonBody,pad,ny,W-pad*2,neonBodySize*1.85);
+      ny = isZh ? wrapTextCJK(ctx,neonBody,pad,ny,W-pad*2,neonBodySize*1.85,false) : wrapTextJustify(ctx,neonBody,pad,ny,W-pad*2,neonBodySize*1.85);
       ny += W*0.018;
       // Insight
       const neonInsight = isZh?(item.insight_zh||item.insight_en):item.insight_en;
@@ -2154,8 +2154,8 @@ function renderCanvas() {
     if (s.minimal) {
       const minInsight = isZh?(item.insight_zh||item.insight_en):item.insight_en;
       const minTitle = isZh?(item.title_zh||item.title_en):item.title_en;
-      const minInsightSize = Math.round(W*0.038*scale);
-      const minTitleSize = Math.round(W*0.022*scale);
+      const minInsightSize = Math.round(W*0.050*scale);
+      const minTitleSize = Math.round(W*0.026*scale);
       const minLineGap = W*0.032;
       const minAccentGap = W*0.026;
       const maxW = W - pad*2.5;
@@ -2243,7 +2243,7 @@ function renderCanvas() {
     } else {
       // English: left-align (no justify)
       ctx.font=(isParchment?'400':'300')+' '+bodySize+'px '+bFont;
-      y = wrapText(ctx, contentText, pad, y, W-pad*2, bodySize*1.85);
+      y = wrapTextJustify(ctx, contentText, pad, y, W-pad*2, bodySize*1.85);
     }
     y += bodySize*0.2;
 
@@ -2273,7 +2273,7 @@ function renderCanvas() {
       ctx.font=insightStyle+'400 '+insightSize+'px '+iFont;
       ctx.fillStyle = _imgStyle==='ink' ? '#f5f0e8' : (_imgStyle==='neon' ? '#ff66ff' : s.sub);
       ctx.globalAlpha = 1.0;
-      y = wrapText(ctx, insightText, pad, y, W-pad*2, insightSize*1.65);
+      y = wrapTextJustify(ctx, insightText, pad, y, W-pad*2, insightSize*1.65);
       ctx.globalAlpha=1;
     }
     y += insightSize*0.2;
