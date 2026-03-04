@@ -2,6 +2,20 @@
 
 ---
 
+## [1.8] 2026-03-03 - Bug Fixes & Performance
+
+### Bug Fixes
+- Fixed _pendingBatch variable declaration order causing JS error
+- Archive data not displaying and Generate failing were both caused by this error
+
+### Performance
+- Font preconnect added for Google Fonts (faster font load, less flicker)
+
+### Security
+- vercel.json updated with CSP, X-Frame-Options, X-Content-Type-Options, Referrer-Policy headers
+
+---
+
 ## [1.7] 2026-03-03 - Accessibility, UX & Dark Mode
 
 ### Keyboard & Focus
