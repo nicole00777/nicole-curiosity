@@ -1813,14 +1813,14 @@ function buildCard(item, uid, starred) {
         '</button>' +
       '</div>' +
     '</div>' +
-    '<div class="card-title-en">'+hlText(item.title_en||'', _q)+'</div>' +
+    '<div class="card-title-en">'+hlText(item.title_en||'', (document.getElementById("filterQuery")?.value||'').trim())+'</div>' +
 
     '<div class="lang-tabs">' +
       '<button class="lang-tab active" onclick="switchLang(this,\'en\',\''+uid+'\')">EN</button>' +
       '<button class="lang-tab" onclick="switchLang(this,\'zh\',\''+uid+'\')">中文</button>' +
     '</div>' +
     '<div class="content-block active" id="en-'+uid+'">' +
-      '<p class="card-content">'+hlText(item.content_en||'', _q)+'</p>' +
+      '<p class="card-content">'+hlText(item.content_en||'', (document.getElementById("filterQuery")?.value||'').trim())+'</p>' +
       '<div class="card-insight">'+esc(item.insight_en)+'</div>' +
     '</div>' +
     '<div class="content-block" id="zh-'+uid+'">' +
