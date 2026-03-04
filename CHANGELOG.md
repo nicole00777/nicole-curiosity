@@ -2,6 +2,54 @@
 
 ---
 
+## [1.7] 2026-03-03 - Accessibility, UX & Dark Mode
+
+### Keyboard & Focus
+- Modal open: focus moves to close/action button automatically
+- Modal close: focus returns to the card that was clicked
+- Escape key closes all modals (detail, summary, auth)
+
+### Search
+- Matched keywords highlighted in card title and content
+- Highlight color adapts to each theme (warm yellow / blue / green / amber)
+
+### Error Handling
+- All errors now use top-of-screen toast instead of inline text
+- Toast slides in from top, auto-dismisses after 5s
+- Dark background, white text, red left border for clear visibility
+
+### Generate Button
+- Disabled state now shows 50% opacity + not-allowed cursor
+- More visually obvious when generation is in progress
+
+### Ocean Dark Mode
+- Background deepened, text softened for less eye strain
+- Card backgrounds brightened for better layer contrast
+- Image brightness reduced to 88%
+- Card content line-height increased to 1.85 (1.9 on mobile)
+- Mood chip touch target increased to 44px on mobile
+- Auto-switches to Ocean when system is in dark mode
+- Reverts to Linen when system switches back to light mode
+
+### Amber Readability
+- Card background changed from near-white to warm beige (#f5e8d0)
+- Card text softened from near-black to warm brown (#3a2010)
+- Card content line-height increased to 1.85
+
+### Default Theme
+- New users land on Linen (white) by default
+- Returning users keep their saved theme
+
+### CSS Architecture
+- Shared tokens (--radius, --space-*, --transition-*) moved to :root
+- Search highlight styles added per theme
+- prefers-reduced-motion: all animations disabled for sensitive users
+- Print styles: hides UI chrome, shows clean card content only
+- Font fallback stack improved for cross-platform coverage
+- Olive and Ocean --tertiary contrast improved toward WCAG AA
+
+---
+
 ## [1.6] 2026-03-03 - UX Polish & Bug Fixes
 
 ### Visual
