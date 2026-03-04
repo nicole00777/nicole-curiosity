@@ -66,7 +66,7 @@
 /* ── Ocean ── deep navy bg */
 [data-theme="ocean"]{
   --bg:#0f1f2e;--surface:#162434;--card-bg:#192836;
-  --text:#d8e8f0;--secondary:#8aacc0;--tertiary:#4a6880;
+  --text:#d8e8f0;--secondary:#8aacc0;--tertiary:#6a8ea8;
   --border:#1e3048;--border-lt:#182840;
   --nav-bg:#0a1828;--input-bg:#e8f0f8;--btn-bg:#d8e8f0;--btn-text:#0f1f2e;
   --modal-bg:#162840;--overlay-bg:rgba(0,0,0,.65);
@@ -80,7 +80,7 @@
 
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{font-size:16px;scroll-behavior:smooth}
-body{background:var(--bg);color:var(--text);transition:background .3s,color .3s;font-family:'DM Sans',-apple-system,sans-serif;font-weight:300;min-height:100vh;-webkit-font-smoothing:antialiased}
+body{background:var(--bg);color:var(--text);transition:background .3s,color .3s;font-family:'DM Sans',-apple-system,BlinkMacSystemFont,'Segoe UI','Helvetica Neue',Arial,sans-serif;font-weight:300;min-height:100vh;-webkit-font-smoothing:antialiased}
 .page{max-width:1200px;margin:0 auto;padding:0 40px;position:relative}
 .page::before,.page::after{content:'';position:fixed;top:0;bottom:0;width:1px;background:linear-gradient(180deg,transparent 0%,var(--border) 8%,var(--border) 92%,transparent 100%);z-index:0;pointer-events:none}
 .page::before{left:calc(50% - 600px)}.page::after{right:calc(50% - 600px)}
@@ -205,8 +205,7 @@ nav::before{content:'';position:fixed;top:0;left:0;right:0;height:2px;background
 .password-input::placeholder{color:var(--tertiary)}.password-input:focus{border-color:var(--secondary);background:var(--surface)}
 .gen-btn{font-family:'DM Sans',sans-serif;font-size:14px;font-weight:500;letter-spacing:.3px;background:var(--btn-bg);color:var(--btn-text);border:none;border-radius:var(--radius-sm);padding:12px 24px;cursor:pointer;transition:background .18s,transform .1s;white-space:nowrap}
 .gen-btn:hover{background:var(--accent);filter:brightness(1.15);transform:translateY(-1px)}.gen-btn:active{transform:none}.gen-btn:disabled{opacity:.45;cursor:not-allowed;transform:none;filter:grayscale(.4)}
-.error-msg{font-size:13px;font-weight:400;color:#c0392b;min-height:20px;text-align:right;width:100%;letter-spacing:.2px;display:flex;align-items:center;justify-content:flex-end;gap:5px}
-.error-msg:not(:empty)::before{content:'⚠';font-size:12px}
+.error-msg{display:none}
 
 /* ── Loading State ──────────────────────────────────── */
 /* ── Loading State ──────────────────────────────────── */
@@ -398,6 +397,9 @@ nav::before{content:'';position:fixed;top:0;left:0;right:0;height:2px;background
 
 /* CURIOSITY TOAST */
 .curiosity-toast{position:fixed;bottom:32px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--text);color:#fff;font-family:'DM Serif Display',serif;font-size:13px;font-style:italic;padding:12px 24px;border-radius:40px;opacity:0;transition:opacity .4s,transform .4s;pointer-events:none;z-index:500;white-space:nowrap;max-width:90vw;text-align:center}
+.error-toast{position:fixed;top:32px;left:50%;transform:translateX(-50%) translateY(-12px);background:#1a1a1a;color:#fff;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:400;line-height:1.5;padding:14px 24px 14px 20px;border-radius:12px;border-left:4px solid #e05540;opacity:0;transition:opacity .35s,transform .35s;pointer-events:none;z-index:9999;max-width:min(420px,90vw);text-align:left;box-shadow:0 8px 32px rgba(0,0,0,.25);display:flex;align-items:flex-start;gap:10px}
+.error-toast::before{content:"⚠";font-size:16px;color:#e05540;flex-shrink:0;margin-top:1px}
+.error-toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 .curiosity-toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 
 /* RANDOM WONDER */
@@ -792,7 +794,7 @@ footer{border-top:1px solid var(--border);padding:28px 0;display:flex;align-item
 [data-theme="amber"] .img-section-label{color:var(--secondary)}
 [data-theme="amber"] .img-picker-btn{color:var(--secondary);background:rgba(0,0,0,.15);border-color:transparent}
 [data-theme="amber"] .img-picker-btn:hover{background:rgba(0,0,0,.25);color:var(--text)}
-[data-theme="amber"] .img-picker-btn.active{background:var(--accent);border-color:var(--secondary);color:var(--accent-text)}
+[data-theme="amber"] .img-picker-btn.active{background:transparent;border-color:var(--secondary);color:var(--text);box-shadow:inset 0 0 0 1px var(--secondary)}
 [data-theme="amber"] .img-dl-btn{background:var(--accent);color:var(--accent-text)}
 [data-theme="amber"] .img-dl-btn:hover{background:var(--accent);filter:brightness(1.3)}
 [data-theme="amber"] .img-close-btn{background:rgba(0,0,0,.2);color:var(--secondary);border:none}
@@ -831,6 +833,30 @@ button:focus-visible,a:focus-visible{outline:2px solid var(--secondary);outline-
 .mood-chip:focus-visible{outline:2px solid var(--text);outline-offset:2px}
 .card:focus-within{box-shadow:0 0 0 2px var(--secondary)}
 
+
+/* ── Accessibility: reduced motion ──────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+  }
+}
+/* ── Print styles ────────────────────────────────────── */
+@media print {
+  nav, .gen-row, .error-msg, .toolbar, .load-more-btn,
+  .share-bar, .sidebar, footer, .curiosity-toast, .error-toast,
+  #authArea, .mood-chips-wrap { display: none !important; }
+  body { background: #fff !important; color: #111 !important; }
+  .card { break-inside: avoid; border: 1px solid #ddd !important;
+    background: #fff !important; color: #111 !important; box-shadow: none !important; }
+  .card-title-en, .card-content { color: #111 !important; }
+  .card-insight { color: #444 !important; }
+  .card-source { color: #666 !important; }
+  .hero { padding: 16px 0 !important; }
+  .page { grid-template-columns: 1fr !important; }
+  .main-col { grid-column: 1 !important; }
+}
 </style>
 <script defer src="https://cdn.vercel-insights.com/v1/script.js"></script>
 <!-- Google tag (gtag.js) -->
@@ -1397,6 +1423,7 @@ async function generate() {
   btn.disabled = true; btn.textContent = 'Generating...';
   loader.classList.add('show');
   document.getElementById('errorMsg').textContent = '';
+  const et=document.getElementById('errorToast'); if(et){et.classList.remove('show');}
   try {
     const controller = new AbortController();
     const timeoutId  = setTimeout(() => controller.abort(), API_TIMEOUT_MS);
@@ -1443,8 +1470,15 @@ function showToast(msg, duration=4000) {
   setTimeout(() => t.classList.remove('show'), duration);
 }
 function showError(msg, useToast=false) {
-  if (useToast) { showToast(msg); }
-  else { document.getElementById('errorMsg').textContent = msg; }
+  const t = document.getElementById('errorToast');
+  if (!t) return;
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(window._errorToastTimer);
+  window._errorToastTimer = setTimeout(() => t.classList.remove('show'), 5000);
+  // also clear inline just in case
+  const inline = document.getElementById('errorMsg');
+  if (inline) inline.textContent = '';
   document.getElementById('loading').classList.remove('show');
   document.getElementById('genBtn').disabled = false;
   document.getElementById('genBtn').textContent = 'Generate';
@@ -2809,6 +2843,7 @@ function toggleSummaryStar(btn, idx) {
 
 <!-- Toast -->
 <div class="curiosity-toast" id="curiosityToast"></div>
+<div class="error-toast" id="errorToast"></div>
 
 
 <!-- Flappy Bird -->
