@@ -4,15 +4,15 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="referrer" content="no-referrer">
-<title>Curiosity Box</title>
-<meta name="description" content="Five things worth knowing. Surprising, sharp, and a little wicked — one curiosity box per day.">
-<meta property="og:title" content="Curiosity Box">
-<meta property="og:description" content="Five things worth knowing. Surprising, sharp, and a little wicked — one curiosity box per day.">
+<title>knowing.</title>
+<meta name="description" content="Five things worth knowing. Surprising, sharp, and a little wicked — ">
+<meta property="og:title" content="knowing。">
+<meta property="og:description" content="Five things worth knowing. Surprising, sharp, and a little wicked — ">
 <meta property="og:image" content="https://curiositybox.vercel.app/og-image.png">
 <meta property="og:url" content="https://curiositybox.vercel.app">
 <meta property="og:type" content="website">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Curiosity Box">
+<meta name="twitter:title" content="knowing。">
 <meta name="twitter:description" content="Five things worth knowing. Surprising, sharp, and a little wicked.">
 <meta name="twitter:image" content="https://curiositybox.vercel.app/og-image.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -145,7 +145,7 @@ nav::before{content:'';position:fixed;top:0;left:0;right:0;height:2px;background
 .t-label-sm{font-family:'DM Sans',sans-serif;font-size:11px;font-weight:500;letter-spacing:2.5px;text-transform:uppercase}
 .t-body-sm {font-family:'DM Sans',sans-serif;font-size:12px;font-weight:300;letter-spacing:0px}
 .t-caption  {font-family:'DM Sans',sans-serif;font-size:11px;font-weight:300;letter-spacing:.2px}
-.nav-logo{font-family:'DM Serif Display',serif;font-size:1rem;color:var(--text)}
+.nav-logo{font-family:'DM Sans',sans-serif;font-size:11px;font-weight:500;letter-spacing:1.5px;text-transform:uppercase;color:var(--secondary)}
 .nav-link{font-size:12px;color:var(--tertiary);background:none;border:none;cursor:pointer;letter-spacing:.5px;transition:color .15s;display:none;font-family:'DM Sans',sans-serif}
 .nav-link:hover{color:var(--text)}.nav-link.danger:hover{color:#c0392b}.nav-link.show{display:inline}
 .hero{display:grid;grid-template-columns:1fr 1fr;padding:64px 0 56px;border-bottom:1px solid var(--border);align-items:end}
@@ -361,7 +361,23 @@ nav::before{content:'';position:fixed;top:0;left:0;right:0;height:2px;background
 .refresh-btn.spinning{transform:rotate(360deg)}
 .footer-disclaimer{font-size:13px;font-weight:300;color:var(--secondary);text-align:center;margin-top:24px;margin-bottom:16px;line-height:1.8;font-style:italic;letter-spacing:.2px;max-width:600px;margin-left:auto;margin-right:auto;opacity:.8}
 .empty-state{text-align:center;padding:72px 0 96px;color:var(--tertiary);font-size:13px;line-height:2}
-.empty-state-icon{font-size:32px;display:block;margin-bottom:16px;opacity:.4;filter:grayscale(1)}
+.empty-state-dot{
+  font-family:'DM Serif Display',serif;
+  font-size:6rem;line-height:1;
+  display:block;margin-bottom:12px;
+  color:var(--border);
+  -webkit-text-fill-color:var(--border);
+}
+.empty-knowing{
+  font-family:'DM Serif Display',serif;
+  font-style:italic;
+  background:var(--grad);
+  background-size:200% 100%;
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  background-clip:text;
+  animation:rainbowFlow 12s linear infinite;
+}
 .empty-state-title{font-family:'DM Serif Display',serif;font-size:1.1rem;color:var(--secondary);display:block;margin-bottom:8px}
 .empty-state-sub{font-size:13px;color:var(--tertiary);display:block}
 footer{border-top:none;padding:28px 0;display:flex;align-items:center;justify-content:space-between;margin-top:40px;position:relative}
@@ -681,6 +697,11 @@ button:focus-visible,a:focus-visible{outline:2px solid var(--secondary);outline-
 }
 .dot-span.brand{
   font-size:.82em;vertical-align:.04em;margin-left:.02em;
+  background:var(--grad);background-size:200% 100%;
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  background-clip:text;
+  animation:rainbowFlow 12s linear infinite;
+  font-style:italic;
 }
 .hero-sub{
   font-size:14px;color:var(--secondary);line-height:1.75;
@@ -1226,12 +1247,97 @@ button:focus-visible,a:focus-visible{outline:2px solid var(--secondary);outline-
 .knowing-dot{
   opacity:0;
   font-family:'DM Serif Display',serif;
-  font-style:normal;
+  font-style:italic;
   font-size:.82em;
   vertical-align:.04em;
   margin-left:.02em;
-  color:var(--text);
-  -webkit-text-fill-color:var(--text);
+  background:var(--grad);
+  background-size:200% 100%;
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  background-clip:text;
+  animation:rainbowFlow 12s linear infinite;
+}
+
+/* ── Save as image — mobile ─────────────────────────── */
+@media(max-width:600px){
+  #imgPickerModal .img-modal{
+    padding:12px 10px 0;
+    display:flex;flex-direction:column;
+    max-height:92vh;
+  }
+  #imgPickerModal .img-modal > *{flex-shrink:0}
+  .img-picker-scroll{
+    flex:1;overflow-y:auto;min-height:0;
+    padding-bottom:8px;
+  }
+  #imgPickerModal .img-picker-grid{gap:5px}
+  #imgPickerModal .img-picker-btn{padding:8px 6px;font-size:11px;gap:5px}
+  #imgPickerModal .picker-swatch{width:14px;height:14px;min-width:14px}
+  .img-canvas-wrap{
+    max-height:32vh !important;
+    overflow:hidden;
+  }
+  .img-canvas-wrap canvas{
+    max-height:32vh;
+    width:auto !important;
+    max-width:100%;
+    display:block;margin:0 auto;
+  }
+  .img-modal-footer{
+    position:sticky;bottom:0;
+    background:var(--card-bg);
+    padding:10px 0 14px;
+    border-top:1px solid var(--border);
+    margin-top:4px;
+  }
+  .img-picker-grid button{font-size:11px;padding:6px 4px}
+  .img-section-label{margin-top:10px;margin-bottom:6px}
+}
+
+/* ── Fun bits — mobile ──────────────────────────────── */
+@media(max-width:600px){
+  .fun-bit{padding:12px 14px}
+  .fun-bit-text{font-size:13px;line-height:1.55}
+  .sidebar-fun-bits{gap:8px}
+}
+
+/* ── Footer — mobile ────────────────────────────────── */
+@media(max-width:600px){
+  footer{margin-top:24px;padding:16px 0 10px}
+  .footer-disclaimer{padding:10px 16px 16px;font-size:10px}
+}
+
+/* ── Planet easter egg button ───────────────────────── */
+.planet-egg-btn{
+  position:fixed;bottom:24px;right:20px;
+  width:28px;height:28px;border-radius:50%;
+  background:var(--text);opacity:0.2;
+  border:none;cursor:pointer;
+  transition:opacity .2s,transform .2s;
+  z-index:9999;padding:0;
+}
+.planet-egg-btn:hover{opacity:0.45;transform:scale(1.15)}
+.planet-egg-toast{
+  position:fixed;bottom:64px;right:16px;
+  background:var(--card-bg);color:var(--text);
+  border:1px solid var(--border);
+  border-radius:12px;padding:14px 18px;
+  font-family:'DM Sans',sans-serif;
+  font-size:14px;font-weight:400;
+  box-shadow:0 4px 24px rgba(0,0,0,.12);
+  z-index:10000;
+  opacity:0;transform:translateY(8px);
+  transition:opacity .3s ease,transform .3s ease;
+  pointer-events:none;max-width:220px;
+  text-align:center;line-height:1.6;
+}
+.planet-egg-toast.show{opacity:1;transform:translateY(0);pointer-events:auto}
+.planet-egg-link{
+  display:block;margin-top:10px;
+  font-size:12px;color:var(--secondary);
+  cursor:pointer;text-decoration:underline;
+  text-underline-offset:2px;
 }
 </style>
 <script defer src="https://cdn.vercel-insights.com/v1/script.js"></script>
@@ -1261,7 +1367,7 @@ button:focus-visible,a:focus-visible{outline:2px solid var(--secondary);outline-
 <body>
 <div class="page">
 <nav>
-  <span class="nav-logo">Curiosity Box</span>
+  <span class="nav-logo" id="navDate"></span>
   <div style="display:flex;align-items:center;gap:14px">
     <div id="todayDate" style="font-family:'DM Sans',sans-serif;font-size:9px;font-weight:500;letter-spacing:2px;text-transform:uppercase;color:var(--secondary);white-space:nowrap"></div>
     <div id="themeSwitcher" style="display:flex;gap:5px;align-items:center;">
@@ -1301,7 +1407,7 @@ button:focus-visible,a:focus-visible{outline:2px solid var(--secondary);outline-
       <input type="password" class="password-input" id="passwordInput"
         placeholder="Password" maxlength="64" autocomplete="new-password"
         onkeydown="if(event.key==='Enter') generate()"/>
-      <button class="gen-btn" id="genBtn" onclick="generate()" aria-label="Generate curiosity box">Generate</button>
+      <button class="gen-btn" id="genBtn" onclick="generate()" aria-label="Generate your wonders">Generate</button>
     </div>
     <div class="error-msg" id="errorMsg"></div>
     <div id="authArea" style="margin-top:10px;min-height:32px;position:relative">
@@ -1317,7 +1423,7 @@ button:focus-visible,a:focus-visible{outline:2px solid var(--secondary);outline-
   </div>
 </div>
 
-<div class="loading" id="loading" role="status" aria-live="polite" aria-label="Generating your curiosity box">
+<div class="loading" id="loading" role="status" aria-live="polite" aria-label="Generating your wonders">
   <div class="loading-track"></div>
   <p class="loading-label">Collecting wonders</p>
 </div>
@@ -1352,9 +1458,9 @@ button:focus-visible,a:focus-visible{outline:2px solid var(--secondary);outline-
     </div>
     <div id="archive"></div>
     <div class="empty-state" id="emptyState" role="status">
-      <span class="empty-state-icon" aria-hidden="true">📭</span>
-      <span class="empty-state-title">Nothing here yet</span>
-      <span class="empty-state-sub">Choose a mood above and hit Generate<br>to start your first Curiosity Box.</span>
+      <span class="empty-state-dot" aria-hidden="true">。</span>
+      <span class="empty-state-title">Nothing here yet.</span>
+      <span class="empty-state-sub">Choose a mood above and hit Generate<br>to start <span class="empty-knowing">knowing。</span></span>
     </div>
   </div>
 
@@ -1487,7 +1593,7 @@ button:focus-visible,a:focus-visible{outline:2px solid var(--secondary);outline-
   <span class="footer-r">Made with curiosity</span>
 </footer>
 <div class="footer-disclaimer">
-  Knowledge dispersed at random velocity. Accuracy not guaranteed. Side effects may include unexpected dinner conversation topics, compulsive Googling, and a mild superiority complex. The Little Bird accepts no liability for facts retained.
+  Knowledge dispersed at random velocity. Accuracy not guaranteed. Side effects may include unexpected dinner conversation topics, compulsive Googling, and a mild superiority complex.<br>The Little Bird accepts no liability for facts retained.
 </div>
 </div>
 
@@ -1535,6 +1641,7 @@ button:focus-visible,a:focus-visible{outline:2px solid var(--secondary);outline-
   <div class="img-modal">
     <div style="font-family:'DM Serif Display',serif;font-size:1.1rem;margin-bottom:4px">Save as image</div>
     <div style="font-size:12px;color:#999;margin-bottom:20px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis" id="imgPickerTitle"></div>
+    <div class="img-picker-scroll">
     <div class="img-section-label">Style</div>
     <div class="img-picker-grid" id="styleGrid" style="grid-template-columns:1fr 1fr 1fr 1fr;gap:6px;margin-bottom:4px">
       <button class="img-picker-btn active" onclick="selectOpt(this,'style','category')"><span class="picker-swatch" id="swatchCategory"></span> Category</button>
@@ -1559,6 +1666,8 @@ button:focus-visible,a:focus-visible{outline:2px solid var(--secondary);outline-
     </div>
     <canvas id="imgCanvas" style="display:none"></canvas>
     <img id="imgPreview" style="width:100%;border-radius:10px;box-shadow:0 4px 20px rgba(0,0,0,.12);display:block;margin-bottom:8px" alt="Curiosity Card">
+    </div><!-- /img-picker-scroll -->
+    <div class="img-modal-footer">
     <div style="font-size:10px;color:#bbb;text-align:center;margin-bottom:12px" id="imgSaveHint">
       <span class="desktop-hint">Click to download</span>
       <span class="mobile-hint" style="display:none">Long press image to save to Photos</span>
@@ -1567,6 +1676,7 @@ button:focus-visible,a:focus-visible{outline:2px solid var(--secondary);outline-
       <button class="img-dl-btn" onclick="downloadCanvas()">Save</button>
       <button class="img-close-btn" onclick="closeModal('imgPickerModal')">Close</button>
     </div>
+    </div><!-- /img-modal-footer -->
   </div>
 </div>
 
@@ -2048,7 +2158,7 @@ function switchLang(btn, lang, uid) {
 let _shareText = '';
 function openShareModal(item) {
   const title = item.title_en;
-  _shareText = (item.emoji||'') + ' ' + title + '\n\n' + item.content_en + '\n\n' + item.insight_en + '\n\n— Curiosity Box';
+  _shareText = (item.emoji||'') + ' ' + title + '\n\n' + item.content_en + '\n\n' + item.insight_en + '\n\n— knowing。';
   const encoded = encodeURIComponent(_shareText);
   const encodedUrl = encodeURIComponent('https://nicole-curiosity.vercel.app');
   document.getElementById('shareModalSub').textContent = '"' + title + '"';
@@ -2399,9 +2509,10 @@ function renderCanvas() {
   ctx.fillStyle=s.sub;
   const footFont = isZh ? (s.zhBodyFont||'PingFang SC, sans-serif') : (s.bodyFont||'DM Sans, sans-serif');
   ctx.font='300 '+footSize+'px '+footFont;
-  ctx.fillStyle = s.text||s.sub;
   ctx.globalAlpha=0.55;
-  ctx.fillText('Curiosity Box', pad, footY+footSize);
+  ctx.font='italic '+footSize+'px \'DM Serif Display\', Georgia, serif';
+  ctx.fillStyle = s.text||s.sub;
+  ctx.fillText('knowing。', pad, footY+footSize);
   ctx.textAlign='right'; ctx.fillText('The Little Bird', W-pad, footY+footSize);
   ctx.textAlign='left'; ctx.globalAlpha=1;
 
@@ -2797,11 +2908,13 @@ initAuth();
 
 function initTodayDate() {
   const el = document.getElementById('todayDate');
+  const navEl = document.getElementById('navDate');
   if (!el) return;
   const now = new Date();
   const days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
   const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
   el.textContent = 'Today is ' + days[now.getDay()] + ', ' + months[now.getMonth()] + ' ' + now.getDate();
+  if (navEl) navEl.textContent = days[now.getDay()] + ', ' + months[now.getMonth()] + ' ' + now.getDate();
 }
 
 function toggleSettingsMenu() {
@@ -3286,8 +3399,11 @@ function toggleSummaryStar(btn, idx) {
   else window._pendingStars.add(idx);
 }
 </script>
-<div class="creature-wrap"><div class="creature" id="creature" title=""></div></div>
-<button id="flappyBtn" onclick="openFlappy()" title="Play Flappy Bird" style="position:fixed;bottom:20px;right:48px;background:none;border:none;cursor:pointer;font-size:18px;opacity:0.22;transition:opacity .2s;z-index:200;line-height:1;padding:4px;display:none !important" onmouseover="this.style.opacity=.7" onmouseout="this.style.opacity=.22">&#128038;</button>
+<button class="planet-egg-btn" id="planetEggBtn" onclick="showPlanetEgg()" title="..."></button>
+<div class="planet-egg-toast" id="planetEggToast">
+  你不需要点这里。
+  <span class="planet-egg-link" onclick="openFlappy();hidePlanetEgg()">……还是来玩个游戏吧</span>
+</div>
 
 <!-- Auth modal -->
 <div id="authModal" onclick="if(event.target===this)closeAuthModal()" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:1200;align-items:center;justify-content:center;backdrop-filter:blur(4px);">
