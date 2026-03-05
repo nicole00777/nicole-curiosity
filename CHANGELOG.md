@@ -1,4 +1,48 @@
-# Changelog — Curiosity Box
+# Changelog — knowing。
+
+---
+
+## [2.0] 2026-03-04 — Rebrand & Feature Expansion
+
+### Brand
+- Product renamed from **Curiosity Box** to **knowing。** (Chinese period signature)
+- Typewriter animation on hero: types out brand name with multi-phase reveal
+- Gradient `knowing。` signature used throughout: share images, PDF export, empty state
+- OG image updated: "Five things worth knowing。" large serif layout, 1200×630px
+
+### Export
+- **Export archive** now generates both JSON backup and a designed PDF simultaneously
+- PDF cover: large gradient `knowing。` in DM Serif Display italic, stats block (wonders / sessions / starred), knowledge diet bar chart
+- PDF content pages: category color accent bar, title, body, insight, source per item; starred items marked ★
+- PDF header rule + footer: `knowing。` left-aligned, page number right-aligned
+- JSON export unchanged; import merges without duplicates
+
+### Generate Button
+- Hover: button background becomes flowing rainbow gradient (1.5s loop)
+- Idle: subtle rainbow glow pulse retained
+
+### Empty State
+- Removed decorative circle icon; empty state starts directly with "Nothing here yet."
+
+### Easter Egg
+- Planet egg toast updated to English: "You weren't supposed to find this. Fine! Wanna play a game?"
+- "game?" is inline hyperlink to Flappy Bird
+- `showPlanetEgg()` and `hidePlanetEgg()` functions added (were previously missing)
+
+### Password Input
+- Switched to `type="password"` (shows ****) with `autocomplete="off"`, random `name` attribute, and `readonly` + `onfocus` trick to block browser autofill suggestions
+
+### Mobile Fixes
+- Save image modal: removed sticky background color block behind Save/Close buttons
+- All modals (save image, detail, summary, share, wonder overlay, Flappy Bird): body scroll locks on open and unlocks on close — prevents touch events bleeding through to background page
+- All modals: added `-webkit-overflow-scrolling: touch` and `overscroll-behavior: contain` for smooth iOS internal scrolling
+- Top nav date font size reduced to 9px on mobile to match Archive label
+
+### Share Image
+- Watermark: "The Little Bird" removed; `knowing。` moved to right-aligned only
+
+### OG Image
+- `og-image.png` cropped to 1200×630 with linen background padding (no text clipped)
 
 ---
 
