@@ -1358,6 +1358,9 @@ button:focus-visible,a:focus-visible{outline:2px solid var(--secondary);outline-
     <div style="position:relative">
       <button id="settingsBtn" aria-label="Settings menu" aria-haspopup="true" onclick="toggleSettingsMenu()" title="Settings" style="background:none;border:none;cursor:pointer;color:var(--tertiary);font-size:16px;line-height:1;padding:4px 6px;transition:color .15s;display:flex;align-items:center;" onmouseover="this.style.color='var(--text)'" onmouseout="this.style.color='var(--tertiary)'">&#8943;</button>
       <div id="settingsMenu" style="display:none;position:absolute;right:0;top:calc(100% + 8px);background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:6px;min-width:160px;box-shadow:0 8px 24px rgba(0,0,0,.12);z-index:200;">
+        <button class="nav-link" onclick="exportArchive();toggleSettingsMenu()" style="display:block;width:100%;text-align:left;padding:8px 12px;border-radius:6px;font-size:12px;letter-spacing:.3px;color:var(--secondary);transition:background .15s;" onmouseover="this.style.background='var(--border)'" onmouseout="this.style.background='none'">Export archive</button>
+        <label style="display:block;width:100%;text-align:left;padding:8px 12px;border-radius:6px;font-size:12px;letter-spacing:.3px;color:var(--secondary);cursor:pointer;transition:background .15s;box-sizing:border-box;" onmouseover="this.style.background='var(--border)'" onmouseout="this.style.background='none'">Import archive<input type="file" accept=".json" onchange="importArchive(event);toggleSettingsMenu()" style="display:none"></label>
+        <div style="height:1px;background:var(--border);margin:4px 0"></div>
         <button class="nav-link danger" id="clearBtn" onclick="clearAll();toggleSettingsMenu()" style="display:block;width:100%;text-align:left;padding:8px 12px;border-radius:6px;font-size:12px;letter-spacing:.3px;color:#c0392b;transition:background .15s;" onmouseover="this.style.background='var(--border)'" onmouseout="this.style.background='none'">Clear history</button>
       </div>
     </div>
@@ -3327,6 +3330,259 @@ function initFlappy() {
   canvas._keyHandler && document.removeEventListener('keydown', canvas._keyHandler);
   canvas._keyHandler = keyHandler;
   loop();
+}
+
+function exportArchive() {
+  const batches = loadBatches();
+  const stars = getStars();
+
+  // ── JSON export ──────────────────────────────────────
+  const payload = { version: 1, exportedAt: new Date().toISOString(), batches, stars };
+  const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'knowing-archive-' + new Date().toISOString().slice(0,10) + '.json';
+  a.click();
+  URL.revokeObjectURL(a.href);
+
+  // ── PDF export ───────────────────────────────────────
+  if (!batches.length) { showToast('Archive exported.'); return; }
+
+  // Load jsPDF dynamically
+  if (!window.jspdf) {
+    const s = document.createElement('script');
+    s.src = 'https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js';
+    s.onload = () => _generatePDF(batches, stars);
+    document.head.appendChild(s);
+  } else {
+    _generatePDF(batches, stars);
+  }
+  showToast('Exporting archive…');
+}
+
+function _generatePDF(batches, stars) {
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF({ unit: 'mm', format: 'a4', orientation: 'portrait' });
+  const W = 210, H = 297;
+  const ML = 22, MR = 22, MT = 28, MB = 24;
+  const CW = W - ML - MR;
+  const dateStr = new Date().toLocaleDateString('en-GB', { year:'numeric', month:'long', day:'numeric' });
+  const totalItems = batches.reduce((n, b) => n + (b.items||[]).length, 0);
+
+  const C = {
+    ink:    [17,  17,  17 ],
+    mid:    [85,  85,  85 ],
+    light:  [144, 144, 144],
+    rule:   [220, 219, 214],
+    bg:     [245, 244, 240],
+    accent: [91,  141, 181],
+    Psychology:[107,143,168], History:[160,120,80], Nature:[95,140,110],
+    Culture:[138,111,168], Philosophy:[74,122,155], Language:[176,128,64],
+    Food:[184,104,72], Art:[144,96,160], Science:[58,112,144], Folklore:[112,128,80],
+  };
+
+  function rgb(col) { return { r: col[0], g: col[1], b: col[2] }; }
+  function setFill(col) { doc.setFillColor(...col); }
+  function setDraw(col) { doc.setDrawColor(...col); }
+  function setTxt(col)  { doc.setTextColor(...col); }
+
+  function rule(y, col, lw=0.25) {
+    setDraw(col||C.rule); doc.setLineWidth(lw);
+    doc.line(ML, y, W-MR, y);
+  }
+
+  function addPage() {
+    doc.addPage();
+    // header rule
+    setDraw(C.rule); doc.setLineWidth(0.25);
+    doc.line(ML, 14, W-MR, 14);
+    // footer
+    setTxt(C.light); doc.setFontSize(7);
+    doc.setFont('helvetica','normal');
+    doc.text('knowing。', ML, H-10);
+    doc.text(String(doc.internal.getCurrentPageInfo().pageNumber), W-MR, H-10, {align:'right'});
+    rule(H-14, C.rule);
+  }
+
+  // ── COVER PAGE ────────────────────────────────────────
+  // top accent bar
+  setFill(C.ink); doc.rect(0, 0, W, 8, 'F');
+
+  // title block
+  let y = 60;
+  setTxt(C.light); doc.setFontSize(8); doc.setFont('helvetica','normal');
+  doc.text('ANNUAL ARCHIVE', ML, y);
+  y += 14;
+
+  setTxt(C.ink); doc.setFontSize(38); doc.setFont('helvetica','bold');
+  doc.text('knowing。', ML, y);
+  y += 8;
+
+  rule(y + 4, C.ink, 0.5); y += 16;
+
+  setTxt(C.mid); doc.setFontSize(11); doc.setFont('helvetica','normal');
+  doc.text('A collection of things worth knowing.', ML, y);
+  y += 22;
+
+  // stats block
+  setFill(C.bg); doc.roundedRect(ML, y, CW, 36, 2, 2, 'F');
+  const cols3 = [ML+14, ML + CW/3 + 10, ML + (CW/3)*2 + 6];
+  const stats = [
+    [String(totalItems), 'wonders collected'],
+    [String(batches.length), 'sessions'],
+    [String(stars.length), 'starred'],
+  ];
+  stats.forEach(([val, label], i) => {
+    setTxt(C.ink); doc.setFontSize(22); doc.setFont('helvetica','bold');
+    doc.text(val, cols3[i], y + 16);
+    setTxt(C.light); doc.setFontSize(7.5); doc.setFont('helvetica','normal');
+    doc.text(label.toUpperCase(), cols3[i], y + 23);
+  });
+  y += 50;
+
+  // category breakdown
+  const catCounts = {};
+  batches.forEach(b => (b.items||[]).forEach(item => {
+    catCounts[item.category] = (catCounts[item.category]||0) + 1;
+  }));
+  const sorted = Object.entries(catCounts).sort((a,b)=>b[1]-a[1]);
+  const maxC = sorted[0]?.[1] || 1;
+
+  setTxt(C.light); doc.setFontSize(7.5); doc.setFont('helvetica','bold');
+  doc.text('KNOWLEDGE DIET', ML, y); y += 7;
+
+  sorted.forEach(([cat, count]) => {
+    const col = C[cat] || C.mid;
+    const barW = (count / maxC) * (CW - 44);
+    setFill(col); doc.rect(ML, y - 2.5, barW + 2, 4, 'F');
+    setTxt(col); doc.setFontSize(7); doc.setFont('helvetica','bold');
+    doc.text(cat.toUpperCase(), ML + barW + 5, y + 0.5);
+    setTxt(C.light); doc.setFont('helvetica','normal');
+    doc.text(String(count), W-MR, y + 0.5, {align:'right'});
+    y += 8;
+  });
+
+  y += 8; rule(y, C.rule); y += 12;
+  setTxt(C.light); doc.setFontSize(8); doc.setFont('helvetica','normal');
+  doc.text('Exported ' + dateStr, ML, y);
+  doc.text('curiositybox.vercel.app', W-MR, y, {align:'right'});
+
+  // bottom bar
+  setFill(C.ink); doc.rect(0, H-8, W, 8, 'F');
+
+  // ── CONTENT PAGES ─────────────────────────────────────
+  addPage();
+  y = MT;
+
+  batches.forEach((batch, bi) => {
+    const items = batch.items || [];
+    if (!items.length) return;
+
+    // ── batch header ──
+    if (y > H - MB - 40) { addPage(); y = MT; }
+
+    const bDate = batch.date || new Date(batch.savedAt||Date.now()).toLocaleDateString('en-GB',{year:'numeric',month:'long',day:'numeric'});
+    const moodLabel = (batch.mood && batch.mood !== 'any') ? ' · ' + batch.mood : '';
+
+    setFill(C.bg); doc.rect(ML, y-4, CW, 12, 'F');
+    setTxt(C.light); doc.setFontSize(7); doc.setFont('helvetica','bold');
+    doc.text((bDate + moodLabel).toUpperCase(), ML+4, y+3);
+    setTxt(C.light); doc.setFont('helvetica','normal');
+    doc.text(items.length + ' wonders', W-MR-4, y+3, {align:'right'});
+    y += 16;
+
+    items.forEach((item, ii) => {
+      const catCol = C[item.category] || C.mid;
+      const uid = 'c'+String(batch.id)+'_'+ii;
+      const isStarred = stars.includes(uid);
+      const estimatedH = 52 + Math.ceil((item.content_en||'').length / 90) * 5;
+
+      if (y + estimatedH > H - MB) { addPage(); y = MT; }
+
+      // cat accent bar
+      setFill(catCol); doc.rect(ML, y, 2, 28, 'F');
+
+      // index + star
+      setTxt(C.light); doc.setFontSize(7); doc.setFont('helvetica','normal');
+      doc.text(String(ii+1).padStart(2,'0'), ML+5, y+5);
+      if (isStarred) { setTxt([192,152,64]); doc.text('★', ML+5, y+11); }
+
+      // category
+      setTxt(catCol); doc.setFontSize(6.5); doc.setFont('helvetica','bold');
+      doc.text((item.category||'').toUpperCase(), ML+14, y+5);
+
+      // title
+      setTxt(C.ink); doc.setFontSize(12); doc.setFont('helvetica','bold');
+      const titleLines = doc.splitTextToSize(item.title_en||'', CW-14);
+      doc.text(titleLines, ML+14, y+12);
+      y += 12 + titleLines.length * 6;
+
+      // content
+      setTxt(C.mid); doc.setFontSize(8.5); doc.setFont('helvetica','normal');
+      const bodyLines = doc.splitTextToSize(item.content_en||'', CW-14);
+      if (y + bodyLines.length*5 > H-MB) { addPage(); y = MT; }
+      doc.text(bodyLines, ML+14, y);
+      y += bodyLines.length * 5 + 4;
+
+      // insight
+      if (item.insight_en) {
+        if (y + 10 > H-MB) { addPage(); y = MT; }
+        setTxt(C.light); doc.setFontSize(7.5); doc.setFont('helvetica','italic');
+        const insLines = doc.splitTextToSize('" ' + item.insight_en + ' "', CW-18);
+        doc.text(insLines, ML+14, y);
+        y += insLines.length * 4.5 + 3;
+      }
+
+      // source
+      if (item.source || item.source_name) {
+        setTxt(C.light); doc.setFontSize(7); doc.setFont('helvetica','normal');
+        doc.text('— ' + (item.source||item.source_name), ML+14, y);
+        y += 5;
+      }
+
+      rule(y+2, C.rule); y += 10;
+    });
+
+    y += 4;
+  });
+
+  doc.save('knowing-archive-' + new Date().toISOString().slice(0,10) + '.pdf');
+}
+
+
+function importArchive(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    try {
+      const payload = JSON.parse(e.target.result);
+      const incoming = payload.batches || (Array.isArray(payload) ? payload : []);
+      const existing = loadBatches();
+      const existingIds = new Set(existing.map(b => String(b.id)));
+      const merged = [...existing];
+      let added = 0;
+      for (const b of incoming) {
+        if (!existingIds.has(String(b.id))) { merged.push(b); added++; }
+      }
+      merged.sort((a,b) => (b.savedAt||b.id) - (a.savedAt||a.id));
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(merged.slice(0, MAX_BATCHES)));
+      // merge stars
+      if (payload.stars && payload.stars.length) {
+        const existingStars = loadStars();
+        const mergedStars = [...new Set([...existingStars, ...payload.stars])];
+        saveStars(mergedStars);
+      }
+      _showCount = PAGE_SIZE;
+      renderArchive();
+      updatePlanet();
+      showToast('Imported ' + added + ' new batch' + (added !== 1 ? 'es' : '') + '.');
+    } catch(err) {
+      showToast('Import failed — invalid file.');
+    }
+  };
+  reader.readAsText(file);
+  event.target.value = '';
 }
 
 function showPlanetEgg() {
