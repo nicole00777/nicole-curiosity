@@ -2493,8 +2493,7 @@ function renderCanvas() {
   ctx.globalAlpha=0.55;
   ctx.font='italic '+footSize+'px \'DM Serif Display\', Georgia, serif';
   ctx.fillStyle = s.text||s.sub;
-  ctx.fillText('knowing。', pad, footY+footSize);
-  ctx.textAlign='right'; ctx.fillText('The Little Bird', W-pad, footY+footSize);
+  ctx.textAlign='right'; ctx.fillText('knowing。', W-pad, footY+footSize);
   ctx.textAlign='left'; ctx.globalAlpha=1;
 
   const preview = document.getElementById('imgPreview');
@@ -3328,6 +3327,18 @@ function initFlappy() {
   canvas._keyHandler && document.removeEventListener('keydown', canvas._keyHandler);
   canvas._keyHandler = keyHandler;
   loop();
+}
+
+function showPlanetEgg() {
+  const toast = document.getElementById('planetEggToast');
+  if (!toast) return;
+  toast.classList.add('show');
+  clearTimeout(window._eggTimer);
+  window._eggTimer = setTimeout(() => toast.classList.remove('show'), 4000);
+}
+function hidePlanetEgg() {
+  const toast = document.getElementById('planetEggToast');
+  if (toast) toast.classList.remove('show');
 }
 
 function setTheme(theme, auto=false) {
