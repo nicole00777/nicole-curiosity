@@ -1383,8 +1383,10 @@ button:focus-visible,a:focus-visible{outline:2px solid var(--secondary);outline-
     </div>
     <div class="gen-row">
       <!-- FIX 1: new-password prevents iOS saved-password autocomplete sheet -->
-      <input type="password" class="password-input" id="passwordInput"
-        placeholder="Password" maxlength="64" autocomplete="new-password"
+      <input type="text" class="password-input" id="passwordInput"
+        placeholder="Password" maxlength="64"
+        autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"
+        name="ncb_x7z9" readonly onfocus="this.removeAttribute('readonly')"
         onkeydown="if(event.key==='Enter') generate()"/>
       <button class="gen-btn" id="genBtn" onclick="generate()" aria-label="Generate your wonders">Generate</button>
     </div>
