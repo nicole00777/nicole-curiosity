@@ -3360,7 +3360,62 @@ function exportArchive() {
   showToast('Exporting archive…');
 }
 
-function _generatePDF(batches, stars) {
+async function _getOgImageBase64() {
+  return new Promise(resolve => {
+    const img = new window.Image();
+    img.crossOrigin = 'anonymous';
+    img.onload = () => {
+      const cv = document.createElement('canvas');
+      cv.width = img.naturalWidth; cv.height = img.naturalHeight;
+      cv.getContext('2d').drawImage(img, 0, 0);
+      try { resolve(cv.toDataURL('image/png')); } catch(e) { resolve(null); }
+    };
+    img.onerror = () => resolve(null);
+    // try og-image from same origin, fallback to template canvas render
+    img.src = '/og-image.png?' + Date.now();
+  });
+}
+
+async function _makeKnowingCanvas(sizePx, align='left', targetWidthPx=null) {
+  // Render "knowing。" in DM Serif Display italic with brand gradient using canvas
+  const GRAD = ['#5b8db5','#4a9e6a','#c07840','#8a6ab8','#c45a5a'];
+  const text = 'knowing。';
+  const cv = document.createElement('canvas');
+  const dpr = 2;
+  const tmpCtx = document.createElement('canvas').getContext('2d');
+  tmpCtx.font = `italic ${sizePx}px "DM Serif Display", Georgia, serif`;
+  const totalW = tmpCtx.measureText(text).width;
+  const H2 = sizePx * 1.4;
+  const W2 = targetWidthPx || (totalW + sizePx * 0.2);
+  cv.width  = W2 * dpr;
+  cv.height = H2 * dpr;
+  cv.style.width  = W2 + 'px';
+  cv.style.height = H2 + 'px';
+  const ctx = cv.getContext('2d');
+  ctx.scale(dpr, dpr);
+  ctx.font = `italic ${sizePx}px "DM Serif Display", Georgia, serif`;
+  // per-char gradient
+  let sx = align === 'right' ? W2 - totalW : align === 'center' ? (W2 - totalW)/2 : 0;
+  const baseline = sizePx * 1.1;
+  for (let i = 0; i < text.length; i++) {
+    const t = i / Math.max(text.length - 1, 1);
+    const seg = t * (GRAD.length - 1);
+    const gi = Math.min(Math.floor(seg), GRAD.length - 2);
+    const gt = seg - gi;
+    const hex2 = h => parseInt(h, 16);
+    const lerp = (a, b, t) => Math.round(a + (b - a) * t);
+    const c1 = GRAD[gi], c2 = GRAD[gi+1];
+    const r = lerp(hex2(c1.slice(1,3)), hex2(c2.slice(1,3)), gt);
+    const g = lerp(hex2(c1.slice(3,5)), hex2(c2.slice(3,5)), gt);
+    const b = lerp(hex2(c1.slice(5,7)), hex2(c2.slice(5,7)), gt);
+    ctx.fillStyle = `rgb(${r},${g},${b})`;
+    ctx.fillText(text[i], sx, baseline);
+    sx += ctx.measureText(text[i]).width;
+  }
+  return cv.toDataURL('image/png');
+}
+
+async function _generatePDF(batches, stars) {
   const { jsPDF } = window.jspdf;
   const doc = new jsPDF({ unit: 'mm', format: 'a4', orientation: 'portrait' });
   const W = 210, H = 297;
@@ -3375,70 +3430,60 @@ function _generatePDF(batches, stars) {
     light:  [144, 144, 144],
     rule:   [220, 219, 214],
     bg:     [245, 244, 240],
-    accent: [91,  141, 181],
     Psychology:[107,143,168], History:[160,120,80], Nature:[95,140,110],
     Culture:[138,111,168], Philosophy:[74,122,155], Language:[176,128,64],
     Food:[184,104,72], Art:[144,96,160], Science:[58,112,144], Folklore:[112,128,80],
   };
 
-  function rgb(col) { return { r: col[0], g: col[1], b: col[2] }; }
   function setFill(col) { doc.setFillColor(...col); }
   function setDraw(col) { doc.setDrawColor(...col); }
   function setTxt(col)  { doc.setTextColor(...col); }
-
   function rule(y, col, lw=0.25) {
     setDraw(col||C.rule); doc.setLineWidth(lw);
     doc.line(ML, y, W-MR, y);
   }
 
+  // Pre-render knowing. at two sizes
+  const DPR = 2;
+  const knowingLg = await _makeKnowingCanvas(52, 'left');   // cover header ~18mm
+  const knowingSm = await _makeKnowingCanvas(28, 'right');  // footer ~7mm
+  const lgH_mm = 13, lgW_mm = 52;
+  const smH_mm = 7,  smW_mm = 28;
+
+  function addKnowingFooter() {
+    rule(H-MB+2, C.rule);
+    // knowing。left
+    doc.addImage(knowingSm, 'PNG', ML, H-MB+2, smW_mm, smH_mm);
+    // page number right
+    setTxt(C.light); doc.setFontSize(7); doc.setFont('helvetica','normal');
+    doc.text(String(doc.internal.getCurrentPageInfo().pageNumber), W-MR, H-MB+8, {align:'right'});
+  }
+
   function addPage() {
     doc.addPage();
-    // header rule
-    setDraw(C.rule); doc.setLineWidth(0.25);
-    doc.line(ML, 14, W-MR, 14);
-    // footer
-    setTxt(C.light); doc.setFontSize(7);
-    doc.setFont('helvetica','normal');
-    doc.text('knowing。', ML, H-10);
-    doc.text(String(doc.internal.getCurrentPageInfo().pageNumber), W-MR, H-10, {align:'right'});
-    rule(H-14, C.rule);
+    rule(14, C.rule);
+    addKnowingFooter();
   }
 
   // ── COVER PAGE ────────────────────────────────────────
-  // top accent bar
-  setFill(C.ink); doc.rect(0, 0, W, 8, 'F');
+  // knowing。large, top of page
+  const coverTopY = 24;
+  doc.addImage(knowingLg, 'PNG', ML, coverTopY, lgW_mm, lgH_mm);
 
-  // title block
-  let y = 60;
-  setTxt(C.light); doc.setFontSize(8); doc.setFont('helvetica','normal');
-  doc.text('ANNUAL ARCHIVE', ML, y);
-  y += 14;
-
-  setTxt(C.ink); doc.setFontSize(38); doc.setFont('helvetica','bold');
-  doc.text('knowing。', ML, y);
-  y += 8;
-
-  rule(y + 4, C.ink, 0.5); y += 16;
-
-  setTxt(C.mid); doc.setFontSize(11); doc.setFont('helvetica','normal');
-  doc.text('A collection of things worth knowing.', ML, y);
-  y += 22;
+  let y = coverTopY + lgH_mm + 8;
+  rule(y, C.ink, 0.5); y += 12;
 
   // stats block
-  setFill(C.bg); doc.roundedRect(ML, y, CW, 36, 2, 2, 'F');
-  const cols3 = [ML+14, ML + CW/3 + 10, ML + (CW/3)*2 + 6];
-  const stats = [
-    [String(totalItems), 'wonders collected'],
-    [String(batches.length), 'sessions'],
-    [String(stars.length), 'starred'],
-  ];
-  stats.forEach(([val, label], i) => {
-    setTxt(C.ink); doc.setFontSize(22); doc.setFont('helvetica','bold');
-    doc.text(val, cols3[i], y + 16);
-    setTxt(C.light); doc.setFontSize(7.5); doc.setFont('helvetica','normal');
-    doc.text(label.toUpperCase(), cols3[i], y + 23);
-  });
-  y += 50;
+  setFill(C.bg); doc.roundedRect(ML, y, CW, 34, 2, 2, 'F');
+  const cols3 = [ML+12, ML + CW/3 + 8, ML + (CW/3)*2 + 4];
+  [[String(totalItems),'wonders collected'],[String(batches.length),'sessions'],[String(stars.length),'starred']]
+    .forEach(([val, label], i) => {
+      setTxt(C.ink); doc.setFontSize(20); doc.setFont('helvetica','bold');
+      doc.text(val, cols3[i], y+15);
+      setTxt(C.light); doc.setFontSize(7); doc.setFont('helvetica','normal');
+      doc.text(label.toUpperCase(), cols3[i], y+22);
+    });
+  y += 44;
 
   // category breakdown
   const catCounts = {};
@@ -3447,47 +3492,39 @@ function _generatePDF(batches, stars) {
   }));
   const sorted = Object.entries(catCounts).sort((a,b)=>b[1]-a[1]);
   const maxC = sorted[0]?.[1] || 1;
-
-  setTxt(C.light); doc.setFontSize(7.5); doc.setFont('helvetica','bold');
+  setTxt(C.light); doc.setFontSize(7); doc.setFont('helvetica','bold');
   doc.text('KNOWLEDGE DIET', ML, y); y += 7;
-
   sorted.forEach(([cat, count]) => {
     const col = C[cat] || C.mid;
-    const barW = (count / maxC) * (CW - 44);
-    setFill(col); doc.rect(ML, y - 2.5, barW + 2, 4, 'F');
-    setTxt(col); doc.setFontSize(7); doc.setFont('helvetica','bold');
-    doc.text(cat.toUpperCase(), ML + barW + 5, y + 0.5);
+    const barW = (count / maxC) * (CW - 42);
+    setFill(col); doc.rect(ML, y-2.5, barW+2, 3.5, 'F');
+    setTxt(col); doc.setFontSize(6.5); doc.setFont('helvetica','bold');
+    doc.text(cat.toUpperCase(), ML+barW+4, y+0.5);
     setTxt(C.light); doc.setFont('helvetica','normal');
-    doc.text(String(count), W-MR, y + 0.5, {align:'right'});
-    y += 8;
+    doc.text(String(count), W-MR, y+0.5, {align:'right'});
+    y += 7.5;
   });
 
-  y += 8; rule(y, C.rule); y += 12;
-  setTxt(C.light); doc.setFontSize(8); doc.setFont('helvetica','normal');
-  doc.text('Exported ' + dateStr, ML, y);
-  doc.text('curiositybox.vercel.app', W-MR, y, {align:'right'});
-
-  // bottom bar
-  setFill(C.ink); doc.rect(0, H-8, W, 8, 'F');
+  // cover footer
+  y += 4; rule(y, C.rule); y += 8;
+  doc.addImage(knowingSm, 'PNG', ML, y - smH_mm + 1, smW_mm, smH_mm);
+  setTxt(C.light); doc.setFontSize(7.5); doc.setFont('helvetica','normal');
+  doc.text('Exported ' + dateStr, W-MR, y, {align:'right'});
 
   // ── CONTENT PAGES ─────────────────────────────────────
   addPage();
   y = MT;
 
-  batches.forEach((batch, bi) => {
+  batches.forEach((batch) => {
     const items = batch.items || [];
     if (!items.length) return;
-
-    // ── batch header ──
     if (y > H - MB - 40) { addPage(); y = MT; }
 
     const bDate = batch.date || new Date(batch.savedAt||Date.now()).toLocaleDateString('en-GB',{year:'numeric',month:'long',day:'numeric'});
     const moodLabel = (batch.mood && batch.mood !== 'any') ? ' · ' + batch.mood : '';
-
     setFill(C.bg); doc.rect(ML, y-4, CW, 12, 'F');
     setTxt(C.light); doc.setFontSize(7); doc.setFont('helvetica','bold');
     doc.text((bDate + moodLabel).toUpperCase(), ML+4, y+3);
-    setTxt(C.light); doc.setFont('helvetica','normal');
     doc.text(items.length + ' wonders', W-MR-4, y+3, {align:'right'});
     y += 16;
 
@@ -3496,35 +3533,27 @@ function _generatePDF(batches, stars) {
       const uid = 'c'+String(batch.id)+'_'+ii;
       const isStarred = stars.includes(uid);
       const estimatedH = 52 + Math.ceil((item.content_en||'').length / 90) * 5;
-
       if (y + estimatedH > H - MB) { addPage(); y = MT; }
 
-      // cat accent bar
       setFill(catCol); doc.rect(ML, y, 2, 28, 'F');
-
-      // index + star
       setTxt(C.light); doc.setFontSize(7); doc.setFont('helvetica','normal');
       doc.text(String(ii+1).padStart(2,'0'), ML+5, y+5);
       if (isStarred) { setTxt([192,152,64]); doc.text('★', ML+5, y+11); }
 
-      // category
       setTxt(catCol); doc.setFontSize(6.5); doc.setFont('helvetica','bold');
       doc.text((item.category||'').toUpperCase(), ML+14, y+5);
 
-      // title
       setTxt(C.ink); doc.setFontSize(12); doc.setFont('helvetica','bold');
       const titleLines = doc.splitTextToSize(item.title_en||'', CW-14);
       doc.text(titleLines, ML+14, y+12);
       y += 12 + titleLines.length * 6;
 
-      // content
       setTxt(C.mid); doc.setFontSize(8.5); doc.setFont('helvetica','normal');
       const bodyLines = doc.splitTextToSize(item.content_en||'', CW-14);
       if (y + bodyLines.length*5 > H-MB) { addPage(); y = MT; }
       doc.text(bodyLines, ML+14, y);
       y += bodyLines.length * 5 + 4;
 
-      // insight
       if (item.insight_en) {
         if (y + 10 > H-MB) { addPage(); y = MT; }
         setTxt(C.light); doc.setFontSize(7.5); doc.setFont('helvetica','italic');
@@ -3533,7 +3562,6 @@ function _generatePDF(batches, stars) {
         y += insLines.length * 4.5 + 3;
       }
 
-      // source
       if (item.source || item.source_name) {
         setTxt(C.light); doc.setFontSize(7); doc.setFont('helvetica','normal');
         doc.text('— ' + (item.source||item.source_name), ML+14, y);
@@ -3542,7 +3570,6 @@ function _generatePDF(batches, stars) {
 
       rule(y+2, C.rule); y += 10;
     });
-
     y += 4;
   });
 
