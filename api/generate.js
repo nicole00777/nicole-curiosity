@@ -45,9 +45,6 @@ const MOOD_PROMPTS = {
   any:           "No particular mood — full range of tone and subject matter.",
 };
 
-// ── Topic pool organised by category for balanced sampling ──────────────────
-// Each category has roughly equal weight; pickBalancedSeeds() draws one per
-// category so Art no longer dominates the seed hints.
 const TOPIC_POOL_BY_CAT = {
   Psychology: [
     "the Dunning-Kruger effect more nuanced than memes suggest","embodied cognition changing philosophy of mind",
@@ -180,10 +177,6 @@ const TOPIC_POOL_BY_CAT = {
   ],
 };
 
-/**
- * Pick n seeds, one per randomly-chosen category.
- * This guarantees Art never dominates over other categories.
- */
 function pickBalancedSeeds(n = 5) {
   const cats = Object.keys(TOPIC_POOL_BY_CAT);
   const shuffledCats = [...cats].sort(() => Math.random() - 0.5).slice(0, n);
@@ -191,6 +184,97 @@ function pickBalancedSeeds(n = 5) {
     const pool = TOPIC_POOL_BY_CAT[cat];
     return pool[Math.floor(Math.random() * pool.length)];
   });
+}
+
+function buildPrompt({ today, mood, moodInstruction, seedHint, avoidHint }) {
+  return `You are a curiosity generator — fearlessly curious, covering culture, history, psychology, human nature, science, art, language, food, travel, philosophy, and everything weird and true about the world.
+
+Today's mood: ${mood.toUpperCase()} — ${moodInstruction}
+
+Today's random seeds (inspiration only, not literal topics): ${seedHint}
+
+Generate exactly 5 fascinating facts — each from a completely different domain, era, culture, and corner of knowledge.
+
+Rules:
+- Something the reader has almost certainly never encountered before
+- Go beyond Wikipedia — find the strange, counterintuitive, or darkly funny angle
+- 40-55 English words per content_en (no lists, a small story with texture)
+- Tone must match today's mood
+- One sharp insight that reframes how you see the world
+- source: cite the most specific real source you can. Use this format depending on type:
+    Book: Lastname, Firstname. Title (Year)
+    Journal article: Lastname, Firstname. "Article title." Journal Name (Year)
+    Institution/museum: Institution Name
+    Website/publication: Publication Name
+  Include author name whenever one exists. No URLs. Must be real and verifiable.
+- tags: 2-3 broad thematic tags that will be shared across many entries. Always include the category name as one tag (e.g. "psychology", "history"). Use high-level concepts only — not specific facts. Choose from themes like: memory, perception, behavior, identity, consciousness, power, death, ritual, time, evolution, ecology, language, food, art, war, religion, body, society, gender, money, science, nature, culture, philosophy, folklore, health, emotion, politics, technology, trade, empire, belief, discovery
+
+Return ONLY this exact JSON, no markdown, no explanation, nothing else:
+{
+  "date": "${today}",
+  "mood": "${mood}",
+  "items": [
+    {
+      "index": 1,
+      "category": "Psychology",
+      "title_zh": "Chinese title under 10 characters",
+      "title_en": "English title under 8 words",
+      "content_zh": "55-70 Chinese characters",
+      "content_en": "40-55 words",
+      "insight_zh": "点睛洞察15字以内",
+      "insight_en": "One sharp insight under 15 words",
+      "source": "Formatted source citation",
+      "tags": ["psychology", "behavior"]
+    }
+  ]
+}
+
+category must be exactly one of: Psychology / History / Nature / Culture / Philosophy / Language / Food / Art / Science / Folklore
+Forbidden: motivational content, fabricated sources, repeated domains across 5 items, any text outside the JSON.${avoidHint}`;
+}
+
+function parseResult(text) {
+  const cleaned = text.replace(/```json\n?/g, "").replace(/```\n?/g, "").trim();
+  const jsonMatch = cleaned.match(/\{[\s\S]*\}/);
+  if (!jsonMatch) return null;
+  try {
+    return JSON.parse(jsonMatch[0]);
+  } catch {
+    const repaired = jsonMatch[0]
+      .replace(/[\u0000-\u001F\u007F]/g, " ")
+      .replace(/,\s*}/g, "}")
+      .replace(/,\s*]/g, "]");
+    try { return JSON.parse(repaired); } catch { return null; }
+  }
+}
+
+async function callClaude(prompt) {
+  const upstream = await fetch("https://api.anthropic.com/v1/messages", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "x-api-key": CLAUDE_API_KEY,
+      "anthropic-version": "2023-06-01",
+    },
+    body: JSON.stringify({
+      model: CLAUDE_MODEL,
+      max_tokens: 4000,   // ↑ from 3000 — prevents JSON truncation
+      temperature: 0.7,   // ↓ from 0.8 — more reliable formatting
+      messages: [{ role: "user", content: prompt }],
+    }),
+  });
+
+  const raw = await upstream.text();
+  let data = null;
+  try { data = JSON.parse(raw); } catch {}
+
+  if (!upstream.ok) {
+    throw new Error(data?.error?.message || raw.slice(0, 300) || "Upstream error");
+  }
+
+  const text = data?.content?.[0]?.text;
+  if (!text) throw new Error("Empty AI response");
+  return text;
 }
 
 export default async function handler(req, res) {
@@ -255,105 +339,31 @@ export default async function handler(req, res) {
     ? `\n\nAvoid repeating or closely resembling these recently shown topics:\n${recentTitles.map(t => '- '+t).join('\n')}`
     : '';
 
-  const prompt = `You are a curiosity generator — fearlessly curious, covering culture, history, psychology, human nature, science, art, language, food, travel, philosophy, and everything weird and true about the world.
+  const prompt = buildPrompt({ today, mood, moodInstruction, seedHint, avoidHint });
 
-Today's mood: ${mood.toUpperCase()} — ${moodInstruction}
+  // ── Try up to 2 times before giving up ──────────────────────────────────
+  const MAX_ATTEMPTS = 2;
+  let lastError = null;
 
-Today's random seeds (inspiration only, not literal topics): ${seedHint}
-
-Generate exactly 5 fascinating facts — each from a completely different domain, era, culture, and corner of knowledge.
-
-Rules:
-- Something the reader has almost certainly never encountered before
-- Go beyond Wikipedia — find the strange, counterintuitive, or darkly funny angle
-- 40-55 English words per content_en (no lists, a small story with texture)
-- Tone must match today's mood
-- One sharp insight that reframes how you see the world
-- source: cite the most specific real source you can. Use this format depending on type:
-    Book: Lastname, Firstname. Title (Year)
-    Journal article: Lastname, Firstname. "Article title." Journal Name (Year)
-    Institution/museum: Institution Name
-    Website/publication: Publication Name
-  Include author name whenever one exists. No URLs. Must be real and verifiable.
-- tags: 2-3 broad thematic tags that will be shared across many entries. Always include the category name as one tag (e.g. "psychology", "history"). Use high-level concepts only — not specific facts. Choose from themes like: memory, perception, behavior, identity, consciousness, power, death, ritual, time, evolution, ecology, language, food, art, war, religion, body, society, gender, money, science, nature, culture, philosophy, folklore, health, emotion, politics, technology, trade, empire, belief, discovery
-
-Return ONLY this exact JSON, no markdown, no explanation, nothing else:
-{
-  "date": "${today}",
-  "mood": "${mood}",
-  "items": [
-    {
-      "index": 1,
-      "category": "Psychology",
-      "title_zh": "Chinese title under 10 characters",
-      "title_en": "English title under 8 words",
-      "content_zh": "55-70 Chinese characters",
-      "content_en": "40-55 words",
-      "insight_zh": "点睛洞察15字以内",
-      "insight_en": "One sharp insight under 15 words",
-      "source": "Formatted source citation",
-      "tags": ["psychology", "behavior"]
-    }
-  ]
-}
-
-category must be exactly one of: Psychology / History / Nature / Culture / Philosophy / Language / Food / Art / Science / Folklore
-Forbidden: motivational content, fabricated sources, repeated domains across 5 items, any text outside the JSON.${avoidHint}`;
-
-  try {
-    const upstream = await fetch("https://api.anthropic.com/v1/messages", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "x-api-key": CLAUDE_API_KEY,
-        "anthropic-version": "2023-06-01",
-      },
-      body: JSON.stringify({
-        model: CLAUDE_MODEL,
-        max_tokens: 3000,
-        temperature: 0.8,
-        messages: [{ role: "user", content: prompt }],
-      }),
-    });
-
-    const raw = await upstream.text();
-    let data = null;
-    try { data = JSON.parse(raw); } catch {}
-
-    if (!upstream.ok) {
-      return res.status(502).json({
-        error: "Upstream AI error",
-        detail: (data?.error?.message || raw || "").slice(0, 300),
-      });
-    }
-
-    const text = data?.content?.[0]?.text;
-    if (!text) return res.status(502).json({ error: "Empty AI response" });
-
-    const cleaned = text.replace(/```json\n?/g, "").replace(/```\n?/g, "").trim();
-    const jsonMatch = cleaned.match(/\{[\s\S]*\}/);
-    if (!jsonMatch) return res.status(502).json({ error: "Could not find JSON in response" });
-
-    let result;
+  for (let attempt = 1; attempt <= MAX_ATTEMPTS; attempt++) {
     try {
-      result = JSON.parse(jsonMatch[0]);
-    } catch {
-      const repaired = jsonMatch[0]
-        .replace(/[\u0000-\u001F\u007F]/g, " ")
-        .replace(/,\s*}/g, "}")
-        .replace(/,\s*]/g, "]");
-      try { result = JSON.parse(repaired); }
-      catch { return res.status(502).json({ error: "JSON parse failed", raw_sample: cleaned.slice(0, 800) }); }
+      const text = await callClaude(prompt);
+      const result = parseResult(text);
+
+      if (!result || !Array.isArray(result.items) || result.items.length === 0) {
+        lastError = "Invalid response structure";
+        continue; // silent retry
+      }
+
+      result.mood = mood;
+      return res.status(200).json(result);
+
+    } catch (err) {
+      lastError = err.message || "Unknown error";
+      // don't retry on auth errors
+      if (lastError.includes("401")) break;
     }
-
-    if (!result.items || !Array.isArray(result.items) || result.items.length === 0) {
-      return res.status(502).json({ error: "Invalid response structure" });
-    }
-
-    result.mood = mood;
-    return res.status(200).json(result);
-
-  } catch {
-    return res.status(500).json({ error: "Server error. Please try again." });
   }
+
+  return res.status(502).json({ error: "The AI is having a moment. Please try again.", detail: lastError });
 }
