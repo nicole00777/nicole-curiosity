@@ -145,7 +145,7 @@ nav::before{content:'';position:fixed;top:0;left:0;right:0;height:2px;background
 .t-label-sm{font-family:'DM Sans',sans-serif;font-size:11px;font-weight:500;letter-spacing:2.5px;text-transform:uppercase}
 .t-body-sm {font-family:'DM Sans',sans-serif;font-size:12px;font-weight:300;letter-spacing:0px}
 .t-caption  {font-family:'DM Sans',sans-serif;font-size:11px;font-weight:300;letter-spacing:.2px}
-.nav-logo{font-family:'DM Sans',sans-serif;font-size:11px;font-weight:500;letter-spacing:1.5px;text-transform:uppercase;color:var(--secondary)}
+.nav-logo{font-family:'DM Sans',sans-serif;font-size:11px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:var(--secondary)}
 .nav-link{font-size:12px;color:var(--tertiary);background:none;border:none;cursor:pointer;letter-spacing:.5px;transition:color .15s;display:none;font-family:'DM Sans',sans-serif}
 .nav-link:hover{color:var(--text)}.nav-link.danger:hover{color:#c0392b}.nav-link.show{display:inline}
 .hero{display:grid;grid-template-columns:1fr 1fr;padding:64px 0 56px;border-bottom:1px solid var(--border);align-items:end}
@@ -175,7 +175,7 @@ nav::before{content:'';position:fixed;top:0;left:0;right:0;height:2px;background
 @keyframes borderPulse{0%,100%{opacity:0.5;filter:blur(2px)}50%{opacity:0.9;filter:blur(4px)}}
 .gen-btn:disabled{opacity:.5;cursor:not-allowed;transform:none}
 .gen-btn:disabled::before{animation:none;opacity:0.2}
-.gen-btn:hover{background:var(--grad);color:#fff;filter:none;transform:translateY(-1px);text-shadow:0 1px 3px rgba(0,0,0,0.3)}.gen-btn:active{transform:none}.gen-btn:disabled{opacity:.45;cursor:not-allowed;transform:none;filter:grayscale(.4)}
+.gen-btn:hover{background:var(--grad);background-size:200% 100%;color:#fff;transform:translateY(-1px);text-shadow:0 1px 3px rgba(0,0,0,0.3);animation:rainbowFlow 1.5s linear infinite}.gen-btn:active{transform:none}.gen-btn:disabled{opacity:.45;cursor:not-allowed;transform:none;filter:grayscale(.4)}
 .error-msg{display:none}
 .loading{display:none;padding:48px 0 16px;text-align:center}.loading.show{display:block}
 .loading-track{width:36px;height:1px;background:var(--border);margin:0 auto 16px;overflow:hidden;position:relative}
@@ -399,7 +399,6 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;back
   .hero-title{font-size:clamp(2.2rem,10vw,3rem)}
   nav{padding:14px 0;align-items:center}
   .nav-logo{font-size:1.1rem;white-space:nowrap}
-  #todayDate{display:none}
   #themeSwitcher button{width:24px !important;height:24px !important}
   #settingsBtn{font-size:20px;min-width:44px;min-height:44px}
   .mood-row{flex-wrap:wrap;gap:6px}
@@ -489,7 +488,6 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;back
 [data-theme="amber"] .detail-tags .detail-tag{border-color:rgba(255,220,150,.4);color:var(--secondary)}
 [data-theme="amber"] .hero-kicker,[data-theme="amber"] .hero-sub,[data-theme="amber"] .mood-label,[data-theme="amber"] .toolbar-title,[data-theme="amber"] .group-date{color:var(--secondary)}
 [data-theme="amber"] .nav-logo{color:var(--text)}
-[data-theme="amber"] #todayDate{color:var(--secondary)}
 [data-theme="amber"] .loading-label{color:var(--secondary)}
 [data-theme="amber"] .error-msg{color:#ff9060}
 [data-theme="olive"] .card{color:var(--text)}
@@ -555,7 +553,6 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;back
 [data-theme="olive"] .group-mood{background:var(--card-bg);border-color:#c0d0a8;color:var(--card-text-3)}
 [data-theme="olive"] .filter-select,[data-theme="olive"] .filter-input{background:var(--bg);color:var(--text);border-color:var(--border)}
 [data-theme="olive"] .nav-logo{color:var(--text)}
-[data-theme="olive"] #todayDate{color:var(--tertiary)}
 [data-theme="olive"] .loading-label{color:var(--secondary)}
 [data-theme="olive"] .mood-chip{color:var(--secondary);border-color:rgba(200,224,128,.35)}
 [data-theme="olive"] .mood-chip:hover{color:var(--text);border-color:var(--accent)}
@@ -609,7 +606,6 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;back
 [data-theme="ocean"] .detail-insight{color:#8aacc0;border-color:rgba(144,208,240,.15)}
 [data-theme="ocean"] .detail-tags .detail-tag{border-color:rgba(144,208,240,.3);color:var(--secondary)}
 [data-theme="ocean"] .nav-logo{color:var(--text)}
-[data-theme="ocean"] #todayDate{color:var(--secondary)}
 [data-theme="ocean"] .loading-label{color:var(--secondary)}
 [data-theme="ocean"] .mood-chip{color:var(--secondary);border-color:rgba(144,208,240,.3)}
 [data-theme="ocean"] .mood-chip:hover{color:var(--text);border-color:var(--accent-ocean)}
@@ -727,11 +723,9 @@ button:focus-visible,a:focus-visible{outline:2px solid var(--secondary);outline-
 .password-input::placeholder{color:var(--tertiary)}.password-input:focus{border-color:var(--secondary);background:var(--surface)}
 .gen-btn{font-family:'DM Sans',sans-serif;font-size:14px;font-weight:500;letter-spacing:.3px;background:var(--btn-bg);color:var(--btn-text);border:none;border-radius:var(--radius-sm);padding:12px 24px;cursor:pointer;transition:background .3s,color .3s,transform .1s,opacity .18s;white-space:nowrap;position:relative}
 .gen-btn::before{content:'';position:absolute;inset:-2px;border-radius:calc(var(--radius-sm) + 2px);background:var(--grad);background-size:200% 100%;z-index:-1;opacity:0.7;animation:borderPulse 8s ease-in-out infinite,rainbowFlow 8s linear infinite}
-@keyframes rainbowFlow{0%{background-position:0% 50%}100%{background-position:200% 50%}}
-@keyframes borderPulse{0%,100%{opacity:0.5;filter:blur(2px)}50%{opacity:0.9;filter:blur(4px)}}
 .gen-btn:disabled{opacity:.5;cursor:not-allowed;transform:none}
 .gen-btn:disabled::before{animation:none;opacity:0.2}
-.gen-btn:hover{background:var(--grad);color:#fff;filter:none;transform:translateY(-1px);text-shadow:0 1px 3px rgba(0,0,0,0.3)}.gen-btn:active{transform:none}.gen-btn:disabled{opacity:.45;cursor:not-allowed;transform:none;filter:grayscale(.4)}
+.gen-btn:hover{background:var(--grad);background-size:200% 100%;color:#fff;transform:translateY(-1px);text-shadow:0 1px 3px rgba(0,0,0,0.3);animation:rainbowFlow 1.5s linear infinite}.gen-btn:active{transform:none}.gen-btn:disabled{opacity:.45;cursor:not-allowed;transform:none;filter:grayscale(.4)}
 .error-msg{display:none}
 .loading{display:none;padding:48px 0 16px;text-align:center}.loading.show{display:block}
 .loading-track{width:36px;height:1px;background:var(--border);margin:0 auto 16px;overflow:hidden;position:relative}
@@ -1348,28 +1342,13 @@ button:focus-visible,a:focus-visible{outline:2px solid var(--secondary);outline-
   gtag('js', new Date());
   gtag('config', 'G-TZJP3T1CN9');
 </script>
-<script>
-(function() {
-  const saved = localStorage.getItem('ncb_theme');
-  if (!saved && window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-    localStorage.setItem('ncb_theme', 'ocean');
-  }
-  if (window.matchMedia) {
-    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
-      if (!window._userPickedTheme) {
-        if (typeof setTheme === 'function') setTheme(e.matches ? 'ocean' : 'light');
-      }
-    });
-  }
-})();
-</script>
 </head>
 <body>
 <div class="page">
 <nav>
   <span class="nav-logo" id="navDate"></span>
   <div style="display:flex;align-items:center;gap:14px">
-    <div id="todayDate" style="font-family:'DM Sans',sans-serif;font-size:9px;font-weight:500;letter-spacing:2px;text-transform:uppercase;color:var(--secondary);white-space:nowrap"></div>
+    
     <div id="themeSwitcher" style="display:flex;gap:5px;align-items:center;">
       <button onclick="setTheme('light')"  id="themeLight"  title="Linen"   style="width:18px;height:18px;border-radius:50%;background:#f5f4f0;border:2px solid #888;cursor:pointer;transition:transform .15s,border-color .15s,border-width .15s;" onmouseover="this.style.transform='scale(1.2)'" onmouseout="this.style.transform='scale(1)'"></button>
       <button onclick="setTheme('amber')"  id="themeAmber"  title="Amber"   style="width:18px;height:18px;border-radius:50%;background:#e8740a;border:2px solid #d96c08;cursor:pointer;transition:transform .15s,border-color .15s,border-width .15s;" onmouseover="this.style.transform='scale(1.2)'" onmouseout="this.style.transform='scale(1)'"></button>
@@ -1458,7 +1437,7 @@ button:focus-visible,a:focus-visible{outline:2px solid var(--secondary);outline-
     </div>
     <div id="archive"></div>
     <div class="empty-state" id="emptyState" role="status">
-      <span class="empty-state-dot" aria-hidden="true">。</span>
+
       <span class="empty-state-title">Nothing here yet.</span>
       <span class="empty-state-sub">Choose a mood above and hit Generate<br>to start <span class="empty-knowing">knowing。</span></span>
     </div>
@@ -2907,13 +2886,10 @@ initTodayDate();
 initAuth();
 
 function initTodayDate() {
-  const el = document.getElementById('todayDate');
   const navEl = document.getElementById('navDate');
-  if (!el) return;
   const now = new Date();
   const days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
   const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-  el.textContent = 'Today is ' + days[now.getDay()] + ', ' + months[now.getMonth()] + ' ' + now.getDate();
   if (navEl) navEl.textContent = days[now.getDay()] + ', ' + months[now.getMonth()] + ' ' + now.getDate();
 }
 
