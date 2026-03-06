@@ -139,7 +139,7 @@ nav::before{content:'';position:fixed;top:0;left:0;right:0;height:2px;background
 [data-theme="amber"] .sidebar-block .sb-name{color:var(--card-text)}
 [data-theme="amber"] .sidebar-block a{color:var(--card-text)}
 [data-theme="amber"] .fun-bit{color:var(--card-text);background:rgba(255,255,255,.15);border-color:rgba(255,220,150,.3)}
-[data-theme="amber"] .fun-bit-label{color:var(--card-text-3)}
+[data-theme="amber"] .fun-bit-label{color:rgba(255,240,210,.75) !important}
 [data-theme="amber"] .active-tag,[data-theme="amber"] .tag:hover{background:#3a2010 !important;border-color:#3a2010;color:#f5e8d0 !important;text-shadow:none}
 [data-theme="amber"] .fun-bit-text{color:var(--card-text)}
 .t-label-xs{font-family:'DM Sans',sans-serif;font-size:9px;font-weight:500;letter-spacing:2px;text-transform:uppercase}
@@ -240,16 +240,16 @@ nav::before{content:'';position:fixed;top:0;left:0;right:0;height:2px;background
 .sidebar{position:sticky;top:40px;padding-top:48px;border-left:1px solid var(--border);padding-left:32px;margin-left:-16px}
 .sb-section{margin-bottom:24px}
 .sb-heading{font-size:9px;font-weight:500;letter-spacing:2px;text-transform:uppercase;margin-bottom:8px;padding-bottom:8px;border-bottom:1px solid var(--border)}
-.sb-section:nth-child(1) .sb-heading{color:#7c9eb5;border-bottom-color:#7c9eb520}
-.sb-section:nth-child(2) .sb-heading{color:#5f8c6e;border-bottom-color:#5f8c6e20}
-.sb-section:nth-child(3) .sb-heading{color:#b86848;border-bottom-color:#b8684820}
-.sb-section:nth-child(4) .sb-heading{color:#8a6fa8;border-bottom-color:#8a6fa820}
-.sb-section:nth-child(5) .sb-heading{color:#4a7a9b;border-bottom-color:#4a7a9b20}
-.sb-section:nth-child(6) .sb-heading{color:#a07850;border-bottom-color:#a0785020}
-.sb-section:nth-child(7) .sb-heading{color:#708050;border-bottom-color:#70805020}
-.sb-section:nth-child(8) .sb-heading{color:#9060a0;border-bottom-color:#9060a020}
-.sb-section:nth-child(9) .sb-heading{color:#3a7090;border-bottom-color:#3a709020}
-.sb-section:nth-child(10) .sb-heading{color:#b08040;border-bottom-color:#b0804020}
+:root .sb-section:nth-child(1) .sb-heading{color:#7c9eb5 !important;border-bottom-color:#7c9eb530 !important}
+:root .sb-section:nth-child(2) .sb-heading{color:#5f8c6e !important;border-bottom-color:#5f8c6e30 !important}
+:root .sb-section:nth-child(3) .sb-heading{color:#b86848 !important;border-bottom-color:#b8684830 !important}
+:root .sb-section:nth-child(4) .sb-heading{color:#8a6fa8 !important;border-bottom-color:#8a6fa830 !important}
+:root .sb-section:nth-child(5) .sb-heading{color:#4a7a9b !important;border-bottom-color:#4a7a9b30 !important}
+:root .sb-section:nth-child(6) .sb-heading{color:#a07850 !important;border-bottom-color:#a0785030 !important}
+:root .sb-section:nth-child(7) .sb-heading{color:#708050 !important;border-bottom-color:#70805030 !important}
+:root .sb-section:nth-child(8) .sb-heading{color:#9060a0 !important;border-bottom-color:#9060a030 !important}
+:root .sb-section:nth-child(9) .sb-heading{color:#3a7090 !important;border-bottom-color:#3a709030 !important}
+:root .sb-section:nth-child(10) .sb-heading{color:#b08040 !important;border-bottom-color:#b0804030 !important}
 .sb-link{display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid var(--border-lt);text-decoration:none;color:var(--secondary);transition:color .15s}
 .sb-link:last-child{border-bottom:none}.sb-link:hover{color:var(--text)}
 .sb-icon{width:14px;height:14px;border-radius:3px;flex-shrink:0;opacity:.7;object-fit:contain}
@@ -426,6 +426,9 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;back
   .toolbar-title{font-size:9px;letter-spacing:2px}
   .hero-kicker{font-size:9px;letter-spacing:2px}
   .share-btn{min-height:44px;padding:10px 16px;font-size:13px;border-radius:12px}
+  [data-theme="amber"] .summary-card .share-btn{color:#3a1a08 !important;background:rgba(255,255,255,.35) !important;border:1px solid rgba(255,255,255,.5) !important;font-weight:500}
+  [data-theme="olive"] .summary-card .share-btn{color:#eef0d8 !important;background:rgba(255,255,255,.15) !important;border:1px solid rgba(255,255,255,.25) !important;font-weight:400}
+  [data-theme="ocean"] .summary-card .share-btn{color:#e8f4ff !important;background:rgba(255,255,255,.15) !important;border:1px solid rgba(255,255,255,.3) !important;font-weight:400}
   .card{padding:18px 16px}
   .cards-grid{grid-template-columns:1fr}
   .cards-grid .card:first-child{grid-column:auto}
@@ -797,16 +800,16 @@ button:focus-visible,a:focus-visible{outline:2px solid var(--secondary);outline-
 .sidebar{position:sticky;top:40px;padding-top:48px;border-left:1px solid var(--border);padding-left:32px;margin-left:-16px}
 .sb-section{margin-bottom:24px}
 .sb-heading{font-size:9px;font-weight:500;letter-spacing:2px;text-transform:uppercase;margin-bottom:8px;padding-bottom:8px;border-bottom:1px solid var(--border)}
-.sb-section:nth-child(1) .sb-heading{color:#7c9eb5;border-bottom-color:#7c9eb520}
-.sb-section:nth-child(2) .sb-heading{color:#5f8c6e;border-bottom-color:#5f8c6e20}
-.sb-section:nth-child(3) .sb-heading{color:#b86848;border-bottom-color:#b8684820}
-.sb-section:nth-child(4) .sb-heading{color:#8a6fa8;border-bottom-color:#8a6fa820}
-.sb-section:nth-child(5) .sb-heading{color:#4a7a9b;border-bottom-color:#4a7a9b20}
-.sb-section:nth-child(6) .sb-heading{color:#a07850;border-bottom-color:#a0785020}
-.sb-section:nth-child(7) .sb-heading{color:#708050;border-bottom-color:#70805020}
-.sb-section:nth-child(8) .sb-heading{color:#9060a0;border-bottom-color:#9060a020}
-.sb-section:nth-child(9) .sb-heading{color:#3a7090;border-bottom-color:#3a709020}
-.sb-section:nth-child(10) .sb-heading{color:#b08040;border-bottom-color:#b0804020}
+:root .sb-section:nth-child(1) .sb-heading{color:#7c9eb5 !important;border-bottom-color:#7c9eb530 !important}
+:root .sb-section:nth-child(2) .sb-heading{color:#5f8c6e !important;border-bottom-color:#5f8c6e30 !important}
+:root .sb-section:nth-child(3) .sb-heading{color:#b86848 !important;border-bottom-color:#b8684830 !important}
+:root .sb-section:nth-child(4) .sb-heading{color:#8a6fa8 !important;border-bottom-color:#8a6fa830 !important}
+:root .sb-section:nth-child(5) .sb-heading{color:#4a7a9b !important;border-bottom-color:#4a7a9b30 !important}
+:root .sb-section:nth-child(6) .sb-heading{color:#a07850 !important;border-bottom-color:#a0785030 !important}
+:root .sb-section:nth-child(7) .sb-heading{color:#708050 !important;border-bottom-color:#70805030 !important}
+:root .sb-section:nth-child(8) .sb-heading{color:#9060a0 !important;border-bottom-color:#9060a030 !important}
+:root .sb-section:nth-child(9) .sb-heading{color:#3a7090 !important;border-bottom-color:#3a709030 !important}
+:root .sb-section:nth-child(10) .sb-heading{color:#b08040 !important;border-bottom-color:#b0804030 !important}
 .sb-link{display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid var(--border-lt);text-decoration:none;color:var(--secondary);transition:color .15s}
 .sb-link:last-child{border-bottom:none}.sb-link:hover{color:var(--text)}
 .sb-icon{width:14px;height:14px;border-radius:3px;flex-shrink:0;opacity:.7;object-fit:contain}
@@ -968,6 +971,9 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;back
   .toolbar-title{font-size:9px;letter-spacing:2px}
   .hero-kicker{font-size:9px;letter-spacing:2px}
   .share-btn{min-height:44px;padding:10px 16px;font-size:13px;border-radius:12px}
+  [data-theme="amber"] .summary-card .share-btn{color:#3a1a08 !important;background:rgba(255,255,255,.35) !important;border:1px solid rgba(255,255,255,.5) !important;font-weight:500}
+  [data-theme="olive"] .summary-card .share-btn{color:#eef0d8 !important;background:rgba(255,255,255,.15) !important;border:1px solid rgba(255,255,255,.25) !important;font-weight:400}
+  [data-theme="ocean"] .summary-card .share-btn{color:#e8f4ff !important;background:rgba(255,255,255,.15) !important;border:1px solid rgba(255,255,255,.3) !important;font-weight:400}
   .card{padding:18px 16px}
   .cards-grid{grid-template-columns:1fr}
   .cards-grid .card:first-child{grid-column:auto}
@@ -1482,28 +1488,28 @@ button:focus-visible,a:focus-visible{outline:2px solid var(--secondary);outline-
       <svg class="planet-svg" id="planetSvg" viewBox="0 0 180 130"></svg>
     </div>
       <div class="sb-section">
-        <div class="sb-heading">Deep Reading</div>
+        <div class="sb-heading" style="color:#7c9eb5 !important;border-bottom-color:#7c9eb530 !important">Deep Reading</div>
         <a class="sb-link" href="https://aeon.co" target="_blank" rel="noopener"><img class="sb-icon" src="https://www.google.com/s2/favicons?domain=aeon.co&sz=32" alt="" loading="lazy" onerror="this.style.opacity=0"><span class="sb-name">Aeon</span></a>
         <a class="sb-link" href="https://longreads.com" target="_blank" rel="noopener"><img class="sb-icon" src="https://www.google.com/s2/favicons?domain=longreads.com&sz=32" alt="" loading="lazy" onerror="this.style.opacity=0"><span class="sb-name">Longreads</span></a>
         <a class="sb-link" href="https://psyche.co" target="_blank" rel="noopener"><img class="sb-icon" src="https://www.google.com/s2/favicons?domain=psyche.co&sz=32" alt="" loading="lazy" onerror="this.style.opacity=0"><span class="sb-name">Psyche</span></a>
         <a class="sb-link" href="https://www.theatlantic.com/science/" target="_blank" rel="noopener"><img class="sb-icon" src="https://www.google.com/s2/favicons?domain=theatlantic.com&sz=32" alt="" loading="lazy" onerror="this.style.opacity=0"><span class="sb-name">The Atlantic</span></a>
       </div>
       <div class="sb-section">
-        <div class="sb-heading">Food &amp; Drink</div>
+        <div class="sb-heading" style="color:#b86848 !important;border-bottom-color:#b8684830 !important">Food &amp; Drink</div>
         <a class="sb-link" href="https://www.bonappetit.com" target="_blank" rel="noopener"><img class="sb-icon" src="https://www.google.com/s2/favicons?domain=bonappetit.com&sz=32" alt="" loading="lazy" onerror="this.style.opacity=0"><span class="sb-name">Bon Appétit</span></a>
         <a class="sb-link" href="https://www.eater.com" target="_blank" rel="noopener"><img class="sb-icon" src="https://www.google.com/s2/favicons?domain=eater.com&sz=32" alt="" loading="lazy" onerror="this.style.opacity=0"><span class="sb-name">Eater</span></a>
         <a class="sb-link" href="https://food52.com" target="_blank" rel="noopener"><img class="sb-icon" src="https://www.google.com/s2/favicons?domain=food52.com&sz=32" alt="" loading="lazy" onerror="this.style.opacity=0"><span class="sb-name">Food52</span></a>
         <a class="sb-link" href="https://www.seriouseats.com" target="_blank" rel="noopener"><img class="sb-icon" src="https://www.google.com/s2/favicons?domain=seriouseats.com&sz=32" alt="" loading="lazy" onerror="this.style.opacity=0"><span class="sb-name">Serious Eats</span></a>
       </div>
       <div class="sb-section">
-        <div class="sb-heading">Medical Science</div>
+        <div class="sb-heading" style="color:#5f8c6e !important;border-bottom-color:#5f8c6e30 !important">Medical Science</div>
         <a class="sb-link" href="https://www.mayoclinic.org" target="_blank" rel="noopener"><img class="sb-icon" src="https://www.google.com/s2/favicons?domain=mayoclinic.org&sz=32" alt="" loading="lazy" onerror="this.style.opacity=0"><span class="sb-name">Mayo Clinic</span></a>
         <a class="sb-link" href="https://medlineplus.gov" target="_blank" rel="noopener"><img class="sb-icon" src="https://www.google.com/s2/favicons?domain=medlineplus.gov&sz=32" alt="" loading="lazy" onerror="this.style.opacity=0"><span class="sb-name">MedlinePlus (NIH)</span></a>
         <a class="sb-link" href="https://www.nejm.org" target="_blank" rel="noopener"><img class="sb-icon" src="https://www.google.com/s2/favicons?domain=nejm.org&sz=32" alt="" loading="lazy" onerror="this.style.opacity=0"><span class="sb-name">New England Journal of Medicine</span></a>
         <a class="sb-link" href="https://www.statnews.com" target="_blank" rel="noopener"><img class="sb-icon" src="https://www.google.com/s2/favicons?domain=statnews.com&sz=32" alt="" loading="lazy" onerror="this.style.opacity=0"><span class="sb-name">STAT News</span></a>
       </div>
       <div class="sb-section">
-        <div class="sb-heading">Museums &amp; Collections</div>
+        <div class="sb-heading" style="color:#8a6fa8 !important;border-bottom-color:#8a6fa830 !important">Museums &amp; Collections</div>
         <a class="sb-link" href="https://www.britishmuseum.org" target="_blank" rel="noopener"><img class="sb-icon" src="https://www.google.com/s2/favicons?domain=britishmuseum.org&sz=32" alt="" loading="lazy" onerror="this.style.opacity=0"><span class="sb-name">British Museum</span></a>
         <a class="sb-link" href="https://www.louvre.fr/en" target="_blank" rel="noopener"><img class="sb-icon" src="https://www.google.com/s2/favicons?domain=louvre.fr&sz=32" alt="" loading="lazy" onerror="this.style.opacity=0"><span class="sb-name">Louvre</span></a>
         <a class="sb-link" href="https://www.metmuseum.org" target="_blank" rel="noopener"><img class="sb-icon" src="https://www.google.com/s2/favicons?domain=metmuseum.org&sz=32" alt="" loading="lazy" onerror="this.style.opacity=0"><span class="sb-name">Metropolitan Museum</span></a>
@@ -1515,7 +1521,7 @@ button:focus-visible,a:focus-visible{outline:2px solid var(--secondary);outline-
         <a class="sb-link" href="https://www.vam.ac.uk" target="_blank" rel="noopener"><img class="sb-icon" src="https://www.google.com/s2/favicons?domain=vam.ac.uk&sz=32" alt="" loading="lazy" onerror="this.style.opacity=0"><span class="sb-name">V&amp;A Museum</span></a>
       </div>
       <div class="sb-section">
-        <div class="sb-heading">Nature &amp; Conservation</div>
+        <div class="sb-heading" style="color:#5f8c6e !important;border-bottom-color:#5f8c6e30 !important">Nature &amp; Conservation</div>
         <a class="sb-link" href="https://www.carbonbrief.org" target="_blank" rel="noopener"><img class="sb-icon" src="https://www.google.com/s2/favicons?domain=carbonbrief.org&sz=32" alt="" loading="lazy" onerror="this.style.opacity=0"><span class="sb-name">Carbon Brief</span></a>
         <a class="sb-link" href="https://www.iucnredlist.org" target="_blank" rel="noopener"><img class="sb-icon" src="https://www.google.com/s2/favicons?domain=iucnredlist.org&sz=32" alt="" loading="lazy" onerror="this.style.opacity=0"><span class="sb-name">IUCN Red List</span></a>
         <a class="sb-link" href="https://www.nationalgeographic.com/environment" target="_blank" rel="noopener"><img class="sb-icon" src="https://www.google.com/s2/favicons?domain=nationalgeographic.com&sz=32" alt="" loading="lazy" onerror="this.style.opacity=0"><span class="sb-name">National Geographic</span></a>
@@ -1523,20 +1529,20 @@ button:focus-visible,a:focus-visible{outline:2px solid var(--secondary);outline-
         <a class="sb-link" href="https://www.worldwildlife.org/stories" target="_blank" rel="noopener"><img class="sb-icon" src="https://www.google.com/s2/favicons?domain=worldwildlife.org&sz=32" alt="" loading="lazy" onerror="this.style.opacity=0"><span class="sb-name">WWF Stories</span></a>
       </div>
       <div class="sb-section">
-        <div class="sb-heading">Open Courses</div>
+        <div class="sb-heading" style="color:#4a7a9b !important;border-bottom-color:#4a7a9b30 !important">Open Courses</div>
         <a class="sb-link" href="https://www.coursera.org/browse" target="_blank" rel="noopener"><img class="sb-icon" src="https://www.google.com/s2/favicons?domain=coursera.org&sz=32" alt="" loading="lazy" onerror="this.style.opacity=0"><span class="sb-name">Coursera</span></a>
         <a class="sb-link" href="https://ocw.mit.edu" target="_blank" rel="noopener"><img class="sb-icon" src="https://www.google.com/s2/favicons?domain=ocw.mit.edu&sz=32" alt="" loading="lazy" onerror="this.style.opacity=0"><span class="sb-name">MIT OpenCourseWare</span></a>
         <a class="sb-link" href="https://www.ted.com/talks" target="_blank" rel="noopener"><img class="sb-icon" src="https://www.google.com/s2/favicons?domain=ted.com&sz=32" alt="" loading="lazy" onerror="this.style.opacity=0"><span class="sb-name">TED Talks</span></a>
         <a class="sb-link" href="https://oyc.yale.edu" target="_blank" rel="noopener"><img class="sb-icon" src="https://www.google.com/s2/favicons?domain=yale.edu&sz=32" alt="" loading="lazy" onerror="this.style.opacity=0"><span class="sb-name">Yale Open Courses</span></a>
       </div>
       <div class="sb-section">
-        <div class="sb-heading">Outdoors &amp; Adventure</div>
+        <div class="sb-heading" style="color:#708050 !important;border-bottom-color:#70805030 !important">Outdoors &amp; Adventure</div>
         <a class="sb-link" href="https://www.alltrails.com" target="_blank" rel="noopener"><img class="sb-icon" src="https://www.google.com/s2/favicons?domain=alltrails.com&sz=32" alt="" loading="lazy" onerror="this.style.opacity=0"><span class="sb-name">AllTrails</span></a>
         <a class="sb-link" href="https://www.outsideonline.com" target="_blank" rel="noopener"><img class="sb-icon" src="https://www.google.com/s2/favicons?domain=outsideonline.com&sz=32" alt="" loading="lazy" onerror="this.style.opacity=0"><span class="sb-name">Outside Online</span></a>
         <a class="sb-link" href="https://www.rei.com/learn/expert-advice" target="_blank" rel="noopener"><img class="sb-icon" src="https://www.google.com/s2/favicons?domain=rei.com&sz=32" alt="" loading="lazy" onerror="this.style.opacity=0"><span class="sb-name">REI Expert Advice</span></a>
       </div>
       <div class="sb-section">
-        <div class="sb-heading">Philosophy</div>
+        <div class="sb-heading" style="color:#9060a0 !important;border-bottom-color:#9060a030 !important">Philosophy</div>
         <a class="sb-link" href="https://www.existentialcomics.com" target="_blank" rel="noopener"><img class="sb-icon" src="https://www.google.com/s2/favicons?domain=existentialcomics.com&sz=32" alt="" loading="lazy" onerror="this.style.opacity=0"><span class="sb-name">Existential Comics</span></a>
         <a class="sb-link" href="https://iep.utm.edu" target="_blank" rel="noopener"><img class="sb-icon" src="https://www.google.com/s2/favicons?domain=iep.utm.edu&sz=32" alt="" loading="lazy" onerror="this.style.opacity=0"><span class="sb-name">Internet Encyclopedia of Philosophy</span></a>
         <a class="sb-link" href="https://philosophybites.com" target="_blank" rel="noopener"><img class="sb-icon" src="https://www.google.com/s2/favicons?domain=philosophybites.com&sz=32" alt="" loading="lazy" onerror="this.style.opacity=0"><span class="sb-name">Philosophy Bites</span></a>
@@ -1544,20 +1550,20 @@ button:focus-visible,a:focus-visible{outline:2px solid var(--secondary);outline-
         <a class="sb-link" href="https://www.philosophersmag.com" target="_blank" rel="noopener"><img class="sb-icon" src="https://www.google.com/s2/favicons?domain=philosophersmag.com&sz=32" alt="" loading="lazy" onerror="this.style.opacity=0"><span class="sb-name">The Philosopher's Magazine</span></a>
       </div>
       <div class="sb-section">
-        <div class="sb-heading">Psychology Tests</div>
+        <div class="sb-heading" style="color:#6b8fa8 !important;border-bottom-color:#6b8fa830 !important">Psychology Tests</div>
         <a class="sb-link" href="https://www.16personalities.com" target="_blank" rel="noopener"><img class="sb-icon" src="https://www.google.com/s2/favicons?domain=16personalities.com&sz=32" alt="" loading="lazy" onerror="this.style.opacity=0"><span class="sb-name">16 Personalities</span></a>
         <a class="sb-link" href="https://implicit.harvard.edu/implicit/takeatest.html" target="_blank" rel="noopener"><img class="sb-icon" src="https://www.google.com/s2/favicons?domain=harvard.edu&sz=32" alt="" loading="lazy" onerror="this.style.opacity=0"><span class="sb-name">Harvard Implicit (IAT)</span></a>
         <a class="sb-link" href="https://www.authentichappiness.sas.upenn.edu/testcenter" target="_blank" rel="noopener"><img class="sb-icon" src="https://www.google.com/s2/favicons?domain=upenn.edu&sz=32" alt="" loading="lazy" onerror="this.style.opacity=0"><span class="sb-name">UPenn Authentic Happiness</span></a>
         <a class="sb-link" href="https://www.primals.org/take-the-pi-50" target="_blank" rel="noopener"><img class="sb-icon" src="https://www.google.com/s2/favicons?domain=primals.org&sz=32" alt="" loading="lazy" onerror="this.style.opacity=0"><span class="sb-name">UPenn Primal World Beliefs</span></a>
       </div>
       <div class="sb-section">
-        <div class="sb-heading">Science &amp; Research</div>
+        <div class="sb-heading" style="color:#3a7090 !important;border-bottom-color:#3a709030 !important">Science &amp; Research</div>
         <a class="sb-link" href="https://www.nature.com/news" target="_blank" rel="noopener"><img class="sb-icon" src="https://www.google.com/s2/favicons?domain=nature.com&sz=32" alt="" loading="lazy" onerror="this.style.opacity=0"><span class="sb-name">Nature News</span></a>
         <a class="sb-link" href="https://nautil.us" target="_blank" rel="noopener"><img class="sb-icon" src="https://www.google.com/s2/favicons?domain=nautil.us&sz=32" alt="" loading="lazy" onerror="this.style.opacity=0"><span class="sb-name">Nautilus</span></a>
         <a class="sb-link" href="https://www.scientificamerican.com" target="_blank" rel="noopener"><img class="sb-icon" src="https://www.google.com/s2/favicons?domain=scientificamerican.com&sz=32" alt="" loading="lazy" onerror="this.style.opacity=0"><span class="sb-name">Scientific American</span></a>
       </div>
       <div class="sb-section">
-        <div class="sb-heading">Travel &amp; Culture</div>
+        <div class="sb-heading" style="color:#a07850 !important;border-bottom-color:#a0785030 !important">Travel &amp; Culture</div>
         <a class="sb-link" href="https://www.atlasobscura.com" target="_blank" rel="noopener"><img class="sb-icon" src="https://www.google.com/s2/favicons?domain=atlasobscura.com&sz=32" alt="" loading="lazy" onerror="this.style.opacity=0"><span class="sb-name">Atlas Obscura</span></a>
         <a class="sb-link" href="https://www.cntraveler.com" target="_blank" rel="noopener"><img class="sb-icon" src="https://www.google.com/s2/favicons?domain=cntraveler.com&sz=32" alt="" loading="lazy" onerror="this.style.opacity=0"><span class="sb-name">Condé Nast Traveler</span></a>
         <a class="sb-link" href="https://www.lonelyplanet.com" target="_blank" rel="noopener"><img class="sb-icon" src="https://www.google.com/s2/favicons?domain=lonelyplanet.com&sz=32" alt="" loading="lazy" onerror="this.style.opacity=0"><span class="sb-name">Lonely Planet</span></a>
