@@ -2,6 +2,33 @@
 
 ---
 
+## [2.1] 2026-03-06 — UI Contrast & Button Fixes
+
+### Theme Fixes — Amber / Olive / Ocean
+- **Share / Save image buttons**: text color changed to deep contrasting colors per theme (deep brown for Amber, deep green for Olive, white for Ocean dark mode); applied to both main cards and summary modal cards
+- **Summary modal share buttons**: fixed — previously only `.card .share-btn` was targeted; now `.summary-card .share-btn` is also covered
+- **Mobile summary modal**: share/save buttons now match desktop styling via explicit `@media(max-width:720px)` theme overrides
+- **Archive button (mobile)**: pure ghost style — transparent background, no border, theme-appropriate text color
+- **Archive button (desktop)**: solid button with theme-appropriate background and text color (deep brown / deep green / light blue)
+
+### Amber Theme
+- **Fun bits section labels** (POINTLESS WISDOM, YOU DIDN'T NEED TO KNOW, BAD IDEA OF THE DAY): changed from dark brown to light cream `rgba(255,240,210,.75)` for visibility on orange background
+
+### Linen (White) Theme
+- **Sidebar section headings**: each of the 11 categories now has a distinct color applied via inline style, immune to CSS cascade overrides
+
+### AI Generation Reliability
+- `max_tokens` increased from 3000 → 4000 to prevent JSON truncation
+- `temperature` lowered from 0.8 → 0.7 for more reliable JSON formatting
+- Server-side silent retry: on parse or structure failure, backend retries once before returning error
+- Frontend silent retry: on any non-401 failure, frontend retries once with 800ms delay before showing error toast
+
+### EN / 中文 Toggle
+- Moved inside `card-title-row` flex container alongside title
+- Mobile: button size reduced in corner position to avoid occupying full row
+
+---
+
 ## [2.0] 2026-03-04 — Rebrand & Feature Expansion
 
 ### Brand
